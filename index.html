@@ -1,1676 +1,1490 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Orange DSL Technical Support Simulator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orange DSL Handbook — Basel Magdy</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-:root {
-  --bg: #0a0e14;
-  --bg-2: #131922;
-  --bg-3: #1a2330;
-  --card: #1f2a38;
-  --card-2: #243042;
-  --orange: #ff6b00;
-  --orange-2: #ff8c33;
-  --orange-dark: #cc5500;
-  --green: #22c55e;
-  --red: #ef4444;
-  --yellow: #f59e0b;
-  --blue: #3b82f6;
-  --purple: #a855f7;
-  --text: #e8edf5;
-  --text-dim: #94a3b8;
-  --text-mute: #64748b;
-  --border: #2d3a4d;
-}
-html, body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-  font-size: 15px;
-  line-height: 1.5;
-}
-body {
-  background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(255,107,0,0.08), transparent 60%),
-    radial-gradient(1000px 500px at 110% 10%, rgba(59,130,246,0.06), transparent 60%),
-    var(--bg);
-}
-.app { max-width: 900px; margin: 0 auto; padding: 12px; padding-bottom: 80px; }
+  :root{
+    --bg:#0d0d12;
+    --bg-2:#14141b;
+    --card:#1a1a23;
+    --card-2:#22222d;
+    --border:#2a2a36;
+    --text:#ececf1;
+    --muted:#8b8b98;
+    --orange:#ff6a00;
+    --orange-2:#ff8a33;
+    --orange-soft:rgba(255,106,0,.12);
+    --green:#22c55e;
+    --yellow:#eab308;
+    --red:#ef4444;
+    --blue:#3b82f6;
+    --purple:#a855f7;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --radius:16px;
+    --radius-sm:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background:
+      radial-gradient(1000px 600px at 10% -10%, rgba(255,106,0,.08), transparent 60%),
+      radial-gradient(800px 500px at 100% 100%, rgba(59,130,246,.05), transparent 60%);
+    pointer-events:none;z-index:0;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:24px;position:relative;z-index:1}
 
-.trainer {
-  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-  color: white;
-  padding: 14px 18px;
-  border-radius: 14px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 6px 24px rgba(255,107,0,0.25);
-  position: sticky;
-  top: 6px;
-  z-index: 50;
-}
-.trainer-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.trainer-logo {
-  width: 38px; height: 38px;
-  background: white;
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 900; color: var(--orange); font-size: 18px;
-  flex-shrink: 0;
-}
-.trainer-name { font-weight: 800; font-size: 15px; letter-spacing: 0.3px; }
-.trainer-sub { font-size: 10px; opacity: 0.9; font-weight: 500; }
-.trainer-badge {
-  background: rgba(255,255,255,0.2);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  backdrop-filter: blur(10px);
-  flex-shrink: 0;
-}
+  /* Header */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(13,13,18,.85);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar-inner{
+    max-width:1100px;margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{
+    width:42px;height:42px;border-radius:12px;
+    background:linear-gradient(135deg,var(--orange),#ff3d00);
+    display:grid;place-items:center;font-weight:800;color:#fff;
+    box-shadow:0 6px 20px rgba(255,106,0,.35);
+  }
+  .brand-text h1{font-size:16px;font-weight:700;letter-spacing:.2px}
+  .brand-text p{font-size:12px;color:var(--muted)}
+  .trainer-badge{
+    display:flex;align-items:center;gap:10px;
+    background:var(--orange-soft);
+    border:1px solid rgba(255,106,0,.3);
+    padding:8px 14px;border-radius:999px;
+    font-size:13px;font-weight:600;color:var(--orange-2);
+  }
+  .trainer-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange)}
+  .top-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{
+    background:var(--card);border:1px solid var(--border);color:var(--text);
+    padding:8px 14px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;
+    transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+  }
+  .btn:hover{background:var(--card-2);border-color:var(--orange);transform:translateY(-1px)}
+  .btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+  .btn.primary:hover{background:var(--orange-2)}
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.stat {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px 6px;
-  text-align: center;
-  transition: transform 0.2s;
-}
-.stat:active { transform: scale(0.97); }
-.stat-label { font-size: 9px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
-.stat-value { font-size: 16px; font-weight: 800; color: var(--orange); margin-top: 2px; }
-.stat-value.green { color: var(--green); }
-.stat-value.blue { color: var(--blue); }
-.stat-value.yellow { color: var(--yellow); }
+  /* Hero */
+  .hero{
+    margin-top:24px;padding:32px;border-radius:var(--radius);
+    background:linear-gradient(135deg,rgba(255,106,0,.1),rgba(255,106,0,.02));
+    border:1px solid rgba(255,106,0,.2);
+    position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;top:-50%;left:-20%;width:400px;height:400px;
+    background:radial-gradient(circle,rgba(255,106,0,.15),transparent 70%);
+    filter:blur(40px);
+  }
+  .hero h2{font-size:28px;margin-bottom:8px;position:relative}
+  .hero h2 span{color:var(--orange)}
+  .hero p{color:var(--muted);font-size:15px;position:relative;max-width:700px}
+  .hero-stats{display:flex;gap:20px;margin-top:20px;flex-wrap:wrap;position:relative}
+  .stat{background:var(--card);padding:12px 18px;border-radius:12px;border:1px solid var(--border)}
+  .stat b{display:block;font-size:20px;color:var(--orange)}
+  .stat span{font-size:12px;color:var(--muted)}
 
-.level-bar {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.level-icon {
-  width: 44px; height: 44px;
-  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 900; font-size: 18px; color: white;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(255,107,0,0.3);
-}
-.level-info { flex: 1; min-width: 0; }
-.level-title { font-weight: 700; font-size: 13px; }
-.level-name { font-size: 11px; color: var(--text-dim); }
-.level-xp { font-size: 11px; color: var(--orange); font-weight: 700; margin-top: 2px; }
-.xp-bar {
-  height: 6px;
-  background: var(--bg-3);
-  border-radius: 3px;
-  margin-top: 6px;
-  overflow: hidden;
-}
-.xp-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--orange), var(--orange-2));
-  border-radius: 3px;
-  transition: width 0.5s ease;
-}
+  /* Search */
+  .search-box{
+    margin-top:20px;position:relative;
+  }
+  .search-box input{
+    width:100%;padding:16px 50px 16px 20px;
+    background:var(--card);border:1px solid var(--border);
+    border-radius:14px;color:var(--text);font-size:15px;
+    transition:all .2s;font-family:inherit;
+  }
+  .search-box input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-soft)}
+  .search-box .icon{
+    position:absolute;top:50%;right:18px;transform:translateY(-50%);
+    color:var(--muted);font-size:18px;pointer-events:none;
+  }
+  .search-results{
+    margin-top:10px;background:var(--card);border:1px solid var(--border);
+    border-radius:12px;max-height:300px;overflow-y:auto;display:none;
+  }
+  .search-results.show{display:block}
+  .search-item{
+    padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:10px;transition:background .15s;
+  }
+  .search-item:last-child{border-bottom:none}
+  .search-item:hover{background:var(--card-2)}
+  .search-item .emoji{font-size:20px}
+  .search-item .title{font-weight:600}
+  .search-item .cat{font-size:11px;color:var(--muted);margin-right:auto}
+  mark{background:var(--orange-soft);color:var(--orange-2);padding:0 4px;border-radius:4px}
 
-.timer-bar {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px 14px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.timer-icon { font-size: 20px; flex-shrink: 0; }
-.timer-info { flex: 1; min-width: 0; }
-.timer-text { font-size: 12px; color: var(--text-dim); font-weight: 600; }
-.timer-value { font-size: 18px; font-weight: 800; color: var(--green); }
-.timer-value.warn { color: var(--yellow); }
-.timer-value.danger { color: var(--red); animation: pulse 1s infinite; }
-.timer-progress {
-  height: 5px;
-  background: var(--bg-3);
-  border-radius: 3px;
-  margin-top: 6px;
-  overflow: hidden;
-}
-.timer-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--green), var(--green));
-  border-radius: 3px;
-  transition: width 1s linear, background 0.3s;
-  width: 100%;
-}
-.timer-fill.warn { background: linear-gradient(90deg, var(--yellow), var(--yellow)); }
-.timer-fill.danger { background: linear-gradient(90deg, var(--red), var(--red)); }
+  /* Tabs / Categories */
+  .tabs{
+    display:flex;gap:8px;margin:28px 0 18px;flex-wrap:wrap;
+    background:var(--card);padding:6px;border-radius:14px;border:1px solid var(--border);
+  }
+  .tab{
+    flex:1;min-width:120px;padding:10px 16px;border-radius:10px;
+    cursor:pointer;text-align:center;font-weight:600;font-size:14px;
+    color:var(--muted);transition:all .2s;border:none;background:transparent;
+  }
+  .tab:hover{color:var(--text)}
+  .tab.active{background:var(--orange);color:#fff;box-shadow:0 4px 14px rgba(255,106,0,.3)}
 
-.tabs {
-  display: flex;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 4px;
-  margin-bottom: 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.tabs::-webkit-scrollbar { display: none; }
-.tab {
-  flex: 1;
-  min-width: 75px;
-  padding: 10px 6px;
-  text-align: center;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 12px;
-  color: var(--text-dim);
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.tab.active {
-  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
-  color: white;
-  box-shadow: 0 2px 8px rgba(255,107,0,0.3);
-}
+  /* Category Section */
+  .category{margin-bottom:32px;animation:fadeUp .4s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .category-header{
+    display:flex;align-items:center;gap:12px;padding:18px 20px;
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius);cursor:pointer;
+    transition:all .2s;
+  }
+  .category-header:hover{border-color:var(--orange)}
+  .category-header .icon-big{
+    width:44px;height:44px;border-radius:12px;
+    display:grid;place-items:center;font-size:22px;
+    background:var(--orange-soft);color:var(--orange);
+  }
+  .category-header h3{font-size:18px;flex:1}
+  .category-header .count{color:var(--muted);font-size:13px}
+  .category-header .chev{transition:transform .3s;color:var(--muted)}
+  .category.open .chev{transform:rotate(180deg)}
+  .category-body{
+    max-height:0;overflow:hidden;transition:max-height .4s ease;
+  }
+  .category.open .category-body{max-height:5000px}
+  .topics-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:12px;margin-top:12px;
+  }
+  .topic-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:14px;padding:16px;cursor:pointer;
+    transition:all .25s;position:relative;
+  }
+  .topic-card:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:var(--shadow)}
+  .topic-card .emoji{font-size:26px;margin-bottom:8px}
+  .topic-card h4{font-size:15px;margin-bottom:4px}
+  .topic-card p{font-size:12px;color:var(--muted);line-height:1.5}
+  .topic-card .status{
+    position:absolute;top:12px;left:12px;
+    display:flex;gap:4px;
+  }
+  .topic-card .status .badge{
+    font-size:10px;padding:2px 6px;border-radius:6px;font-weight:700;
+  }
+  .badge.reviewed{background:rgba(34,197,94,.15);color:var(--green)}
+  .badge.need{background:rgba(234,179,8,.15);color:var(--yellow)}
+  .badge.fav{background:rgba(255,106,0,.15);color:var(--orange)}
+  .badge.bookmark{background:rgba(168,85,247,.15);color:var(--purple)}
 
-.view { display: none; animation: fadeIn 0.3s ease; }
-.view.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  /* Topic Modal */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.7);
+    backdrop-filter:blur(8px);z-index:100;
+    display:none;align-items:flex-start;justify-content:center;
+    padding:20px;overflow-y:auto;
+  }
+  .modal-overlay.show{display:flex;animation:fadeIn .2s}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:var(--bg-2);border:1px solid var(--border);
+    border-radius:20px;max-width:900px;width:100%;
+    margin:20px 0;position:relative;
+    animation:slideUp .3s ease;
+  }
+  @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  .modal-header{
+    padding:24px;border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:14px;position:sticky;top:0;
+    background:var(--bg-2);border-radius:20px 20px 0 0;z-index:2;
+  }
+  .modal-header .emoji-big{
+    width:54px;height:54px;border-radius:14px;
+    background:var(--orange-soft);display:grid;place-items:center;font-size:28px;
+  }
+  .modal-header h2{flex:1;font-size:22px}
+  .modal-header .close{
+    width:36px;height:36px;border-radius:10px;background:var(--card);
+    border:1px solid var(--border);cursor:pointer;color:var(--text);
+    font-size:18px;display:grid;place-items:center;
+  }
+  .modal-header .close:hover{background:var(--red);border-color:var(--red)}
+  .modal-actions{
+    display:flex;gap:8px;padding:16px 24px;border-bottom:1px solid var(--border);
+    flex-wrap:wrap;background:var(--card);
+  }
+  .action-btn{
+    padding:8px 12px;border-radius:10px;border:1px solid var(--border);
+    background:var(--bg-2);color:var(--text);cursor:pointer;font-size:12px;
+    font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:all .2s;
+    font-family:inherit;
+  }
+  .action-btn:hover{border-color:var(--orange)}
+  .action-btn.active-review{background:rgba(34,197,94,.15);border-color:var(--green);color:var(--green)}
+  .action-btn.active-need{background:rgba(234,179,8,.15);border-color:var(--yellow);color:var(--yellow)}
+  .action-btn.active-fav{background:rgba(255,106,0,.15);border-color:var(--orange);color:var(--orange)}
+  .action-btn.active-bookmark{background:rgba(168,85,247,.15);border-color:var(--purple);color:var(--purple)}
+  .modal-body{padding:24px}
+  .section-block{margin-bottom:24px}
+  .section-title{
+    display:flex;align-items:center;gap:10px;
+    font-size:16px;font-weight:700;margin-bottom:12px;
+    color:var(--orange-2);
+  }
+  .section-title .num{
+    width:28px;height:28px;border-radius:8px;
+    background:var(--orange-soft);color:var(--orange);
+    display:grid;place-items:center;font-size:13px;font-weight:800;
+  }
+  .content-box{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:16px;font-size:14px;line-height:1.9;
+  }
+  .content-box p{margin-bottom:8px}
+  .content-box p:last-child{margin-bottom:0}
+  .content-box b,.content-box strong{color:var(--orange-2)}
+  .content-box code{
+    background:var(--bg);padding:2px 8px;border-radius:6px;
+    font-family:"Courier New",monospace;font-size:13px;color:var(--orange-2);
+    border:1px solid var(--border);
+  }
+  .content-box ul{padding-right:20px;margin:8px 0}
+  .content-box li{margin-bottom:6px}
+  .content-box .highlight{
+    background:var(--orange-soft);padding:2px 8px;border-radius:6px;
+    color:var(--orange-2);font-weight:600;
+  }
 
-.q-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-.q-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
-.q-number { font-weight: 800; color: var(--orange); font-size: 14px; }
-.q-diff {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 10px;
-  font-weight: 700;
-  background: rgba(255,107,0,0.15);
-  color: var(--orange);
-}
-.q-diff.easy { background: rgba(34,197,94,0.15); color: var(--green); }
-.q-diff.medium { background: rgba(245,158,11,0.15); color: var(--yellow); }
-.q-diff.hard { background: rgba(239,68,68,0.15); color: var(--red); }
-.q-diff.expert { background: rgba(168,85,247,0.15); color: var(--purple); }
-.q-diff.real { background: linear-gradient(135deg, var(--orange), var(--red)); color: white; }
+  /* Conditions cards */
+  .conditions{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .cond-card{
+    padding:14px;border-radius:12px;border:2px solid;
+    position:relative;
+  }
+  .cond-card.green{background:rgba(34,197,94,.08);border-color:var(--green);color:var(--green)}
+  .cond-card.yellow{background:rgba(234,179,8,.08);border-color:var(--yellow);color:var(--yellow)}
+  .cond-card.red{background:rgba(239,68,68,.08);border-color:var(--red);color:var(--red)}
+  .cond-card .cond-head{font-weight:800;margin-bottom:6px;font-size:13px;display:flex;align-items:center;gap:6px}
+  .cond-card .cond-body{font-size:13px;color:var(--text);line-height:1.7}
 
-.complaint {
-  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(59,130,246,0.05));
-  border: 1px solid rgba(59,130,246,0.3);
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin-bottom: 10px;
-  font-size: 13px;
-}
-.complaint-label { color: var(--blue); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
-.complaint-text { color: var(--text); font-weight: 600; margin-top: 2px; }
+  /* Tip boxes */
+  .tip{
+    padding:14px 16px;border-radius:12px;margin:10px 0;
+    border-right:4px solid;
+  }
+  .tip.basel{background:rgba(255,106,0,.08);border-color:var(--orange)}
+  .tip.note{background:rgba(234,179,8,.08);border-color:var(--yellow)}
+  .tip.warn{background:rgba(239,68,68,.08);border-color:var(--red)}
+  .tip.good{background:rgba(34,197,94,.08);border-color:var(--green)}
+  .tip-head{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .tip.basel .tip-head{color:var(--orange-2)}
+  .tip.note .tip-head{color:var(--yellow)}
+  .tip.warn .tip-head{color:var(--red)}
+  .tip.good .tip-head{color:var(--green)}
 
-.data-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 9px 11px;
-  background: var(--bg-2);
-  border-radius: 9px;
-  margin-bottom: 6px;
-  border-left: 3px solid var(--orange);
-}
-.data-label { font-size: 12px; color: var(--text-dim); font-weight: 600; }
-.data-value { font-size: 13px; font-weight: 700; color: var(--text); text-align: right; }
-.data-value.warn { color: var(--yellow); }
-.data-value.bad { color: var(--red); }
-.data-value.good { color: var(--green); }
+  /* Flow diagram */
+  .flow{
+    display:flex;flex-direction:column;align-items:center;gap:0;
+    padding:20px;background:var(--card);border:1px solid var(--border);
+    border-radius:12px;
+  }
+  .flow-node{
+    padding:12px 20px;border-radius:10px;
+    background:var(--bg-2);border:2px solid var(--border);
+    font-weight:600;font-size:13px;text-align:center;
+    min-width:200px;max-width:300px;
+    transition:all .2s;
+  }
+  .flow-node.start{background:var(--orange-soft);border-color:var(--orange);color:var(--orange-2)}
+  .flow-node.decision{background:rgba(59,130,246,.1);border-color:var(--blue);color:var(--blue);transform:rotate(0)}
+  .flow-node.result{background:rgba(34,197,94,.1);border-color:var(--green);color:var(--green)}
+  .flow-node.result-red{background:rgba(239,68,68,.1);border-color:var(--red);color:var(--red)}
+  .flow-node.result-yellow{background:rgba(234,179,8,.1);border-color:var(--yellow);color:var(--yellow)}
+  .flow-arrow{
+    color:var(--muted);font-size:18px;padding:4px 0;
+  }
+  .flow-branch{
+    display:flex;gap:12px;width:100%;justify-content:center;flex-wrap:wrap;
+  }
+  .flow-branch-col{display:flex;flex-direction:column;align-items:center;gap:0}
+  .flow-label{font-size:11px;color:var(--muted);font-weight:700;margin:2px 0}
 
-.q-prompt {
-  margin-top: 14px;
-  padding: 12px;
-  background: linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.05));
-  border: 1px solid rgba(255,107,0,0.3);
-  border-radius: 12px;
-  text-align: center;
-  font-weight: 700;
-  color: var(--orange);
-  font-size: 14px;
-}
+  /* Compare */
+  .compare{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch}
+  .compare-card{
+    padding:16px;border-radius:12px;background:var(--card);border:1px solid var(--border);
+  }
+  .compare-card h5{color:var(--orange-2);margin-bottom:8px;font-size:14px}
+  .compare-card ul{padding-right:18px;font-size:13px}
+  .compare-vs{
+    display:grid;place-items:center;
+    background:var(--orange);color:#fff;font-weight:800;
+    width:44px;height:44px;border-radius:50%;align-self:center;
+  }
 
-.answers {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.ans-btn {
-  background: var(--card);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 8px;
-  color: var(--text);
-  font-weight: 700;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-  font-family: inherit;
-}
-.ans-btn:hover { border-color: var(--orange); background: var(--card-2); }
-.ans-btn:active { transform: scale(0.96); }
-.ans-btn.correct {
-  background: linear-gradient(135deg, var(--green), #16a34a);
-  border-color: var(--green);
-  color: white;
-  animation: pulse 0.5s;
-}
-.ans-btn.wrong {
-  background: linear-gradient(135deg, var(--red), #dc2626);
-  border-color: var(--red);
-  color: white;
-  animation: shake 0.4s;
-}
-.ans-btn.reveal {
-  background: linear-gradient(135deg, var(--green), #16a34a);
-  border-color: var(--green);
-  color: white;
-}
-.ans-btn:disabled { cursor: not-allowed; opacity: 0.85; }
-@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+  /* Summary */
+  .summary-card{
+    background:linear-gradient(135deg,rgba(255,106,0,.1),rgba(255,106,0,.02));
+    border:1px solid rgba(255,106,0,.3);
+    border-radius:14px;padding:20px;
+  }
+  .summary-card .row{
+    display:flex;align-items:center;gap:10px;padding:6px 0;
+    font-size:14px;
+  }
+  .summary-card .arrow{color:var(--orange);font-size:18px;text-align:center;padding:4px 0}
 
-.next-btn {
-  width: 100%;
-  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
-  border: none;
-  border-radius: 12px;
-  padding: 14px;
-  color: white;
-  font-weight: 800;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: inherit;
-  box-shadow: 0 4px 16px rgba(255,107,0,0.3);
-}
-.next-btn:active { transform: scale(0.98); }
-.next-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  /* Floating nav */
+  .float-nav{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    background:var(--card);border:1px solid var(--border);
+    border-radius:999px;padding:8px;display:flex;gap:6px;
+    box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:40;
+    backdrop-filter:blur(10px);
+  }
+  .float-nav button{
+    width:40px;height:40px;border-radius:50%;border:none;
+    background:transparent;color:var(--text);cursor:pointer;
+    font-size:16px;transition:all .2s;
+  }
+  .float-nav button:hover{background:var(--orange-soft);color:var(--orange)}
+  .float-nav button.active{background:var(--orange);color:#fff}
 
-.modal-bg {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(8px);
-  z-index: 100;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  animation: fadeIn 0.3s;
-}
-.modal-bg.show { display: flex; }
-.modal {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 18px;
-  max-width: 500px;
-  width: 100%;
-  max-height: 85vh;
-  overflow-y: auto;
-  animation: slideUp 0.3s;
-}
-@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-.modal-result {
-  text-align: center;
-  padding: 14px;
-  border-radius: 14px;
-  margin-bottom: 12px;
-  font-weight: 900;
-  font-size: 26px;
-  letter-spacing: 1px;
-}
-.modal-result.pass {
-  background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.1));
-  border: 2px solid var(--green);
-  color: var(--green);
-}
-.modal-result.fail {
-  background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.1));
-  border: 2px solid var(--red);
-  color: var(--red);
-}
-.modal-result.timeout {
-  background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(245,158,11,0.1));
-  border: 2px solid var(--yellow);
-  color: var(--yellow);
-}
-.modal-xp {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 800;
-  margin-bottom: 12px;
-}
-.modal-xp.pos { color: var(--green); }
-.modal-xp.neg { color: var(--red); }
-.modal-section {
-  background: var(--card);
-  border-radius: 12px;
-  padding: 11px 13px;
-  margin-bottom: 8px;
-  border-left: 3px solid var(--orange);
-}
-.modal-section h4 {
-  font-size: 12px;
-  color: var(--orange);
-  margin-bottom: 5px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.modal-section p, .modal-section li {
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.6;
-}
-.modal-section ul { padding-left: 18px; margin-top: 4px; }
-.modal-section li { margin-bottom: 3px; }
-.modal-section .highlight { color: var(--orange); font-weight: 700; }
-.modal-section .green { color: var(--green); font-weight: 700; }
-.modal-section .red { color: var(--red); font-weight: 700; }
-.modal-close {
-  width: 100%;
-  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
-  border: none;
-  border-radius: 12px;
-  padding: 12px;
-  color: white;
-  font-weight: 800;
-  font-size: 14px;
-  cursor: pointer;
-  margin-top: 6px;
-  font-family: inherit;
-}
+  /* Back to top */
+  .back-top{
+    position:fixed;bottom:80px;left:20px;
+    width:44px;height:44px;border-radius:50%;
+    background:var(--orange);color:#fff;border:none;cursor:pointer;
+    box-shadow:0 6px 20px rgba(255,106,0,.4);
+    display:none;align-items:center;justify-content:center;font-size:18px;
+    z-index:40;transition:all .2s;
+  }
+  .back-top.show{display:flex}
+  .back-top:hover{transform:translateY(-3px)}
 
-.topic-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  margin-bottom: 10px;
-  overflow: hidden;
-}
-.topic-header {
-  padding: 13px 15px;
-  background: var(--card-2);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 700;
-  font-size: 13px;
-  border-left: 4px solid var(--orange);
-}
-.topic-header:active { background: var(--bg-3); }
-.topic-arrow { transition: transform 0.3s; color: var(--orange); }
-.topic-card.open .topic-arrow { transform: rotate(90deg); }
-.topic-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease;
-}
-.topic-card.open .topic-body { max-height: 5000px; }
-.topic-content { padding: 13px 15px; direction: rtl; text-align: right; }
-.topic-content h5 {
-  font-size: 12px;
-  color: var(--orange);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin: 10px 0 6px;
-  font-weight: 800;
-  direction: ltr;
-  text-align: left;
-}
-.topic-content h5:first-child { margin-top: 0; }
-.topic-content p, .topic-content li {
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.8;
-}
-.topic-content ul { padding-right: 18px; padding-left: 0; }
-.topic-content li { margin-bottom: 3px; }
-.topic-content .en { direction: ltr; display: inline-block; color: var(--orange); font-weight: 700; unicode-bidi: embed; }
-.topic-content .note {
-  background: rgba(245,158,11,0.1);
-  border-right: 3px solid var(--yellow);
-  border-left: none;
-  padding: 8px 10px;
-  border-radius: 6px;
-  margin: 8px 0;
-  font-size: 12px;
-}
-.topic-content .rule {
-  background: rgba(255,107,0,0.1);
-  border-right: 3px solid var(--orange);
-  border-left: none;
-  padding: 8px 10px;
-  border-radius: 6px;
-  margin: 8px 0;
-  font-size: 12px;
-  font-weight: 600;
-}
-.topic-content .summary {
-  background: rgba(34,197,94,0.1);
-  border-right: 3px solid var(--green);
-  border-left: none;
-  padding: 8px 10px;
-  border-radius: 6px;
-  margin: 8px 0;
-  font-size: 12px;
-}
+  /* Quick review modal */
+  .qr-modal{
+    position:fixed;inset:0;background:rgba(0,0,0,.8);
+    backdrop-filter:blur(10px);z-index:200;
+    display:none;overflow-y:auto;padding:20px;
+  }
+  .qr-modal.show{display:block}
+  .qr-content{
+    max-width:800px;margin:20px auto;background:var(--bg-2);
+    border:1px solid var(--border);border-radius:20px;padding:24px;
+  }
+  .qr-header{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);
+  }
+  .qr-header h2{color:var(--orange-2)}
+  .qr-topic{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:14px;padding:16px;margin-bottom:12px;
+  }
+  .qr-topic h4{color:var(--orange-2);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .qr-topic .qr-summary{font-size:13px;color:var(--muted);line-height:1.8}
+  .qr-topic .qr-summary b{color:var(--text)}
 
-.cat-header {
-  font-size: 12px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 800;
-  margin: 14px 0 8px;
-  border-left: 3px solid var(--orange);
-  padding-left: 10px;
-}
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--orange)}
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.stats-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px;
-  text-align: center;
-}
-.stats-card-label { font-size: 11px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
-.stats-card-value { font-size: 22px; font-weight: 800; color: var(--orange); margin-top: 4px; }
-
-.reset-btn {
-  width: 100%;
-  background: var(--card);
-  border: 2px solid var(--red);
-  border-radius: 12px;
-  padding: 12px;
-  color: var(--red);
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-family: inherit;
-}
-
-.all-cases-info {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 12px;
-  font-size: 12px;
-  color: var(--text-dim);
-}
-.all-cases-info strong { color: var(--orange); }
-.all-cases-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.case-tag {
-  background: rgba(255,107,0,0.15);
-  color: var(--orange);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-2); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-@media (max-width: 480px) {
-  .app { padding: 8px; }
-  .stats { grid-template-columns: repeat(4, 1fr); gap: 5px; }
-  .stat { padding: 8px 3px; }
-  .stat-value { font-size: 14px; }
-  .stat-label { font-size: 8px; }
-  .answers { grid-template-columns: repeat(2, 1fr); gap: 7px; }
-  .ans-btn { padding: 11px 5px; font-size: 11px; }
-  .trainer-name { font-size: 13px; }
-  .trainer-sub { font-size: 9px; }
-  .trainer-badge { display: none; }
-  .trainer-logo { width: 34px; height: 34px; font-size: 16px; }
-  .level-icon { width: 38px; height: 38px; font-size: 16px; }
-  .q-card { padding: 12px; }
-  .data-row { padding: 7px 9px; }
-  .data-label { font-size: 11px; }
-  .data-value { font-size: 12px; }
-}
-@media (min-width: 600px) {
-  .answers { grid-template-columns: repeat(3, 1fr); }
-}
+  /* Responsive */
+  @media (max-width:700px){
+    .wrap{padding:14px}
+    .hero{padding:20px}
+    .hero h2{font-size:22px}
+    .modal-body{padding:16px}
+    .modal-header{padding:16px}
+    .compare{grid-template-columns:1fr}
+    .compare-vs{margin:0 auto}
+    .float-nav{bottom:14px}
+    .trainer-badge{font-size:11px;padding:6px 10px}
+    .brand-text h1{font-size:14px}
+    .brand-text p{font-size:10px}
+  }
 </style>
 </head>
 <body>
-<div class="app">
 
-  <div class="trainer">
-    <div class="trainer-left">
-      <div class="trainer-logo">O</div>
-      <div>
-        <div class="trainer-name">Trainer : Basel Magdy</div>
-        <div class="trainer-sub">Orange DSL Technical Support Simulator</div>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="logo">O</div>
+      <div class="brand-text">
+        <h1>Orange DSL Technical Handbook</h1>
+        <p>Interactive Study Guide — Offline Edition</p>
       </div>
     </div>
-    <div class="trainer-badge">LIVE</div>
-  </div>
-
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-label">Level</div>
-      <div class="stat-value" id="sLevel">1</div>
+    <div class="trainer-badge">
+      <span class="dot"></span>
+      <span>Trainer: Basel Magdy</span>
     </div>
-    <div class="stat">
-      <div class="stat-label">XP</div>
-      <div class="stat-value yellow" id="sXp">0</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Accuracy</div>
-      <div class="stat-value green" id="sAcc">0%</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Streak</div>
-      <div class="stat-value blue" id="sStreak">0</div>
+    <div class="top-actions">
+      <button class="btn" onclick="openQuickReview()">⚡ Quick Review</button>
+      <button class="btn" onclick="showBookmarks()">🔖 Bookmarks</button>
     </div>
   </div>
+</div>
 
-  <div class="level-bar">
-    <div class="level-icon" id="lvlIcon">1</div>
-    <div class="level-info">
-      <div class="level-title" id="lvlTitle">Level 1 · Easy</div>
-      <div class="level-name" id="lvlName">Trainee Agent</div>
-      <div class="level-xp" id="lvlXp">0 / 100 XP</div>
-      <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h2>أهلاً بيك في <span>Handbook</span> الـ DSL</h2>
+    <p>ده مش كتاب… ده زي ما تكون قاعد مع <b style="color:var(--orange-2)">Basel Magdy</b> قبل الشيفت بتراجعه. كل موضوع مشروح بالعامية، ومعاه Flow و Decision Tree عشان تفهم المنطق مش تحفظ.</p>
+    <div class="hero-stats">
+      <div class="stat"><b id="stat-total">0</b><span>موضوع</span></div>
+      <div class="stat"><b id="stat-reviewed">0</b><span>تم مراجعته ✔</span></div>
+      <div class="stat"><b id="stat-bookmarks">0</b><span>معلم 🔖</span></div>
     </div>
-  </div>
 
-  <div class="timer-bar" id="timerBar">
-    <div class="timer-icon">⏱️</div>
-    <div class="timer-info">
-      <div class="timer-text">Time Remaining</div>
-      <div class="timer-value" id="timerValue">90s</div>
-      <div class="timer-progress"><div class="timer-fill" id="timerFill"></div></div>
+    <div class="search-box">
+      <input type="text" id="search" placeholder="ابحث… مثلاً: Bad, Gaming, No Browsing, Reset" autocomplete="off">
+      <span class="icon">🔍</span>
+      <div class="search-results" id="searchResults"></div>
     </div>
   </div>
 
+  <!-- Tabs -->
   <div class="tabs">
-    <div class="tab active" data-view="practice">🎯 Practice</div>
-    <div class="tab" data-view="learn">📚 Learn</div>
-    <div class="tab" data-view="stats">📊 Stats</div>
+    <button class="tab active" data-filter="all">📋 الكل</button>
+    <button class="tab" data-filter="physical">📚 Physical Issues</button>
+    <button class="tab" data-filter="network">🌐 Network Issues</button>
+    <button class="tab" data-filter="reviewed">✔ تمت مراجعته</button>
+    <button class="tab" data-filter="bookmarked">🔖 Bookmarks</button>
   </div>
 
-  <div class="view active" id="view-practice">
-    <div class="q-card" id="qCard"></div>
-    <div class="answers" id="answers"></div>
-    <button class="next-btn" id="nextBtn" disabled>Next Question →</button>
-  </div>
+  <!-- Categories Container -->
+  <div id="categories"></div>
 
-  <div class="view" id="view-learn">
-    <div class="all-cases-info" id="allCasesInfo"></div>
-    <div class="cat-header">⚠️ Physical Issues</div>
-    <div id="physicalTopics"></div>
-    <div class="cat-header">🌐 Network Issues</div>
-    <div id="networkTopics"></div>
-  </div>
+</div>
 
-  <div class="view" id="view-stats">
-    <div class="stats-grid">
-      <div class="stats-card">
-        <div class="stats-card-label">Total Questions</div>
-        <div class="stats-card-value" id="stTotal">0</div>
+<!-- Topic Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="emoji-big" id="mEmoji">📡</div>
+      <div>
+        <h2 id="mTitle">Topic Title</h2>
+        <p style="color:var(--muted);font-size:13px" id="mCat">Category</p>
       </div>
-      <div class="stats-card">
-        <div class="stats-card-label">Correct</div>
-        <div class="stats-card-value" style="color:var(--green)" id="stCorrect">0</div>
-      </div>
-      <div class="stats-card">
-        <div class="stats-card-label">Wrong</div>
-        <div class="stats-card-value" style="color:var(--red)" id="stWrong">0</div>
-      </div>
-      <div class="stats-card">
-        <div class="stats-card-label">Accuracy</div>
-        <div class="stats-card-value" id="stAcc">0%</div>
-      </div>
-      <div class="stats-card">
-        <div class="stats-card-label">Current Streak</div>
-        <div class="stats-card-value" id="stCur">0</div>
-      </div>
-      <div class="stats-card">
-        <div class="stats-card-label">Best Streak</div>
-        <div class="stats-card-value" style="color:var(--yellow)" id="stBest">0</div>
-      </div>
-      <div class="stats-card">
-        <div class="stats-card-label">Current Level</div>
-        <div class="stats-card-value" id="stLvl">1</div>
-      </div>
-      <div class="stats-card">
-        <div class="stats-card-label">Total XP</div>
-        <div class="stats-card-value" style="color:var(--yellow)" id="stXp">0</div>
-      </div>
-      <div class="stats-card" style="grid-column: span 2;">
-        <div class="stats-card-label">Time Played</div>
-        <div class="stats-card-value" id="stTime">0m</div>
-      </div>
+      <button class="close" onclick="closeModal()">✕</button>
     </div>
-    <button class="reset-btn" id="resetBtn">🔄 Reset Progress</button>
+    <div class="modal-actions">
+      <button class="action-btn" id="btnReview" onclick="toggleStatus('reviewed')">✔ Reviewed</button>
+      <button class="action-btn" id="btnNeed" onclick="toggleStatus('need')">🔄 Need Review</button>
+      <button class="action-btn" id="btnFav" onclick="toggleStatus('fav')">⭐ Favorite</button>
+      <button class="action-btn" id="btnBookmark" onclick="toggleStatus('bookmark')">🔖 Bookmark</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
   </div>
-
 </div>
 
-<div class="modal-bg" id="modalBg">
-  <div class="modal" id="modal"></div>
+<!-- Quick Review Modal -->
+<div class="qr-modal" id="qrModal">
+  <div class="qr-content">
+    <div class="qr-header">
+      <h2>⚡ Quick Review Mode</h2>
+      <button class="btn" onclick="closeQuickReview()">✕ Close</button>
+    </div>
+    <div id="qrBody"></div>
+  </div>
 </div>
+
+<!-- Floating Nav -->
+<div class="float-nav">
+  <button onclick="scrollToCat('physical')" title="Physical">📚</button>
+  <button onclick="scrollToCat('network')" title="Network">🌐</button>
+  <button onclick="openQuickReview()" title="Quick Review">⚡</button>
+  <button onclick="resetAll()" title="Reset Progress">🗑</button>
+</div>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
 /* ============================================================
-   ORANGE DSL TECHNICAL SUPPORT SIMULATOR
-   Trainer: Basel Magdy
+   DATA — كل موضوع هنا. عشان تضيف موضوع جديد، زود object هنا بس.
    ============================================================ */
-
-const ALL_CASES = [
-  "Line Down", "Bad Line", "Line Unstable",
-  "Bit Rate Mismatch", "Slow Download", "Online Gaming",
-  "No Browsing", "Authentication", "Connection Unstable", "WiFi Instability"
-];
-
-/* ---------- LEVEL SYSTEM (for XP & difficulty, NOT for unlocking cases) ---------- */
-const LEVELS = [
-  { min: 1, max: 4, name: "Trainee Agent", diff: "easy", time: 90 },
-  { min: 5, max: 9, name: "Junior Agent", diff: "medium", time: 75 },
-  { min: 10, max: 19, name: "Senior Agent", diff: "hard", time: 60 },
-  { min: 20, max: 49, name: "Expert Agent", diff: "expert", time: 45 },
-  { min: 50, max: 999, name: "Real Job Mode", diff: "real", time: 45 }
-];
-
-function getLevelInfo(lvl) {
-  for (const l of LEVELS) if (lvl >= l.min && lvl <= l.max) return l;
-  return LEVELS[LEVELS.length - 1];
-}
-function xpForLevel(lvl) { return 100 + (lvl - 1) * 50; }
-
-/* ---------- STATE ---------- */
-let state = {
-  level: 1, xp: 0, correct: 0, wrong: 0,
-  streak: 0, best: 0, total: 0,
-  currentQ: null, answered: false,
-  timePlayed: 0
+const CATEGORIES = {
+  physical: {id:'physical', title:'Physical Issues', emoji:'📚', desc:'مشاكل الخط والـ Copper والـ Port'},
+  network:  {id:'network',  title:'Network Issues',  emoji:'🌐', desc:'مشاكل السرعة، التصفح، الألعاب والـ Authentication'}
 };
 
-let timerInterval = null;
-let timeLeft = 0;
-let timeTotal = 0;
+const TOPICS = [
+  /* ========================= PHYSICAL ========================= */
+  {
+    id:'line-down', cat:'physical', emoji:'🔌', title:'Line Down',
+    meaning:`يعني ببساطة إن <b>الخط واقع تماماً</b>، مفيش Sync خالص بين الراوتر والـ DSLAM/MSAN.
+    <br>العميل مفيش عنده إنترنت، والـ DSL light على الراوتر طافي أو بيومض.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل بيقول: <b>"مفيش إنترنت خالص"</b></li>
+      <li>الـ <b>DSL light</b> على الراوتر طافي</li>
+      <li>الـ <b>Internet light</b> طافي</li>
+      <li>لو عندك Access على السيستم: <b>DSL Status = Down</b></li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>DSL Status:</b> Down</li>
+      <li><b>Port Status:</b> Down</li>
+      <li><b>Maximum Rate:</b> 0 أو مش ظاهر</li>
+      <li><b>Bit Rate:</b> 0</li>
+      <li><b>SNR:</b> مش ظاهر</li>
+      <li><b>Port Up Time:</b> 0 أو N/A</li>
+      <li><b>Router Type:</b> تأكد إنه DSL مش FTTH</li>
+    </ul>`,
+    conditions:[
+      {type:'red',   head:'❌ Line Down مؤكد', body:'DSL Status = Down و Maximum Rate = 0'},
+      {type:'yellow',head:'⚠️ Check Port First', body:'تأكد إن الـ Port نفسه شغال مش معطل'},
+      {type:'green', head:'✅ بعد الحل', body:'DSL Status = Up و Maximum Rate يظهر قيمة'}
+    ],
+    understand:`ليه بيحصل Line Down؟
+    <br>لأن في <b>قطع في الـ Copper</b>، أو <b>فصل في الـ Line</b> من ناحية العميل، أو مشكلة في الـ <b>MSAN/DSLAM Port</b> نفسه.
+    <br>يعني المشكلة <b>Physical</b> مش في الـ Configuration.`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ تروح تعمل Reset للراوتر — ده مش هيحل Line Down.</li>
+      <li>❌ تحاول تغير Password — مفيش Authentication أصلاً لو الخط واقع.</li>
+      <li>❌ تضيع وقتك في الـ Speed Test — مفيش Connection من الأساس.</li>
+    </ul>`,
+    compare:{
+      a:{title:'Line Down', points:['DSL Light طافي','Maximum Rate = 0','مفيش Sync خالص','Physical Issue']},
+      b:{title:'Line Unstable', points:['DSL Light بيومض','Maximum Rate متغير','Sync بيقع ويقوم','Bad Line غالباً']}
+    },
+    flow:[
+      {t:'Client: No Internet', type:'start'},
+      {t:'Check DSL Light', type:'decision'},
+      {t:'OFF?', type:'label'},
+      {t:'DSL Status = Down?', type:'decision'},
+      {t:'YES → Line Down', type:'result-red'},
+    ],
+    summary:[
+      {t:'✔ DSL Light OFF', ok:true},
+      {t:'✔ DSL Status = Down', ok:true},
+      {t:'✔ Maximum Rate = 0', ok:true},
+      {t:'↓', arrow:true},
+      {t:'Line Down — Physical Issue', ok:false, result:true}
+    ],
+    tips:[
+      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Line Down، أول حاجة اسأل العميل: "الراوتر شغال ولا مطفي؟" و "في صيانة في المنطقة؟". كتير الأوقات المشكلة من بره.'},
+      {type:'note', head:'🎯 تريكة باسل', body:'متنساوش تعمل Escalation للـ Field Team لو المشكلة Physical من ناحية العميل.'}
+    ]
+  },
+  {
+    id:'bad-line', cat:'physical', emoji:'📉', title:'Bad Line',
+    meaning:`يعني ببساطة إن <b>جودة الخط مش مناسبة للسرعة الحالية</b>.
+    <br>الخط شغال، بس الـ <b>Maximum Rate</b> قليل، فالـ SNR بينزل والـ Bit Rate مش بيوصل للـ Orange Speed.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل بيقول: <b>"النت بطيء"</b> أو <b>"النت بيفصل"</b></li>
+      <li>الـ <b>Maximum Rate</b> أقل من الـ <b>Orange Speed</b></li>
+      <li>الـ <b>SNR / Noise Margin</b> قليل (أقل من 10)</li>
+      <li>الـ <b>Bit Rate</b> أقل من الـ Profile</li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>Maximum Rate:</b> أقل من Orange Speed</li>
+      <li><b>Bit Rate:</b> أقل من Maximum Rate</li>
+      <li><b>SNR (Noise Margin):</b> أقل من 10 (Bad)</li>
+      <li><b>Orange Speed:</b> مثلاً 30 Mbps</li>
+      <li><b>Router Type:</b> VDSL أو ADSL</li>
+      <li><b>Port Type:</b> Copper</li>
+    </ul>`,
+    conditions:[
+      {type:'green', head:'✅ Line كويس', body:'Maximum Rate ≥ Orange Speed و SNR ≥ 10'},
+      {type:'yellow',head:'⚠️ Line متوسط', body:'Maximum Rate قريب من Orange Speed و SNR 6-10'},
+      {type:'red',   head:'❌ Bad Line', body:'Maximum Rate < Orange Speed و SNR < 6'}
+    ],
+    understand:`ليه الـ Bad Line مهم تفهمه؟
+    <br>لأن لو الـ <b>Maximum Rate</b> قليل، يبقى مهما عملت المشكلة الأساسية هي <b>Bad Line</b>.
+    <br>يعني أصل المشكلة <b>Physical</b> — الـ Copper نفسه مش قادر يمشي السرعة دي.
+    <br>بدل ما تحفظ… افهم الفكرة.`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ تعمل Reset للراوتر — مش هيحل Bad Line.</li>
+      <li>❌ تغير Profile Speed — لو Maximum Rate قليل، مش هيفيد.</li>
+      <li>❌ تروح على Online Gaming — المشكلة Physical مش Network.</li>
+    </ul>`,
+    compare:{
+      a:{title:'Bad Line', points:['Maximum Rate قليل','SNR منخفض','Copper Issue','Physical']},
+      b:{title:'Slow Download', points:['Maximum Rate كويس','Bit Rate كويس','ممكن Congestion','Network']},
+    },
+    flow:[
+      {t:'Client: Slow / Unstable', type:'start'},
+      {t:'Check Maximum Rate', type:'decision'},
+      {t:'< Orange Speed?', type:'label'},
+      {t:'SNR < 10?', type:'decision'},
+      {t:'YES → Bad Line', type:'result-red'},
+    ],
+    summary:[
+      {t:'✔ Maximum Rate < Orange Speed', ok:true},
+      {t:'✔ SNR < 10', ok:true},
+      {t:'✔ Copper Port', ok:true},
+      {t:'↓', arrow:true},
+      {t:'Bad Line — Physical', ok:false, result:true}
+    ],
+    tips:[
+      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Maximum Rate أقل من 40 Mbps، حتى لو العميل داخل يشتكي من Online Gaming، المشكلة Bad Line مش Gaming.'},
+      {type:'note', head:'🎯 تريكة باسل', body:'Bad Line ممكن تتحل جزئياً بـ Lock & Unlock أو تغيير Profile، بس الحل الجذري في الـ Field Team.'}
+    ]
+  },
+  {
+    id:'line-unstable', cat:'physical', emoji:'📶', title:'Line Unstable',
+    meaning:`يعني الخط <b>بيقع ويقوم</b>. الـ Sync بيروح ويجي.
+    <br>العميل حاسس إن الإنترنت بيفصل كل شوية، والـ DSL light بيومض.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل: <b>"النت بيفصل ويرجع"</b></li>
+      <li>الـ <b>Port Up Time</b> قليل (ساعات أو دقائق)</li>
+      <li>الـ <b>DSL light</b> بيومض</li>
+      <li>على السيستم: <b>Resync Count</b> عالي</li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>Port Up Time:</b> قليل (أقل من ساعة)</li>
+      <li><b>SNR:</b> متذبذب</li>
+      <li><b>Maximum Rate:</b> بيتغير</li>
+      <li><b>DSL Status:</b> أحياناً Down أحياناً Up</li>
+      <li><b>Error Count:</b> عالي</li>
+    </ul>`,
+    conditions:[
+      {type:'green', head:'✅ Stable', body:'Port Up Time > 24 ساعة و SNR ثابت'},
+      {type:'yellow',head:'⚠️ Unstable', body:'Port Up Time < 6 ساعات'},
+      {type:'red',   head:'❌ Very Unstable', body:'Port Up Time < 10 دقائق و Resync عالي'}
+    ],
+    understand:`ليه Unstable بيحصل؟
+    <br>غالباً بسبب <b>Bad Line</b> أو <b>Interference</b> على الـ Copper.
+    <br>الراوتر بيحاول يعمل Sync، بس جودة الخط مش ثابتة، فبيقع ويعمل Resync.`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ تظن المشكلة WiFi — لا، المشكلة في الـ DSL نفسه.</li>
+      <li>❌ تعمل Reset — ممكن يحل مؤقتاً بس المشكلة هترجع.</li>
+    </ul>`,
+    compare:{
+      a:{title:'Line Unstable', points:['Port Up Time قليل','DSL بيقع ويقوم','Physical/Copper','Resync عالي']},
+      b:{title:'Connection Unstable', points:['النت بيفصل','DSL شغال','Router/WiFi issue','Network']},
+    },
+    flow:[
+      {t:'Client: Internet يقطع', type:'start'},
+      {t:'Check Port Up Time', type:'decision'},
+      {t:'< 1 hour?', type:'label'},
+      {t:'DSL Light بيومض؟', type:'decision'},
+      {t:'YES → Line Unstable', type:'result-yellow'},
+    ],
+    summary:[
+      {t:'✔ Port Up Time قليل', ok:true},
+      {t:'✔ DSL Light بيومض', ok:true},
+      {t:'✔ Resync Count عالي', ok:true},
+      {t:'↓', arrow:true},
+      {t:'Line Unstable', ok:false, result:true}
+    ],
+    tips:[
+      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Port Up Time أقل من 10 دقائق، غالباً في مشكلة Physical كبيرة. اعمل Escalation.'},
+    ]
+  },
 
-function save() { try { localStorage.setItem("orangeDSL3", JSON.stringify(state)); } catch(e){} }
-function load() {
-  try {
-    const s = localStorage.getItem("orangeDSL3");
-    if (s) { const p = JSON.parse(s); Object.assign(state, p); }
-  } catch(e){}
+  /* ========================= NETWORK ========================= */
+  {
+    id:'bit-rate-mismatch', cat:'network', emoji:'⚖️', title:'Bit Rate Mismatch',
+    meaning:`يعني الـ <b>Bit Rate</b> مش مطابق للـ <b>Orange Speed</b>.
+    <br>الخط شغال، بس السرعة الفعلية مختلفة عن اللي المفروض العميل ياخدها.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل: <b>"النت مش على السرعة اللي دفعتلها"</b></li>
+      <li>على السيستم: <b>Bit Rate ≠ Orange Speed</b></li>
+      <li>الـ <b>Speed Test</b> أقل من المتوقع</li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>Orange Speed:</b> مثلاً 30 Mbps</li>
+      <li><b>Bit Rate:</b> مثلاً 15 Mbps</li>
+      <li><b>Maximum Rate:</b> لازم يكون ≥ Orange Speed</li>
+      <li><b>Profile Speed</b></li>
+      <li><b>Speed Test</b></li>
+    </ul>`,
+    conditions:[
+      {type:'green', head:'✅ Matching', body:'Bit Rate ≈ Orange Speed (±10%)'},
+      {type:'yellow',head:'⚠️ Mismatch بسيط', body:'Bit Rate أقل بـ 20% من Orange Speed'},
+      {type:'red',   head:'❌ Mismatch كبير', body:'Bit Rate أقل بـ 50%+ من Orange Speed'}
+    ],
+    understand:`ليه بيحصل Mismatch؟
+    <br>لأن الـ <b>Profile</b> على السيستم ممكن يكون مختلف، أو في <b>Bad Line</b> بيخلي الـ Bit Rate ينزل.
+    <br>أحياناً في <b>Script</b> خاص على السيستم لحل المشكلة دي.`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ تظن المشكلة Bad Line مباشرة — لازم تشوف الـ Maximum Rate الأول.</li>
+      <li>❌ تعمل Reset — مش هيحل Mismatch لو المشكلة في الـ Profile.</li>
+    </ul>`,
+    compare:{
+      a:{title:'Bit Rate Mismatch', points:['Bit Rate ≠ Orange Speed','Profile Issue','Script ممكن يحل','System side']},
+      b:{title:'Slow Download', points:['Bit Rate كويس','Speed Test قليل','ممكن Congestion','Client side']},
+    },
+    flow:[
+      {t:'Client: Speed مش مظبوطة', type:'start'},
+      {t:'Check Orange Speed vs Bit Rate', type:'decision'},
+      {t:'Different?', type:'label'},
+      {t:'Maximum Rate OK?', type:'decision'},
+      {t:'YES → Bit Rate Mismatch', type:'result-yellow'},
+    ],
+    summary:[
+      {t:'✔ Bit Rate ≠ Orange Speed', ok:true},
+      {t:'✔ Maximum Rate OK', ok:true},
+      {t:'✔ DSL Up', ok:true},
+      {t:'↓', arrow:true},
+      {t:'Bit Rate Mismatch', ok:false, result:true}
+    ],
+    tips:[
+      {type:'note', head:'🎯 تريكة باسل', body:'لو العميل داخل يقلل السرعة، هتلاقي Script جوه Slow Download. استخدمه.'},
+    ]
+  },
+  {
+    id:'slow-download', cat:'network', emoji:'🐢', title:'Slow Download',
+    meaning:`الإنترنت <b>شغال</b>، بس <b>بطيء</b>.
+    <br>العميل بيقدر يتصفح، بس التحميل والسرعة مش كويسة.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل: <b>"النت بطيء"</b> أو <b>"التحميل بطيء"</b></li>
+      <li>الـ <b>Speed Test</b> أقل من Orange Speed</li>
+      <li>الـ <b>Bit Rate</b> كويس، بس السرعة الفعلية قليلة</li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>Bit Rate</b></li>
+      <li><b>Maximum Rate</b></li>
+      <li><b>Orange Speed</b></li>
+      <li><b>Speed Test</b> (من جهة العميل)</li>
+      <li><b>SNR</b></li>
+      <li><b>Port Up Time</b></li>
+    </ul>`,
+    conditions:[
+      {type:'green', head:'✅ Speed كويسة', body:'Speed Test ≥ 80% من Orange Speed'},
+      {type:'yellow',head:'⚠️ Slow', body:'Speed Test 50-80% من Orange Speed'},
+      {type:'red',   head:'❌ Very Slow', body:'Speed Test < 50% من Orange Speed'}
+    ],
+    understand:`ليه Slow Download بيحصل؟
+    <br>ممكن يكون:
+    <ul>
+      <li><b>Bad Line</b> — لو Maximum Rate قليل</li>
+      <li><b>Congestion</b> — الشبكة مزدحمة</li>
+      <li><b>Device issue</b> — الراوتر أو الجهاز نفسه</li>
+      <li><b>Server issue</b> — الموقع اللي بيحمل منه بطيء</li>
+    </ul>`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ تظن المشكلة No Browsing — لا، التصفح شغال بس بطيء.</li>
+      <li>❌ تعمل Reset مباشرة — لازم تفحص Maximum Rate الأول.</li>
+    </ul>`,
+    compare:{
+      a:{title:'Slow Download', points:['النت شغال','Speed Test قليل','Bit Rate ممكن يكون كويس','تصفح موجود']},
+      b:{title:'No Browsing', points:['النت مش شغال','مفيش تصفح خالص','IP موجود','Messages مش بتتبعت']},
+    },
+    flow:[
+      {t:'Client: Speed بطيء', type:'start'},
+      {t:'Speed Test', type:'decision'},
+      {t:'< Orange Speed?', type:'label'},
+      {t:'Maximum Rate OK?', type:'decision'},
+      {t:'NO → Bad Line', type:'result-red'},
+      {t:'YES → Congestion / Device', type:'result-yellow'},
+    ],
+    summary:[
+      {t:'✔ DSL Up', ok:true},
+      {t:'✔ IP موجود', ok:true},
+      {t:'✔ Speed Test < Orange Speed', ok:true},
+      {t:'↓', arrow:true},
+      {t:'Slow Download', ok:false, result:true}
+    ],
+    tips:[
+      {type:'basel', head:'💡 Basel\'s Tip', body:'لو العميل شكا من Slow Download، اول حاجة اسأله: "بتعمل Speed Test على أي موقع؟" و "على WiFi ولا Cable؟"'},
+      {type:'note', head:'🎯 تريكة باسل', body:'لو العميل عايز يقلل السرعة، في Script خاص جوه Slow Download.'}
+    ]
+  },
+  {
+    id:'online-gaming', cat:'network', emoji:'🎮', title:'Online Gaming',
+    meaning:`العميل بيلعب <b>Online Games</b> وبيشكي من <b>Ping عالي</b> أو <b>Lag</b>.
+    <br>الإنترنت شغال، بس الألعاب مش شغالة كويس.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل: <b>"الألعاب بتعلق"</b> أو <b>"Ping عالي"</b></li>
+      <li>الـ <b>Ping</b> عالي (أكثر من 100ms)</li>
+      <li>الـ <b>Packet Loss</b> ظاهر</li>
+      <li>الـ <b>Speed Test</b> كويس، بس الألعاب مش كويسة</li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>Ping</b></li>
+      <li><b>Packet Loss</b></li>
+      <li><b>Maximum Rate</b> (لازم ≥ 40)</li>
+      <li><b>SNR</b> (لازم ≥ 100 إن أمكن)</li>
+      <li><b>Router Type</b> (VDSL أفضل)</li>
+      <li><b>MSAN</b> (أفضل من DSLAM)</li>
+    </ul>`,
+    conditions:[
+      {type:'green', head:'✅ Gaming OK', body:'Maximum Rate ≥ 40 و SNR ≥ 100 و Ping < 50'},
+      {type:'yellow',head:'⚠️ Gaming متوسط', body:'Maximum Rate 30-40 أو Ping 50-100'},
+      {type:'red',   head:'❌ Gaming مش هيشتغل', body:'Maximum Rate < 30 أو SNR < 50'}
+    ],
+    understand:`ليه Online Gaming ساعات يبقى Bad Line؟
+    <br>لأن لو الـ <b>Maximum Rate</b> أقل من 40، يبقى الخط نفسه مش مؤهل للألعاب.
+    <br>يعني أصل المشكلة <b>Physical</b>.
+    <br>الألعاب محتاجة <b>Stable Connection</b> مش بس Speed عالي.`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ ناس كتير تشوف Ping عالي وتجري على Online Gaming. وده غلط.</li>
+      <li>❌ لازم الأول تتأكد إن: Maximum Rate ≥ 40، Noise ≥ 100، VDSL Router، MSAN.</li>
+      <li>❌ تظن المشكلة من Orange — ممكن الـ Game Server نفسه بعيد.</li>
+    </ul>`,
+    compare:{
+      a:{title:'Online Gaming', points:['Ping عالي','Packet Loss','Maximum Rate مهم','Stability مهم']},
+      b:{title:'Slow Download', points:['Speed Test قليل','Ping ممكن يكون كويس','Bandwidth مهم','Stability مش ضروري']},
+    },
+    flow:[
+      {t:'Client: Lag في الألعاب', type:'start'},
+      {t:'Check Ping', type:'decision'},
+      {t:'> 100ms?', type:'label'},
+      {t:'Maximum Rate ≥ 40?', type:'decision'},
+      {t:'NO → Bad Line', type:'result-red'},
+      {t:'YES → Check ISP/Game Server', type:'result-yellow'},
+    ],
+    summary:[
+      {t:'✔ Ping عالي', ok:true},
+      {t:'✔ Maximum Rate < 40', ok:true},
+      {t:'✔ SNR < 100', ok:true},
+      {t:'↓', arrow:true},
+      {t:'Online Gaming — Bad Line غالباً', ok:false, result:true}
+    ],
+    tips:[
+      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Maximum Rate أقل من 40، متضيعش وقتك. المشكلة Physical. قول للعميل: "الخط مش مناسب للألعاب."'},
+      {type:'note', head:'🎯 تريكة باسل', body:'VDSL Router + MSAN = أفضل Combo للألعاب. لو العميل عنده ADSL Router، هيشتكي دايماً.'}
+    ]
+  },
+  {
+    id:'no-browsing', cat:'network', emoji:'🚫', title:'No Browsing',
+    meaning:`الإنترنت <b>شغال</b> (DSL Up و IP موجود)، بس <b>مفيش تصفح</b>.
+    <br>العميل مش بيقدر يفتح أي موقع، والـ Messages مش بتتبعت.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل: <b>"مفيش إنترنت"</b> بس الـ DSL شغال</li>
+      <li>الـ <b>DSL light</b> شغال</li>
+      <li>الـ <b>Internet light</b> ممكن يكون شغال</li>
+      <li>الـ <b>Messages</b> (WhatsApp) مش بتتبعت</li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>DSL Status:</b> Up</li>
+      <li><b>IP:</b> موجود</li>
+      <li><b>Bit Rate:</b> كويس</li>
+      <li><b>Authentication:</b> OK</li>
+      <li><b>DNS:</b> ممكن يكون المشكلة</li>
+    </ul>`,
+    conditions:[
+      {type:'green', head:'✅ Browsing OK', body:'IP موجود و Messages بتتبعت'},
+      {type:'yellow',head:'⚠️ Slow Browsing', body:'IP موجود بس بطيء'},
+      {type:'red',   head:'❌ No Browsing', body:'IP موجود بس Messages مش بتتبعت'}
+    ],
+    understand:`ليه No Browsing بيحصل؟
+    <br>لأن في مشكلة في الـ <b>DNS</b> أو الـ <b>Authentication</b> أو الـ <b>Configuration</b> على الراوتر.
+    <br>الخط شغال، بس الـ Traffic مش بيمشي.`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ تظن المشكلة Line Down — لا، DSL Up.</li>
+      <li>❌ تروح تعمل Reset مباشرة — جرب Forget Network الأول.</li>
+    </ul>`,
+    compare:{
+      a:{title:'No Browsing', points:['DSL Up','IP موجود','Messages مش بتتبعت','DNS/Auth issue']},
+      b:{title:'Line Down', points:['DSL Down','مفيش IP','مفيش Connection','Physical issue']},
+    },
+    flow:[
+      {t:'Client: No Internet', type:'start'},
+      {t:'DSL Light ON?', type:'decision'},
+      {t:'YES', type:'label'},
+      {t:'IP موجود؟', type:'decision'},
+      {t:'YES', type:'label'},
+      {t:'Messages بتتبعت؟', type:'decision'},
+      {t:'NO → No Browsing', type:'result-red'},
+    ],
+    summary:[
+      {t:'✔ Physical OK', ok:true},
+      {t:'✔ Orange Speed OK', ok:true},
+      {t:'✔ IP OK', ok:true},
+      {t:'✔ Messages مش بتتبعت', ok:true},
+      {t:'↓', arrow:true},
+      {t:'No Browsing', ok:false, result:true}
+    ],
+    tips:[
+      {type:'basel', head:'💡 Basel\'s Tip', body:'لو دخلت No Browsing، متنساش آخر صفحة. فيها: Forget Network. ولو متحلتش: Reset. ودي ناس كتير بتنساها.'},
+      {type:'note', head:'🎯 تريكة باسل', body:'Forget Network → Reset → Escalation. ده الـ Order الصح.'}
+    ]
+  },
+  {
+    id:'authentication', cat:'network', emoji:'🔐', title:'Authentication',
+    meaning:`العميل مش بيقدر يعمل <b>PPPoE Connection</b>.
+    <br>الـ Username أو Password غلط، أو في مشكلة في الـ <b>Radius</b>.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل: <b>"بيطلعلي Error 691"</b> أو <b>"Wrong Username/Password"</b></li>
+      <li>الـ <b>DSL Up</b> بس مفيش Internet</li>
+      <li>على السيستم: <b>Authentication Failed</b></li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>Authentication Status:</b> Failed</li>
+      <li><b>Username</b></li>
+      <li><b>Service ID</b></li>
+      <li><b>Another ISP</b> (لو كان عند ISP تاني قبل كده)</li>
+      <li><b>Radius</b></li>
+    </ul>`,
+    conditions:[
+      {type:'green', head:'✅ Auth OK', body:'Authentication Success و IP ظاهر'},
+      {type:'yellow',head:'⚠️ Auth Problem', body:'Authentication Failed — Check Username'},
+      {type:'red',   head:'❌ Wrong Credentials', body:'Wrong Username/Password أو Another ISP'}
+    ],
+    understand:`ليه Authentication Fail بيحصل؟
+    <br>لأن الـ <b>Username</b> أو <b>Password</b> غلط، أو العميل كان على <b>Another ISP</b> والـ Service ID لسه متغير.`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ تظن المشكلة Bad Line — لا، DSL Up.</li>
+      <li>❌ تعمل Reset — مش هيحل Auth problem.</li>
+    </ul>`,
+    compare:{
+      a:{title:'Authentication', points:['DSL Up','Auth Failed','Username/Password','Radius']},
+      b:{title:'No Browsing', points:['DSL Up','Auth OK','IP موجود','DNS issue']},
+    },
+    flow:[
+      {t:'Client: Error 691', type:'start'},
+      {t:'DSL Up?', type:'decision'},
+      {t:'YES', type:'label'},
+      {t:'Auth Failed?', type:'decision'},
+      {t:'YES → Authentication', type:'result-red'},
+    ],
+    summary:[
+      {t:'✔ DSL Up', ok:true},
+      {t:'✔ Auth Failed', ok:true},
+      {t:'✔ Wrong Username/Password', ok:true},
+      {t:'↓', arrow:true},
+      {t:'Authentication Issue', ok:false, result:true}
+    ],
+    tips:[
+      {type:'basel', head:'💡 Basel\'s Tip', body:'لو العميل كان على Another ISP، لازم تتأكد إن الـ Service ID اتغير عندنا. غير كده الـ Auth هيفشل.'},
+    ]
+  },
+  {
+    id:'connection-unstable', cat:'network', emoji:'🔁', title:'Connection Unstable',
+    meaning:`الاتصال <b>بيقع ويرجع</b>. مش الـ DSL، لكن الـ <b>PPP Connection</b> نفسه.
+    <br>العميل حاسس إن الإنترنت بيفصل كل شوية.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل: <b>"النت بيفصل ويرجع"</b></li>
+      <li>الـ <b>DSL Up</b> طول الوقت</li>
+      <li>الـ <b>PPP Session</b> بيقع</li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>DSL Status:</b> Up</li>
+      <li><b>PPP Session:</b> Disconnecting</li>
+      <li><b>Router Type</b></li>
+      <li><b>Configuration</b></li>
+      <li><b>TR069</b> (لو فيه Remote Management)</li>
+    </ul>`,
+    conditions:[
+      {type:'green', head:'✅ Stable', body:'PPP Session ثابت و DSL Up'},
+      {type:'yellow',head:'⚠️ Unstable', body:'PPP بيقع كل شوية'},
+      {type:'red',   head:'❌ Very Unstable', body:'PPP بيقع كل دقايق'}
+    ],
+    understand:`ليه Connection Unstable بيحصل؟
+    <br>ممكن يكون:
+    <ul>
+      <li><b>Router overheating</b></li>
+      <li><b>Configuration issue</b></li>
+      <li><b>ISP side issue</b></li>
+      <li><b>TR069</b> مش شغال كويس</li>
+    </ul>`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ تظن المشكلة Line Unstable — لا، DSL Up طول الوقت.</li>
+      <li>❌ تروح على Physical — المشكلة في الـ Router أو Configuration.</li>
+    </ul>`,
+    compare:{
+      a:{title:'Connection Unstable', points:['DSL Up طول الوقت','PPP بيقع','Router/Config issue','Network']},
+      b:{title:'Line Unstable', points:['DSL بيقع','Physical issue','Copper','Resync']},
+    },
+    flow:[
+      {t:'Client: Connection بيقع', type:'start'},
+      {t:'DSL Up طول الوقت؟', type:'decision'},
+      {t:'YES', type:'label'},
+      {t:'PPP Session بيقع؟', type:'decision'},
+      {t:'YES → Connection Unstable', type:'result-yellow'},
+    ],
+    summary:[
+      {t:'✔ DSL Up طول الوقت', ok:true},
+      {t:'✔ PPP Session بيقع', ok:true},
+      {t:'✔ Router/Config issue', ok:true},
+      {t:'↓', arrow:true},
+      {t:'Connection Unstable', ok:false, result:true}
+    ],
+    tips:[
+      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Connection Unstable، جرب Restart Router الأول. لو المشكلة رجعت، شوف الـ Configuration أو اعمل Escalation.'},
+    ]
+  },
+  {
+    id:'wifi-instability', cat:'network', emoji:'📡', title:'WiFi Instability',
+    meaning:`الـ <b>WiFi</b> بيفصل أو الأجهزة بتفصل.
+    <br>الإنترنت شغال على Cable، بس على WiFi مش كويس.`,
+    recognize:`بتعرفه إزاي؟
+    <ul>
+      <li>العميل: <b>"الWiFi بيفصل"</b> أو <b>"الأجهزة بتفصل"</b></li>
+      <li>الـ <b>DSL Up</b> و <b>PPP Up</b></li>
+      <li>على Cable: الإنترنت كويس</li>
+      <li>على WiFi: بيفصل</li>
+    </ul>`,
+    system:`إيه اللي أشوفه على السيستم؟
+    <ul>
+      <li><b>DSL Status:</b> Up</li>
+      <li><b>Bit Rate:</b> كويس</li>
+      <li><b>Router Type</b></li>
+      <li><b>WiFi Configuration</b></li>
+      <li><b>Forget Network</b> (على جهاز العميل)</li>
+    </ul>`,
+    conditions:[
+      {type:'green', head:'✅ WiFi Stable', body:'WiFi شغال كويس على كل الأجهزة'},
+      {type:'yellow',head:'⚠️ WiFi Unstable', body:'WiFi بيفصل على أجهزة معينة'},
+      {type:'red',   head:'❌ WiFi Down', body:'WiFi مش شغال خالص'}
+    ],
+    understand:`ليه WiFi Instability بيحصل؟
+    <br>ممكن يكون:
+    <ul>
+      <li><b>Interference</b> من WiFi الجيران</li>
+      <li><b>Distance</b> من الراوتر</li>
+      <li><b>Router overheating</b></li>
+      <li><b>Device issue</b> (الموبايل أو اللابتوب)</li>
+    </ul>`,
+    mistakes:`<b>الأخطاء الشائعة:</b>
+    <ul>
+      <li>❌ تظن المشكلة DSL — لا، DSL Up.</li>
+      <li>❌ تروح تعمل Reset للراوتر — جرب Forget Network الأول.</li>
+    </ul>`,
+    compare:{
+      a:{title:'WiFi Instability', points:['DSL Up','WiFi بيفصل','Cable كويس','Interference/Distance']},
+      b:{title:'Connection Unstable', points:['PPP بيقع','Cable كمان بيقع','Router/Config issue','Network']},
+    },
+    flow:[
+      {t:'Client: WiFi بيفصل', type:'start'},
+      {t:'Cable شغال؟', type:'decision'},
+      {t:'YES', type:'label'},
+      {t:'WiFi بس بيفصل؟', type:'decision'},
+      {t:'YES → WiFi Instability', type:'result-yellow'},
+    ],
+    summary:[
+      {t:'✔ DSL Up', ok:true},
+      {t:'✔ Cable شغال', ok:true},
+      {t:'✔ WiFi بيفصل', ok:true},
+      {t:'↓', arrow:true},
+      {t:'WiFi Instability', ok:false, result:true}
+    ],
+    tips:[
+      {type:'basel', head:'💡 Basel\'s Tip', body:'أول خطوة في WiFi Instability: Forget Network على الجهاز. لو متحلش: Restart Router. لو لسه: Reset.'},
+      {type:'note', head:'🎯 تريكة باسل', body:'لو العميل عنده راوترين في البيت، ممكن يكون في Conflict. اسأله عن الـ Setup الأول.'}
+    ]
+  },
+];
+
+/* ============================================================
+   STATE — Progress, Bookmarks
+   ============================================================ */
+const STORAGE_KEY = 'orange_dsl_handbook_v1';
+let state = loadState();
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return {status:{}, bookmarks:[]};
+    return JSON.parse(raw);
+  }catch(e){ return {status:{}, bookmarks:[]} }
+}
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
 }
 
-/* ---------- RANDOM GENERATOR ---------- */
-function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+/* ============================================================
+   RENDER
+   ============================================================ */
+const categoriesEl = document.getElementById('categories');
 
-const COMPLAINTS = {
-  "Line Down": ["No internet at all", "Router lights are off/red", "DSL light is red", "Connection lost completely"],
-  "Bad Line": ["Slow internet", "Speed is less than subscribed", "Internet is slow", "Bad speed"],
-  "Line Unstable": ["Internet disconnects and reconnects", "Internet is unstable", "Connection keeps dropping", "Internet is unstable"],
-  "Bit Rate Mismatch": ["Speed not matching subscription", "Wrong speed on port"],
-  "Slow Download": ["Download speed is slow", "Slow download", "Speed test is low"],
-  "Online Gaming": ["High ping in games", "Lag in online games", "High ping", "Ping is high"],
-  "No Browsing": ["Cannot open websites", "No browsing", "Websites don't open"],
-  "Authentication": ["PPP error", "Authentication failed", "Cannot connect", "Username/password error"],
-  "Connection Unstable": ["Frequent disconnections", "Connection drops often", "Unstable connection"],
-  "WiFi Instability": ["WiFi keeps disconnecting", "Wireless is unstable", "WiFi drops"]
-};
+function render(filter='all', searchTerm=''){
+  categoriesEl.innerHTML = '';
+  const cats = ['physical','network'];
+  let totalShown = 0;
 
-function generateQuestion() {
-  const lvlInfo = getLevelInfo(state.level);
-  // ALL cases available from the start
-  const targetCase = pick(ALL_CASES);
-  return buildScenario(targetCase, lvlInfo.diff);
-}
+  cats.forEach(catId=>{
+    const cat = CATEGORIES[catId];
+    let topics = TOPICS.filter(t=>t.cat===catId);
 
-function buildScenario(targetCase, diff) {
-  const isVDSL = Math.random() < 0.65;
-  const router = isVDSL ? "VDSL" : "ADSL";
-  const port = router;
+    if(filter==='reviewed') topics = topics.filter(t=>state.status[t.id]==='reviewed');
+    else if(filter==='bookmarked') topics = topics.filter(t=>state.bookmarks.includes(t.id));
+    else if(filter!=='all') topics = topics.filter(t=>t.cat===filter);
 
-  const q = {
-    id: rand(1000, 99999),
-    complaint: pick(COMPLAINTS[targetCase]),
-    line: "MSAN",
-    router: router,
-    port: port,
-    dslStatus: "UP",
-    maxRate: 0,
-    snr: 0,
-    bitRate: 0,
-    orangeSpeed: 0,
-    speedTest: 0,
-    ping: 0,
-    portUpTime: "",
-    cabinet: "MSAN",
-    teBill: "Paid",
-    wrongPort: "No",
-    msanUnlock: "Yes",
-    profileSpeed: "",
-    quality: 0,
-    answer: targetCase
-  };
-
-  const profiles = router === "VDSL"
-    ? ["30 Mbps", "50 Mbps", "70 Mbps", "100 Mbps"]
-    : ["8 Mbps", "12 Mbps", "16 Mbps", "24 Mbps"];
-  q.profileSpeed = pick(profiles);
-  q.orangeSpeed = parseInt(q.profileSpeed);
-
-  switch (targetCase) {
-    case "Line Down":
-      q.dslStatus = "DOWN";
-      q.maxRate = 0;
-      q.snr = 0;
-      q.bitRate = 0;
-      q.speedTest = 0;
-      q.ping = 0;
-      q.portUpTime = "0 min";
-      break;
-
-    case "Bad Line":
-      q.dslStatus = "UP";
-      if (router === "VDSL") {
-        q.maxRate = rand(10, 35);
-        q.snr = rand(60, 110);
-        q.quality = rand(2, 5);
-      } else {
-        q.maxRate = rand(2, 7);
-        q.snr = rand(40, 90);
-        q.quality = rand(2, 5);
-      }
-      q.bitRate = q.maxRate - rand(0, 3);
-      q.speedTest = Math.round(q.maxRate * (0.6 + Math.random() * 0.3));
-      q.ping = rand(20, 80);
-      q.portUpTime = rand(1, 72) + " hours";
-      break;
-
-    case "Line Unstable":
-      q.dslStatus = "UP";
-      if (router === "VDSL") {
-        q.maxRate = rand(40, 90);
-      } else {
-        q.maxRate = rand(10, 22);
-      }
-      q.snr = rand(90, 130);
-      q.quality = rand(6, 9);
-      q.bitRate = q.maxRate - rand(0, 3);
-      q.speedTest = Math.round(q.maxRate * (0.75 + Math.random() * 0.2));
-      q.ping = rand(20, 60);
-      q.portUpTime = rand(1, 300) + " min";
-      break;
-
-    case "Bit Rate Mismatch":
-      q.dslStatus = "UP";
-      if (router === "VDSL") {
-        q.maxRate = rand(40, 70);
-        q.orangeSpeed = q.maxRate + rand(20, 40);
-      } else {
-        q.maxRate = rand(10, 18);
-        q.orangeSpeed = q.maxRate + rand(8, 15);
-      }
-      q.snr = rand(90, 130);
-      q.quality = rand(7, 10);
-      q.bitRate = q.maxRate - rand(0, 2);
-      q.speedTest = Math.round(q.maxRate * (0.8 + Math.random() * 0.15));
-      q.ping = rand(15, 50);
-      q.portUpTime = rand(6, 72) + " hours";
-      break;
-
-    case "Slow Download":
-      q.dslStatus = "UP";
-      if (router === "VDSL") {
-        q.maxRate = rand(45, 95);
-      } else {
-        q.maxRate = rand(10, 22);
-      }
-      q.orangeSpeed = q.maxRate + rand(0, 10);
-      q.snr = rand(90, 130);
-      q.quality = rand(7, 10);
-      q.bitRate = q.maxRate - rand(0, 3);
-      q.speedTest = Math.round(q.maxRate * (0.3 + Math.random() * 0.25));
-      q.ping = rand(15, 60);
-      q.portUpTime = rand(6, 72) + " hours";
-      break;
-
-    case "Online Gaming":
-      q.dslStatus = "UP";
-      q.router = "VDSL";
-      q.port = "VDSL";
-      q.line = "MSAN";
-      q.cabinet = "MSAN";
-      q.maxRate = rand(40, 100);
-      q.orangeSpeed = q.maxRate + rand(0, 15);
-      q.snr = rand(100, 140);
-      q.quality = rand(7, 10);
-      q.bitRate = q.maxRate - rand(0, 3);
-      q.speedTest = Math.round(q.maxRate * (0.8 + Math.random() * 0.15));
-      q.ping = rand(110, 250);
-      q.portUpTime = rand(6, 72) + " hours";
-      q.msanUnlock = "Yes";
-      break;
-
-    case "No Browsing":
-      q.dslStatus = "UP";
-      if (router === "VDSL") {
-        q.maxRate = rand(40, 90);
-      } else {
-        q.maxRate = rand(10, 22);
-      }
-      q.orangeSpeed = q.maxRate + rand(0, 10);
-      q.snr = rand(80, 120);
-      q.quality = rand(6, 9);
-      q.bitRate = q.maxRate - rand(0, 3);
-      q.speedTest = 0;
-      q.ping = rand(200, 999);
-      q.portUpTime = rand(6, 72) + " hours";
-      break;
-
-    case "Authentication":
-      q.dslStatus = "UP";
-      if (router === "VDSL") {
-        q.maxRate = rand(40, 90);
-      } else {
-        q.maxRate = rand(10, 22);
-      }
-      q.orangeSpeed = q.maxRate + rand(0, 10);
-      q.snr = rand(80, 120);
-      q.quality = rand(6, 9);
-      q.bitRate = q.maxRate - rand(0, 3);
-      q.speedTest = 0;
-      q.ping = 0;
-      q.portUpTime = rand(6, 72) + " hours";
-      break;
-
-    case "Connection Unstable":
-      q.dslStatus = "UP";
-      if (router === "VDSL") {
-        q.maxRate = rand(38, 85);
-      } else {
-        q.maxRate = rand(8, 20);
-      }
-      q.orangeSpeed = q.maxRate + rand(0, 10);
-      q.snr = rand(60, 100);
-      q.quality = rand(5, 7);
-      q.bitRate = q.maxRate - rand(0, 5);
-      q.speedTest = Math.round(q.maxRate * (0.5 + Math.random() * 0.3));
-      q.ping = rand(40, 150);
-      q.portUpTime = rand(1, 180) + " min";
-      break;
-
-    case "WiFi Instability":
-      q.dslStatus = "UP";
-      if (router === "VDSL") {
-        q.maxRate = rand(45, 95);
-      } else {
-        q.maxRate = rand(12, 22);
-      }
-      q.orangeSpeed = q.maxRate + rand(0, 10);
-      q.snr = rand(95, 130);
-      q.quality = rand(7, 10);
-      q.bitRate = q.maxRate - rand(0, 2);
-      q.speedTest = Math.round(q.maxRate * (0.85 + Math.random() * 0.1));
-      q.ping = rand(15, 40);
-      q.portUpTime = rand(12, 72) + " hours";
-      break;
-  }
-
-  if (Math.random() < 0.25) q.teBill = pick(["Paid", "Paid", "Unpaid"]);
-  if (Math.random() < 0.1) q.wrongPort = "Yes";
-
-  q.fields = selectFields(diff, targetCase);
-  return q;
-}
-
-function selectFields(diff, targetCase) {
-  const base = ["complaint", "router", "port"];
-  const optional = {
-    easy: ["line", "dslStatus", "maxRate", "portUpTime", "ping"],
-    medium: ["line", "dslStatus", "maxRate", "snr", "bitRate", "portUpTime", "ping"],
-    hard: ["line", "dslStatus", "maxRate", "snr", "bitRate", "orangeSpeed", "speedTest", "ping", "portUpTime", "cabinet"],
-    expert: ["line", "dslStatus", "maxRate", "snr", "bitRate", "orangeSpeed", "speedTest", "ping", "portUpTime", "cabinet", "quality", "teBill", "wrongPort", "msanUnlock", "profileSpeed"]
-  };
-  const pool = optional[diff] || optional.hard;
-  let count;
-  if (diff === "easy") count = rand(4, 6);
-  else if (diff === "medium") count = rand(5, 7);
-  else if (diff === "hard") count = rand(6, 8);
-  else count = pool.length;
-
-  const required = getRequiredFields(targetCase);
-  const selected = new Set(base);
-  required.forEach(f => selected.add(f));
-  const remaining = pool.filter(f => !selected.has(f));
-  shuffle(remaining);
-  const needed = Math.max(0, count - selected.size);
-  for (let i = 0; i < Math.min(needed, remaining.length); i++) {
-    selected.add(remaining[i]);
-  }
-  return Array.from(selected);
-}
-
-function getRequiredFields(targetCase) {
-  switch (targetCase) {
-    case "Line Down": return ["dslStatus", "maxRate"];
-    case "Bad Line": return ["maxRate", "router"];
-    case "Line Unstable": return ["portUpTime"];
-    case "Online Gaming": return ["ping", "maxRate", "snr"];
-    case "Slow Download": return ["maxRate", "speedTest"];
-    case "Bit Rate Mismatch": return ["maxRate", "orangeSpeed"];
-    case "No Browsing": return ["speedTest", "ping"];
-    case "Authentication": return ["speedTest", "ping"];
-    case "Connection Unstable": return ["portUpTime"];
-    case "WiFi Instability": return ["maxRate", "speedTest"];
-    default: return [];
-  }
-}
-
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-}
-
-/* ---------- DIAGNOSIS ENGINE ---------- */
-function diagnoseReason(q) {
-  const a = q.answer;
-  switch (a) {
-    case "Line Down":
-      return {
-        reason: `DSL Status is <span class="red">DOWN</span> with Maximum Rate = 0. This indicates a complete physical disconnection.`,
-        rules: ["DSL Status = DOWN", "Maximum Rate = 0 Mbps", "SNR = 0", "Port Up Time = 0 min"],
-        learning: "Always check DSL Status first. If DOWN, it's a Line Down case before anything else."
-      };
-    case "Bad Line":
-      const thr = q.router === "VDSL" ? 36 : 8;
-      return {
-        reason: `Maximum Rate (${q.maxRate} Mbps) is below the required threshold of <span class="highlight">${thr} Mbps</span> for ${q.router}. Quality is ${q.quality} (below 6). The line cannot support the subscribed speed.`,
-        rules: [`VDSL: Max Rate must be ≥ 36 Mbps`, `ADSL: Max Rate must be ≥ 8 Mbps`, `Quality must be ≥ 6`, `Correct Orange Speed`],
-        learning: `If Max Rate is below threshold (${thr} Mbps for ${q.router}), diagnose as Bad Line regardless of other parameters.`
-      };
-    case "Line Unstable":
-      return {
-        reason: `Line is UP with acceptable Max Rate (${q.maxRate} Mbps) and Quality (${q.quality}), but Port Up Time is only <span class="highlight">${q.portUpTime}</span>, indicating a recent resync. The line keeps dropping and reconnecting.`,
-        rules: ["DSL Status = UP", "Not a Bad Line (Max Rate OK)", "Port Up Time within last 6 hours", "Frequent resyncs detected"],
-        learning: "When line parameters are acceptable but Port Up Time is very short, the line is unstable."
-      };
-    case "Bit Rate Mismatch":
-      return {
-        reason: `Maximum Rate (${q.maxRate} Mbps) does not match the subscribed Orange Speed (${q.orangeSpeed} Mbps). Line quality is good but the port is delivering wrong speed.`,
-        rules: ["DSL Status = UP", "Line quality is good", "Max Rate ≠ Orange Speed (significant gap)", "Profile speed configured correctly"],
-        learning: "When Max Rate and Orange Speed differ significantly but line quality is good, it's a Bit Rate Mismatch."
-      };
-    case "Slow Download":
-      return {
-        reason: `Maximum Rate is good (${q.maxRate} Mbps) but Speed Test shows only <span class="highlight">${q.speedTest} Mbps</span>. The line syncs correctly but actual throughput is very low.`,
-        rules: ["DSL Status = UP", "Max Rate is good", "Speed Test much lower than Max Rate", "Line quality is good"],
-        learning: "When Max Rate is good but Speed Test is low, diagnose as Slow Download. The issue is in throughput, not sync."
-      };
-    case "Online Gaming":
-      return {
-        reason: `Ping is <span class="highlight">${q.ping} ms</span> (>100), Max Rate is ${q.maxRate} Mbps (≥40), SNR is ${q.snr} (≥100), Router is VDSL, Line is MSAN. All conditions for Online Gaming case are met.`,
-        rules: ["Ping > 100 ms", "Max Rate ≥ 40 Mbps", "SNR (Noise Margin) ≥ 100", "VDSL Router", "MSAN Line"],
-        learning: "Online Gaming requires ALL 5 conditions. If any is missing, fall back to Bad Line or other case."
-      };
-    case "No Browsing":
-      return {
-        reason: `DSL is UP with good parameters, but Speed Test = 0 and Ping is <span class="highlight">${q.ping} ms</span> (very high or timeout). Customer cannot browse despite a synced line.`,
-        rules: ["DSL Status = UP", "Max Rate is good", "Speed Test = 0 or extremely low", "Ping very high or timeout"],
-        learning: "When line is synced but no data flows, diagnose as No Browsing. Check authentication next."
-      };
-    case "Authentication":
-      return {
-        reason: `DSL is UP with good sync, but Speed Test = 0 and Ping = 0. The line is physically fine but PPP session cannot be established.`,
-        rules: ["DSL Status = UP", "Max Rate is good", "Speed Test = 0", "Ping = 0 (no PPP session)"],
-        learning: "When line syncs but there's no IP/Ping, it's an Authentication issue. Verify username/password."
-      };
-    case "Connection Unstable":
-      return {
-        reason: `Line is UP but Port Up Time is only <span class="highlight">${q.portUpTime}</span>. Combined with moderate Quality (${q.quality}) and SNR (${q.snr}), the connection drops frequently.`,
-        rules: ["DSL Status = UP", "Very short Port Up Time", "Moderate Quality (5-7)", "Frequent disconnections"],
-        learning: "Connection Unstable differs from Line Unstable by the severity and pattern of drops."
-      };
-    case "WiFi Instability":
-      return {
-        reason: `DSL parameters are excellent (Max ${q.maxRate} Mbps, SNR ${q.snr}, Quality ${q.quality}), Speed Test matches Max Rate, but customer reports WiFi issues. The problem is wireless, not the line.`,
-        rules: ["DSL parameters are all good", "Speed Test ≈ Max Rate", "Ping is low", "Issue is WiFi-specific"],
-        learning: "When all DSL parameters are perfect but customer complains about connection, diagnose as WiFi Instability."
-      };
-  }
-  return { reason: "", rules: [], learning: "" };
-}
-
-/* ---------- TIMER ---------- */
-function startTimer() {
-  stopTimer();
-  const lvlInfo = getLevelInfo(state.level);
-  timeTotal = lvlInfo.time;
-  timeLeft = timeTotal;
-  updateTimerDisplay();
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    state.timePlayed++;
-    if (state.timePlayed % 10 === 0) save();
-    updateTimerDisplay();
-    if (timeLeft <= 0) {
-      stopTimer();
-      handleTimeout();
+    if(searchTerm){
+      const s = searchTerm.toLowerCase();
+      topics = topics.filter(t=>
+        t.title.toLowerCase().includes(s) ||
+        t.meaning.toLowerCase().includes(s) ||
+        t.id.toLowerCase().includes(s)
+      );
     }
-  }, 1000);
-}
 
-function stopTimer() {
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
-}
+    if(topics.length===0 && (filter==='all' || filter===catId)) return;
+    if(topics.length===0) return;
 
-function updateTimerDisplay() {
-  const v = document.getElementById("timerValue");
-  const f = document.getElementById("timerFill");
-  v.textContent = timeLeft + "s";
-  const pct = (timeLeft / timeTotal) * 100;
-  f.style.width = pct + "%";
-  v.classList.remove("warn", "danger");
-  f.classList.remove("warn", "danger");
-  if (timeLeft <= 10) {
-    v.classList.add("danger");
-    f.classList.add("danger");
-  } else if (timeLeft <= 30) {
-    v.classList.add("warn");
-    f.classList.add("warn");
-  }
-}
+    totalShown += topics.length;
 
-function handleTimeout() {
-  if (state.answered) return;
-  state.answered = true;
-  state.total++;
-  state.wrong++;
-  state.streak = 0;
-  state.xp = Math.max(0, state.xp - 10);
-  const q = state.currentQ;
-  const allBtns = document.querySelectorAll(".ans-btn");
-  allBtns.forEach(b => {
-    b.disabled = true;
-    if (b.textContent === q.answer) b.classList.add("reveal");
+    const catEl = document.createElement('div');
+    catEl.className = 'category open';
+    catEl.id = 'cat-'+catId;
+    catEl.innerHTML = `
+      <div class="category-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="icon-big">${cat.emoji}</div>
+        <div>
+          <h3>${cat.title}</h3>
+          <p style="color:var(--muted);font-size:12px;margin-top:2px">${cat.desc}</p>
+        </div>
+        <span class="count">${topics.length} موضوع</span>
+        <span class="chev">▼</span>
+      </div>
+      <div class="category-body">
+        <div class="topics-grid">
+          ${topics.map(t=>topicCardHTML(t)).join('')}
+        </div>
+      </div>
+    `;
+    categoriesEl.appendChild(catEl);
   });
-  showTimeoutFeedback(q);
-  document.getElementById("nextBtn").disabled = false;
-  renderStats();
-  save();
+
+  if(totalShown===0){
+    categoriesEl.innerHTML = `
+      <div style="text-align:center;padding:40px;color:var(--muted)">
+        <div style="font-size:40px;margin-bottom:10px">🔍</div>
+        <p>مفيش نتائج مطابقة</p>
+      </div>
+    `;
+  }
+
+  updateStats();
 }
 
-function showTimeoutFeedback(q) {
-  const diag = diagnoseReason(q);
-  const modal = document.getElementById("modal");
-  let html = `
-    <div class="modal-result timeout">⏰ TIME OUT!</div>
-    <div class="modal-xp neg">-10 XP</div>
-    <div class="modal-section"><h4>The Correct Answer Was</h4><p><span class="green">${q.answer}</span></p></div>
-    <div class="modal-section"><h4>Reason</h4><p>${diag.reason}</p></div>
-    <div class="modal-section"><h4>Rules for ${q.answer}</h4><ul>${diag.rules.map(r => `<li>${r}</li>`).join("")}</ul></div>
-    <div class="modal-section"><h4>💡 Learning Point</h4><p>${diag.learning}</p></div>
-    <div class="modal-section"><h4>⚠️ Important Rule</h4><p>Always analyze parameters in order: DSL Status → Max Rate → Quality → Speed Test → Ping → Port Up Time. Never guess — let the data guide you.</p></div>
-  `;
-  html += `<button class="modal-close" onclick="closeModal()">Continue →</button>`;
-  modal.innerHTML = html;
-  document.getElementById("modalBg").classList.add("show");
-}
-
-/* ---------- RENDER ---------- */
-function renderStats() {
-  document.getElementById("sLevel").textContent = state.level;
-  document.getElementById("sXp").textContent = state.xp;
-  const acc = state.total ? Math.round(state.correct / state.total * 100) : 0;
-  document.getElementById("sAcc").textContent = acc + "%";
-  document.getElementById("sStreak").textContent = state.streak;
-
-  const info = getLevelInfo(state.level);
-  document.getElementById("lvlIcon").textContent = state.level;
-  document.getElementById("lvlTitle").textContent = `Level ${state.level} · ${info.name}`;
-  document.getElementById("lvlName").textContent = info.name;
-  const needed = xpForLevel(state.level);
-  document.getElementById("lvlXp").textContent = `${state.xp} / ${needed} XP`;
-  document.getElementById("xpFill").style.width = Math.min(100, state.xp / needed * 100) + "%";
-
-  document.getElementById("stTotal").textContent = state.total;
-  document.getElementById("stCorrect").textContent = state.correct;
-  document.getElementById("stWrong").textContent = state.wrong;
-  document.getElementById("stAcc").textContent = acc + "%";
-  document.getElementById("stCur").textContent = state.streak;
-  document.getElementById("stBest").textContent = state.best;
-  document.getElementById("stLvl").textContent = state.level;
-  document.getElementById("stXp").textContent = state.xp;
-  const mins = Math.floor(state.timePlayed / 60);
-  const hrs = Math.floor(mins / 60);
-  const remMins = mins % 60;
-  let timeStr = hrs > 0 ? `${hrs}h ${remMins}m` : `${mins}m`;
-  document.getElementById("stTime").textContent = timeStr;
-}
-
-function renderQuestion() {
-  state.currentQ = generateQuestion();
-  state.answered = false;
-  const q = state.currentQ;
-  const info = getLevelInfo(state.level);
-
-  const fieldLabels = {
-    complaint: "Customer Complaint",
-    line: "Line",
-    router: "Router Type",
-    port: "Port Type",
-    dslStatus: "DSL Status",
-    maxRate: "Maximum Attainable Rate",
-    snr: "SNR",
-    bitRate: "Bit Rate",
-    orangeSpeed: "Orange Speed",
-    speedTest: "Speed Test",
-    ping: "Ping",
-    portUpTime: "Port Up Time",
-    cabinet: "Cabinet Status",
-    teBill: "TE Bill",
-    wrongPort: "Wrong Port",
-    msanUnlock: "MSAN Unlock",
-    profileSpeed: "Profile Speed",
-    quality: "Quality"
-  };
-
-  let html = `
-    <div class="q-header">
-      <div class="q-number">Question #${q.id}</div>
-      <div class="q-diff ${info.diff}">${info.name}</div>
+function topicCardHTML(t){
+  const s = state.status[t.id];
+  const bm = state.bookmarks.includes(t.id);
+  let badges = '';
+  if(s==='reviewed') badges += '<span class="badge reviewed">✔ Reviewed</span>';
+  if(s==='need') badges += '<span class="badge need">🔄 Need Review</span>';
+  if(s==='fav') badges += '<span class="badge fav">⭐ Fav</span>';
+  if(bm) badges += '<span class="badge bookmark">🔖</span>';
+  return `
+    <div class="topic-card" onclick="openTopic('${t.id}')">
+      <div class="status">${badges}</div>
+      <div class="emoji">${t.emoji}</div>
+      <h4>${t.title}</h4>
+      <p>${CATEGORIES[t.cat].title}</p>
     </div>
   `;
-
-  if (q.fields.includes("complaint")) {
-    html += `<div class="complaint">
-      <div class="complaint-label">Customer Complaint</div>
-      <div class="complaint-text">${q.complaint}</div>
-    </div>`;
-  }
-
-  const orderedFields = ["line", "router", "port", "dslStatus", "maxRate", "snr", "bitRate", "orangeSpeed", "speedTest", "ping", "portUpTime", "cabinet", "teBill", "wrongPort", "msanUnlock", "profileSpeed", "quality"];
-  for (const f of orderedFields) {
-    if (!q.fields.includes(f) || f === "complaint") continue;
-    let val = q[f];
-    let cls = "";
-    if (f === "maxRate" || f === "orangeSpeed" || f === "speedTest" || f === "bitRate") {
-      val = val + " Mbps";
-    } else if (f === "ping") {
-      val = val + " ms";
-    } else if (f === "dslStatus") {
-      cls = val === "DOWN" ? "bad" : "good";
-    } else if (f === "maxRate") {
-      const thr = q.router === "VDSL" ? 36 : 8;
-      if (val < thr && q.dslStatus === "UP") cls = "warn";
-    } else if (f === "snr") {
-      if (val < 80) cls = "warn";
-    } else if (f === "quality") {
-      if (val < 6) cls = "warn";
-    } else if (f === "teBill") {
-      if (val === "Unpaid") cls = "warn";
-    } else if (f === "wrongPort") {
-      if (val === "Yes") cls = "warn";
-    }
-    html += `<div class="data-row"><div class="data-label">${fieldLabels[f]}</div><div class="data-value ${cls}">${val}</div></div>`;
-  }
-
-  html += `<div class="q-prompt">⚡ What's the problem?</div>`;
-  document.getElementById("qCard").innerHTML = html;
-
-  // ALL 10 cases as choices — always
-  const ans = document.getElementById("answers");
-  ans.innerHTML = "";
-  ALL_CASES.forEach(c => {
-    const b = document.createElement("button");
-    b.className = "ans-btn";
-    b.textContent = c;
-    b.onclick = () => handleAnswer(c, b);
-    ans.appendChild(b);
-  });
-
-  document.getElementById("nextBtn").disabled = true;
-  startTimer();
 }
 
-function handleAnswer(choice, btn) {
-  if (state.answered) return;
-  state.answered = true;
-  stopTimer();
-  state.total++;
-
-  const q = state.currentQ;
-  const correct = choice === q.answer;
-  const allBtns = document.querySelectorAll(".ans-btn");
-
-  if (correct) {
-    btn.classList.add("correct");
-    state.correct++;
-    state.streak++;
-    if (state.streak > state.best) state.best = state.streak;
-    let xpGain = 20;
-    state.xp += xpGain;
-    let leveledUp = false;
-    while (state.xp >= xpForLevel(state.level)) {
-      state.xp -= xpForLevel(state.level);
-      state.level++;
-      leveledUp = true;
-      if (state.level === 50) state.xp += 100;
-    }
-    showFeedback(true, choice, q, xpGain, leveledUp);
-  } else {
-    btn.classList.add("wrong");
-    allBtns.forEach(b => { if (b.textContent === q.answer) b.classList.add("reveal"); });
-    state.wrong++;
-    state.streak = 0;
-    state.xp = Math.max(0, state.xp - 15);
-    showFeedback(false, choice, q, -15, false);
-  }
-
-  allBtns.forEach(b => b.disabled = true);
-  document.getElementById("nextBtn").disabled = false;
-  renderStats();
-  save();
+function updateStats(){
+  document.getElementById('stat-total').textContent = TOPICS.length;
+  document.getElementById('stat-reviewed').textContent = Object.values(state.status).filter(s=>s==='reviewed').length;
+  document.getElementById('stat-bookmarks').textContent = state.bookmarks.length;
 }
 
-function showFeedback(pass, choice, q, xp, leveledUp) {
-  const diag = diagnoseReason(q);
-  const modal = document.getElementById("modal");
-  let html = `
-    <div class="modal-result ${pass ? 'pass' : 'fail'}">${pass ? 'PASS' : 'FAIL'}</div>
-    <div class="modal-xp ${xp >= 0 ? 'pos' : 'neg'}">${xp >= 0 ? '+' : ''}${xp} XP</div>
+/* ============================================================
+   MODAL — Topic Detail
+   ============================================================ */
+let currentTopic = null;
+
+function openTopic(id){
+  const t = TOPICS.find(x=>x.id===id);
+  if(!t) return;
+  currentTopic = t;
+  document.getElementById('mEmoji').textContent = t.emoji;
+  document.getElementById('mTitle').textContent = t.title;
+  document.getElementById('mCat').textContent = CATEGORIES[t.cat].title;
+
+  const body = document.getElementById('mBody');
+  body.innerHTML = `
+    ${sectionBlock(1,'يعني إيه المشكلة؟', t.meaning)}
+    ${sectionBlock(2,'بتعرفها إزاي؟', t.recognize)}
+    ${sectionBlock(3,'إيه اللي أشوفه على السيستم؟', t.system)}
+
+    <div class="section-block">
+      <div class="section-title"><span class="num">4</span> الشروط</div>
+      <div class="conditions">
+        ${t.conditions.map(c=>`
+          <div class="cond-card ${c.type}">
+            <div class="cond-head">${c.head}</div>
+            <div class="cond-body">${c.body}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    ${sectionBlock(5,'افهمها ببساطة', t.understand)}
+    ${sectionBlock(6,'الأخطاء الشائعة', t.mistakes)}
+
+    <div class="section-block">
+      <div class="section-title"><span class="num">7</span> الفرق بينها وبين...</div>
+      <div class="compare">
+        <div class="compare-card">
+          <h5>${t.compare.a.title}</h5>
+          <ul>${t.compare.a.points.map(p=>`<li>${p}</li>`).join('')}</ul>
+        </div>
+        <div class="compare-vs">VS</div>
+        <div class="compare-card">
+          <h5>${t.compare.b.title}</h5>
+          <ul>${t.compare.b.points.map(p=>`<li>${p}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title"><span class="num">🔀</span> Visual Flow</div>
+      <div class="flow">
+        ${t.flow.map(f=>{
+          if(f.type==='label') return `<div class="flow-label">${f.t}</div>`;
+          return `<div class="flow-node ${f.type||''}">${f.t}</div><div class="flow-arrow">↓</div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title"><span class="num">8</span> مختصر سريع</div>
+      <div class="summary-card">
+        ${t.summary.map(s=>{
+          if(s.arrow) return `<div class="arrow">↓</div>`;
+          const style = s.result ? 'color:var(--orange-2);font-weight:800;font-size:16px' : '';
+          const icon = s.ok ? '✅' : '➡️';
+          return `<div class="row" style="${style}">${icon} ${s.t}</div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    ${t.tips && t.tips.length ? `
+      <div class="section-block">
+        <div class="section-title"><span class="num">🎯</span> Trainer Notes</div>
+        ${t.tips.map(tip=>`
+          <div class="tip ${tip.type}">
+            <div class="tip-head">${tip.head}</div>
+            <div>${tip.body}</div>
+          </div>
+        `).join('')}
+      </div>
+    ` : ''}
   `;
 
-  if (leveledUp) {
-    html += `<div class="modal-section" style="border-left-color: var(--yellow);">
-      <h4>🎉 LEVEL UP!</h4>
-      <p>You reached <span class="highlight">Level ${state.level}</span> — ${getLevelInfo(state.level).name}!</p>
-    </div>`;
-  }
-
-  if (pass) {
-    html += `
-      <div class="modal-section"><h4>✨ Excellent Work!</h4><p>Correct Answer: <span class="green">${q.answer}</span></p></div>
-      <div class="modal-section"><h4>Reason</h4><p>${diag.reason}</p></div>
-      <div class="modal-section"><h4>Rules Applied</h4><ul>${diag.rules.map(r => `<li>${r}</li>`).join("")}</ul></div>
-      <div class="modal-section"><h4>💡 Learning Point</h4><p>${diag.learning}</p></div>
-    `;
-  } else {
-    html += `
-      <div class="modal-section"><h4>Your Answer</h4><p><span class="red">${choice}</span></p></div>
-      <div class="modal-section"><h4>Correct Answer</h4><p><span class="green">${q.answer}</span></p></div>
-      <div class="modal-section"><h4>Why You Were Wrong</h4><p>${diag.reason}</p></div>
-      <div class="modal-section"><h4>Rules for ${q.answer}</h4><ul>${diag.rules.map(r => `<li>${r}</li>`).join("")}</ul></div>
-      <div class="modal-section"><h4>💡 Learning Point</h4><p>${diag.learning}</p></div>
-      <div class="modal-section"><h4>⚠️ Important Rule</h4><p>Always analyze parameters in order: DSL Status → Max Rate → Quality → Speed Test → Ping → Port Up Time. Never guess — let the data guide you.</p></div>
-    `;
-  }
-
-  html += `<button class="modal-close" onclick="closeModal()">Continue →</button>`;
-  modal.innerHTML = html;
-  document.getElementById("modalBg").classList.add("show");
+  refreshActionButtons();
+  document.getElementById('modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
 }
 
-function closeModal() {
-  document.getElementById("modalBg").classList.remove("show");
+function sectionBlock(num, title, content){
+  return `
+    <div class="section-block">
+      <div class="section-title"><span class="num">${num}</span> ${title}</div>
+      <div class="content-box">${content}</div>
+    </div>
+  `;
 }
 
-/* ---------- LEARN VIEW ---------- */
-const TOPICS = {
-  physical: [
-    {
-      title: "🔌 Line Down",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">Line Down</span> معناها إن الـ <span class="en">DSL Connection</span> واقع تماماً. مفيش <span class="en">Sync</span>، مفيش إنترنت، مفيش حاجة شغالة.</p>
-        <h5>الكلمات المهمة</h5>
-        <p><span class="en">DSL Status</span> — حالة الخط<br>
-        <span class="en">Maximum Rate</span> — أقصى سرعة ممكنة<br>
-        <span class="en">SNR / Noise Margin</span> — جودة الإشارة<br>
-        <span class="en">Port Up Time</span> — مدة اتصال البورت</p>
-        <h5>الشروط</h5>
-        <ul>
-          <li><span class="en">DSL Status = DOWN</span></li>
-          <li><span class="en">Maximum Rate = 0 Mbps</span></li>
-          <li><span class="en">SNR = 0</span></li>
-          <li><span class="en">Port Up Time = 0 min</span></li>
-        </ul>
-        <h5>أمثلة</h5>
-        <p>لو <span class="en">DSL Status</span> بتاعك <span class="en">DOWN</span> والـ <span class="en">Max Rate</span> صفر، دي حالة <span class="en">Line Down</span> على طول.</p>
-        <h5>قواعد مهمة</h5>
-        <div class="rule">دائماً افحص <span class="en">DSL Status</span> الأول. لو <span class="en">DOWN</span>، الحالة <span class="en">Line Down</span> قبل أي حاجة تانية.</div>
-        <h5>أشهر الأخطاء</h5>
-        <ul>
-          <li>إنك تحاول تشخص <span class="en">Bad Line</span> والـ <span class="en">DSL</span> واقع</li>
-          <li>إنك تتجاهل خانة <span class="en">DSL Status</span></li>
-          <li>إنك تفضل تفحص باقي البيانات والخط واقع أصلاً</li>
-        </ul>
-        <h5>ملخص سريع</h5>
-        <div class="summary"><span class="en">DSL DOWN</span> + <span class="en">Max Rate 0</span> = <span class="en">Line Down</span>. دايماً.</div>
-      `
-    },
-    {
-      title: "⚡ Bad Line",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">Bad Line</span> معناها إن جودة الخط مش مناسبة للسرعة الحالية. الخط شغال بس مش قادر يدي السرعة المطلوبة.</p>
-        <h5>الكلمات المهمة</h5>
-        <p><span class="en">Maximum Rate</span> — أقصى سرعة ممكنة الخط يدعمها<br>
-        <span class="en">Quality</span> — جودة الخط<br>
-        <span class="en">Orange Speed</span> — السرعة المشتركة عليها</p>
-        <h5>الشروط</h5>
-        <ul>
-          <li>لو <span class="en">Router</span> و <span class="en">Port</span> من نوع <span class="en">VDSL</span>: الـ <span class="en">Maximum Rate</span> لازم يكون <strong>≥ 36 Mbps</strong></li>
-          <li>لو <span class="en">Router</span> و <span class="en">Port</span> من نوع <span class="en">ADSL</span>: الـ <span class="en">Maximum Rate</span> لازم يكون <strong>≥ 8 Mbps</strong></li>
-          <li><span class="en">Quality</span> لازم تكون <strong>≥ 6</strong></li>
-          <li>السرعة تكون مناسبة للـ <span class="en">Maximum Rate</span></li>
-        </ul>
-        <h5>أمثلة</h5>
-        <p>لو <span class="en">Router = VDSL</span> و <span class="en">Port = VDSL</span> والـ <span class="en">Max Rate = 30 Mbps</span>، الحالة <span class="en">Bad Line</span> لأن الـ 30 أقل من 36.</p>
-        <h5>قواعد مهمة</h5>
-        <div class="rule">السرعة الصحيحة = <span class="en">Maximum Rate × 80%</span> إلى <span class="en">85%</span></div>
-        <div class="rule">لو الـ <span class="en">Max Rate</span> أقل من الـ threshold، الحالة <span class="en">Bad Line</span> حتى لو باقي البيانات كويسة.</div>
-        <h5>أشهر الأخطاء</h5>
-        <ul>
-          <li>الخلط بين <span class="en">Bad Line</span> و <span class="en">Line Unstable</span></li>
-          <li>إنك تنسى إن الـ threshold مختلف بين <span class="en">VDSL</span> (36) و <span class="en">ADSL</span> (8)</li>
-          <li>إنك تختار <span class="en">Online Gaming</span> والـ <span class="en">Max Rate</span> أقل من 40</li>
-        </ul>
-        <h5>ملخص سريع</h5>
-        <div class="summary"><span class="en">VDSL &lt; 36 Mbps</span> أو <span class="en">ADSL &lt; 8 Mbps</span> أو <span class="en">Quality &lt; 6</span> = <span class="en">Bad Line</span></div>
-      `
-    },
-    {
-      title: "📉 Line Unstable",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">Line Unstable</span> معناها إن الإنترنت بيفصل وبيعود يشتغل باستمرار. البيانات كويسة بس الـ <span class="en">Port Up Time</span> قصير جداً.</p>
-        <h5>الكلمات المهمة</h5>
-        <p><span class="en">Port Up Time</span> — مدة اتصال البورت (لو قصيرة = الخط بيعمل <span class="en">Resync</span> كتير)<br>
-        <span class="en">Resync</span> — إعادة اتصال الخط</p>
-        <h5>الشروط</h5>
-        <ul>
-          <li>مش <span class="en">Line Down</span></li>
-          <li>مش <span class="en">Bad Line</span> (الـ <span class="en">Max Rate</span> كويس)</li>
-          <li>السرعة صحيحة</li>
-          <li><span class="en">Port Up Time</span> خلال آخر <strong>6 ساعات</strong></li>
-        </ul>
-        <h5>أمثلة</h5>
-        <p>لو <span class="en">Max Rate = 50 Mbps</span> والـ <span class="en">Port Up Time = 45 min</span>، ده معناه إن الخط عمل <span class="en">Resync</span> من أقل من ساعة، يعني مش مستقر.</p>
-        <h5>قواعد مهمة</h5>
-        <div class="rule">الـ <span class="en">Port Up Time</span> القصير = <span class="en">Resync</span> حديث = <span class="en">Instability</span></div>
-        <h5>أشهر الأخطاء</h5>
-        <ul>
-          <li>الخلط بينها وبين <span class="en">Connection Unstable</span></li>
-          <li>تجاهل خانة <span class="en">Port Up Time</span></li>
-        </ul>
-        <h5>ملخص سريع</h5>
-        <div class="summary">بيانات كويسة + <span class="en">Port Up Time</span> قصير جداً = <span class="en">Line Unstable</span></div>
-      `
-    }
-  ],
-  network: [
-    {
-      title: "🐢 Slow Download",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">Slow Download</span> معناها إن الخط بيعمل <span class="en">Sync</span> صح بس سرعة التحميل الفعلية أقل بكتير من المتوقع.</p>
-        <h5>الكلمات المهمة</h5>
-        <p><span class="en">Speed Test</span> — اختبار السرعة الفعلي<br>
-        <span class="en">Throughput</span> — معدل نقل البيانات الفعلي</p>
-        <h5>الشروط</h5>
-        <ul>
-          <li><span class="en">DSL Status = UP</span></li>
-          <li><span class="en">Max Rate</span> كويس</li>
-          <li><span class="en">Speed Test</span> أقل بكتير من <span class="en">Max Rate</span></li>
-          <li>جودة الخط كويسة</li>
-        </ul>
-        <h5>قواعد مهمة</h5>
-        <div class="rule">لو <span class="en">Max Rate</span> كويس بس <span class="en">Speed Test</span> منخفض، المشكلة في الـ <span class="en">Throughput</span> مش في الـ <span class="en">Sync</span>.</div>
-        <h5>ملخص سريع</h5>
-        <div class="summary"><span class="en">Max Rate</span> كويس + <span class="en">Speed Test</span> منخفض = <span class="en">Slow Download</span></div>
-      `
-    },
-    {
-      title: "🔀 Bit Rate Mismatch",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">Bit Rate Mismatch</span> معناها إن الخط بيعمل <span class="en">Sync</span> بسرعة مختلفة عن سرعة الـ <span class="en">Orange Speed</span> المشتركة عليها. جودة الخط كويسة.</p>
-        <h5>الشروط</h5>
-        <ul>
-          <li><span class="en">DSL Status = UP</span></li>
-          <li>جودة الخط كويسة</li>
-          <li><span class="en">Max Rate ≠ Orange Speed</span> (فرق كبير)</li>
-          <li>الـ <span class="en">Profile Speed</span> مظبوط</li>
-        </ul>
-        <h5>قواعد مهمة</h5>
-        <div class="rule">البورت بيوصل سرعة غلط. دي مشكلة إعدادات مش مشكلة خط.</div>
-        <h5>ملخص سريع</h5>
-        <div class="summary">خط كويس + <span class="en">Max Rate ≠ Orange Speed</span> = <span class="en">Bit Rate Mismatch</span></div>
-      `
-    },
-    {
-      title: "🎮 Online Gaming",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">Online Gaming</span> معناها إن العميل بيعاني من ارتفاع في الـ <span class="en">Ping</span> أثناء الألعاب الأونلاين. لازم تتحقق من <strong>كل الشروط الـ 5</strong>.</p>
-        <h5>الكلمات المهمة</h5>
-        <p><span class="en">Ping</span> — زمن الاستجابة بالميلي ثانية<br>
-        <span class="en">MSAN</span> — نوع الكابينة<br>
-        <span class="en">VDSL</span> — نوع الراوتر والبورت</p>
-        <h5>الشروط (لازم تتحقق كلها)</h5>
-        <ul>
-          <li><span class="en">Ping &gt; 100 ms</span></li>
-          <li><span class="en">Max Rate ≥ 40 Mbps</span></li>
-          <li><span class="en">SNR (Noise Margin) ≥ 100</span></li>
-          <li><span class="en">Router Type = VDSL</span></li>
-          <li><span class="en">Line Type = MSAN</span></li>
-        </ul>
-        <h5>أمثلة</h5>
-        <p>لو <span class="en">Ping = 150</span>، <span class="en">Max Rate = 38</span>، <span class="en">SNR = 110</span>، <span class="en">Router = VDSL</span>، <span class="en">Line = MSAN</span>، الحالة <strong>مش</strong> <span class="en">Online Gaming</span> لأن الـ <span class="en">Max Rate</span> أقل من 40. الحالة غالباً <span class="en">Bad Line</span>.</p>
-        <h5>قواعد مهمة</h5>
-        <div class="rule">لو حتى شرط واحد مش متحقق، الحالة <strong>مش</strong> <span class="en">Online Gaming</span>. ارجع لـ <span class="en">Bad Line</span>.</div>
-        <h5>أشهر الأخطاء</h5>
-        <ul>
-          <li>إنك تشوف <span class="en">Ping</span> عالي وتختار <span class="en">Online Gaming</span> على طول</li>
-          <li>إنك تنسى تفحص إن الـ <span class="en">Cabinet</span> من نوع <span class="en">MSAN</span></li>
-          <li>إنك تنسى إن الـ <span class="en">Max Rate</span> لازم يكون ≥ 40</li>
-        </ul>
-        <h5>ملخص سريع</h5>
-        <div class="summary"><span class="en">Ping &gt;100</span> + <span class="en">Max ≥40</span> + <span class="en">SNR ≥100</span> + <span class="en">VDSL</span> + <span class="en">MSAN</span> = <span class="en">Online Gaming</span></div>
-      `
-    },
-    {
-      title: "🚫 No Browsing",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">No Browsing</span> معناها إن الخط شغال ومعمل <span class="en">Sync</span> بس العميل مش قادر يفتح أي موقع.</p>
-        <h5>الشروط</h5>
-        <ul>
-          <li><span class="en">DSL Status = UP</span></li>
-          <li><span class="en">Max Rate</span> كويس</li>
-          <li><span class="en">Speed Test = 0</span> أو منخفض جداً</li>
-          <li><span class="en">Ping</span> عالي جداً أو <span class="en">Timeout</span></li>
-        </ul>
-        <h5>ملخص سريع</h5>
-        <div class="summary">خط شغال + مفيش بيانات بتعدي = <span class="en">No Browsing</span></div>
-      `
-    },
-    {
-      title: "🔐 Authentication",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">Authentication</span> معناها إن الخط شغال بس الـ <span class="en">PPP Session</span> مش بيتعمل. مشكلة في الـ <span class="en">Username/Password</span>.</p>
-        <h5>الشروط</h5>
-        <ul>
-          <li><span class="en">DSL Status = UP</span></li>
-          <li><span class="en">Max Rate</span> كويس</li>
-          <li><span class="en">Speed Test = 0</span></li>
-          <li><span class="en">Ping = 0</span> (مفيش <span class="en">PPP Session</span>)</li>
-        </ul>
-        <h5>قواعد مهمة</h5>
-        <div class="rule">فرق بين <span class="en">No Browsing</span> و <span class="en">Authentication</span>: في الـ <span class="en">Authentication</span> الـ <span class="en">Ping = 0</span>، في الـ <span class="en">No Browsing</span> الـ <span class="en">Ping</span> عالي جداً.</div>
-        <h5>ملخص سريع</h5>
-        <div class="summary">خط شغال + <span class="en">Ping 0</span> + <span class="en">Speed Test 0</span> = <span class="en">Authentication</span></div>
-      `
-    },
-    {
-      title: "🔄 Connection Unstable",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">Connection Unstable</span> معناها إن الاتصال بيفصل بشكل متكرر. مشابه لـ <span class="en">Line Unstable</span> بس بنمط وشدة مختلفة.</p>
-        <h5>الشروط</h5>
-        <ul>
-          <li><span class="en">DSL Status = UP</span></li>
-          <li><span class="en">Port Up Time</span> قصير جداً</li>
-          <li><span class="en">Quality</span> متوسطة (5-7)</li>
-          <li>فصل متكرر</li>
-        </ul>
-        <h5>ملخص سريع</h5>
-        <div class="summary">فصل متكرر + جودة متوسطة = <span class="en">Connection Unstable</span></div>
-      `
-    },
-    {
-      title: "📶 WiFi Instability",
-      body: `
-        <h5>الشرح المبسط</h5>
-        <p>الـ <span class="en">WiFi Instability</span> معناها إن خط الـ <span class="en">DSL</span> مظبوط تماماً بس العميل عنده مشاكل في الـ <span class="en">WiFi</span>. المشكلة في الـ <span class="en">Wireless</span> مش في الخط.</p>
-        <h5>الشروط</h5>
-        <ul>
-          <li>كل بيانات الـ <span class="en">DSL</span> مظبوطة</li>
-          <li><span class="en">Speed Test ≈ Max Rate</span></li>
-          <li><span class="en">Ping</span> منخفض</li>
-          <li>المشكلة خاصة بالـ <span class="en">WiFi</span></li>
-        </ul>
-        <h5>ملخص سريع</h5>
-        <div class="summary"><span class="en">DSL</span> مظبوط + شكوى من الـ <span class="en">WiFi</span> = <span class="en">WiFi Instability</span></div>
-      `
-    }
-  ]
-};
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+  document.body.style.overflow = '';
+  currentTopic = null;
+}
 
-function renderLearn() {
-  const info = document.getElementById("allCasesInfo");
-  info.innerHTML = `<strong>📖 All 10 Cases Available:</strong> You can be tested on any case from the start.
-    <div class="all-cases-list">
-      ${ALL_CASES.map(c => `<span class="case-tag">✓ ${c}</span>`).join("")}
-    </div>`;
-  const phys = document.getElementById("physicalTopics");
-  const net = document.getElementById("networkTopics");
-  phys.innerHTML = TOPICS.physical.map((t, i) => topicHTML(t, "phys-" + i)).join("");
-  net.innerHTML = TOPICS.network.map((t, i) => topicHTML(t, "net-" + i)).join("");
-  document.querySelectorAll(".topic-header").forEach(h => {
-    h.onclick = () => h.parentElement.classList.toggle("open");
+function refreshActionButtons(){
+  if(!currentTopic) return;
+  const id = currentTopic.id;
+  const s = state.status[id];
+  const bm = state.bookmarks.includes(id);
+  document.getElementById('btnReview').classList.toggle('active-review', s==='reviewed');
+  document.getElementById('btnNeed').classList.toggle('active-need', s==='need');
+  document.getElementById('btnFav').classList.toggle('active-fav', s==='fav');
+  document.getElementById('btnBookmark').classList.toggle('active-bookmark', bm);
+}
+
+function toggleStatus(type){
+  if(!currentTopic) return;
+  const id = currentTopic.id;
+  if(type==='bookmark'){
+    const idx = state.bookmarks.indexOf(id);
+    if(idx>=0) state.bookmarks.splice(idx,1);
+    else state.bookmarks.push(id);
+  }else{
+    if(state.status[id]===type) delete state.status[id];
+    else state.status[id] = type;
+  }
+  saveState();
+  refreshActionButtons();
+  render(currentFilter, currentSearch);
+}
+
+/* ============================================================
+   TABS / FILTER
+   ============================================================ */
+let currentFilter = 'all';
+let currentSearch = '';
+
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    currentFilter = tab.dataset.filter;
+    render(currentFilter, currentSearch);
   });
-}
-
-function topicHTML(t, id) {
-  return `<div class="topic-card" id="${id}">
-    <div class="topic-header"><span>${t.title}</span><span class="topic-arrow">▶</span></div>
-    <div class="topic-body"><div class="topic-content">${t.body}</div></div>
-  </div>`;
-}
-
-/* ---------- TABS ---------- */
-document.querySelectorAll(".tab").forEach(t => {
-  t.onclick = () => {
-    document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
-    document.querySelectorAll(".view").forEach(x => x.classList.remove("active"));
-    t.classList.add("active");
-    document.getElementById("view-" + t.dataset.view).classList.add("active");
-    if (t.dataset.view === "learn") renderLearn();
-    if (t.dataset.view === "stats") renderStats();
-  };
 });
 
-document.getElementById("nextBtn").onclick = () => {
-  renderQuestion();
-};
-document.getElementById("resetBtn").onclick = () => {
-  if (confirm("Reset all progress? This cannot be undone.")) {
-    state = { level: 1, xp: 0, correct: 0, wrong: 0, streak: 0, best: 0, total: 0, currentQ: null, answered: false, timePlayed: 0 };
-    save();
-    renderStats();
-    renderQuestion();
+/* ============================================================
+   SEARCH
+   ============================================================ */
+const searchInput = document.getElementById('search');
+const searchResults = document.getElementById('searchResults');
+
+searchInput.addEventListener('input', e=>{
+  const val = e.target.value.trim();
+  currentSearch = val;
+  if(!val){
+    searchResults.classList.remove('show');
+    render(currentFilter, '');
+    return;
   }
-};
+  const s = val.toLowerCase();
+  const matches = TOPICS.filter(t=>
+    t.title.toLowerCase().includes(s) ||
+    t.meaning.toLowerCase().includes(s) ||
+    t.id.toLowerCase().includes(s)
+  );
+  if(matches.length){
+    searchResults.innerHTML = matches.map(t=>`
+      <div class="search-item" onclick="openTopic('${t.id}');searchResults.classList.remove('show');searchInput.value='';currentSearch='';render(currentFilter,'');">
+        <span class="emoji">${t.emoji}</span>
+        <span class="title">${highlight(t.title,val)}</span>
+        <span class="cat">${CATEGORIES[t.cat].title}</span>
+      </div>
+    `).join('');
+    searchResults.classList.add('show');
+  }else{
+    searchResults.innerHTML = `<div class="search-item"><span style="color:var(--muted)">مفيش نتائج</span></div>`;
+    searchResults.classList.add('show');
+  }
+  render(currentFilter, val);
+});
 
-/* ---------- INIT ---------- */
-load();
-renderStats();
-renderQuestion();
-renderLearn();
+function highlight(text, term){
+  if(!term) return text;
+  const re = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`,'gi');
+  return text.replace(re,'<mark>$1</mark>');
+}
 
-document.getElementById("modalBg").onclick = (e) => {
-  if (e.target.id === "modalBg") closeModal();
-};
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.search-box')) searchResults.classList.remove('show');
+});
 
-setInterval(() => {
-  if (!state.answered && timerInterval) save();
-}, 30000);
+/* ============================================================
+   QUICK REVIEW
+   ============================================================ */
+function openQuickReview(){
+  const body = document.getElementById('qrBody');
+  body.innerHTML = TOPICS.map(t=>`
+    <div class="qr-topic">
+      <h4>${t.emoji} ${t.title}</h4>
+      <div class="qr-summary">
+        <b>يعني إيه:</b> ${stripHTML(t.meaning).slice(0,140)}...
+        <br><b>الشروط:</b> ${t.conditions.map(c=>c.head).join(' | ')}
+        <br><b>الخلاصة:</b> ${t.summary.filter(s=>!s.arrow).map(s=>s.t).join(' → ')}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('qrModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeQuickReview(){
+  document.getElementById('qrModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+function stripHTML(html){
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+}
 
-window.addEventListener("beforeunload", save);
+function showBookmarks(){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('.tab[data-filter="bookmarked"]').classList.add('active');
+  currentFilter = 'bookmarked';
+  render(currentFilter, currentSearch);
+  window.scrollTo({top:document.getElementById('categories').offsetTop-80, behavior:'smooth'});
+}
+
+/* ============================================================
+   FLOAT NAV / BACK TO TOP
+   ============================================================ */
+function scrollToCat(id){
+  const el = document.getElementById('cat-'+id);
+  if(el){
+    el.classList.add('open');
+    window.scrollTo({top:el.offsetTop-80, behavior:'smooth'});
+  }
+}
+
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', ()=>{
+  backTop.classList.toggle('show', window.scrollY>400);
+});
+
+function resetAll(){
+  if(confirm('متأكد إنك عايز تمسح كل Progress و Bookmarks؟')){
+    state = {status:{}, bookmarks:[]};
+    saveState();
+    render(currentFilter, currentSearch);
+  }
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+render();
+
+/* Close modal on ESC */
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){
+    closeModal();
+    closeQuickReview();
+  }
+});
+
+/* Close modal on overlay click */
+document.getElementById('modal').addEventListener('click', e=>{
+  if(e.target.id==='modal') closeModal();
+});
 </script>
 </body>
 </html>
