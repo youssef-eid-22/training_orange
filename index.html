@@ -1,1490 +1,1695 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orange DSL Handbook — Basel Magdy</title>
+<meta name="theme-color" content="#141009">
+<title>Orange DSL Training | Trainer: Basel Magdy</title>
+<meta name="description" content="مرجع تدريبي مبسط لمشاكل Orange Home DSL والـScripts والـTroubleshooting — Trainer: Basel Magdy">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --bg:#0d0d12;
-    --bg-2:#14141b;
-    --card:#1a1a23;
-    --card-2:#22222d;
-    --border:#2a2a36;
-    --text:#ececf1;
-    --muted:#8b8b98;
-    --orange:#ff6a00;
-    --orange-2:#ff8a33;
-    --orange-soft:rgba(255,106,0,.12);
-    --green:#22c55e;
-    --yellow:#eab308;
-    --red:#ef4444;
-    --blue:#3b82f6;
-    --purple:#a855f7;
-    --shadow:0 10px 30px rgba(0,0,0,.35);
-    --radius:16px;
-    --radius-sm:10px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    line-height:1.7;
-    min-height:100vh;
-    overflow-x:hidden;
-  }
-  body::before{
-    content:"";
-    position:fixed;inset:0;
-    background:
-      radial-gradient(1000px 600px at 10% -10%, rgba(255,106,0,.08), transparent 60%),
-      radial-gradient(800px 500px at 100% 100%, rgba(59,130,246,.05), transparent 60%);
-    pointer-events:none;z-index:0;
-  }
-  .wrap{max-width:1100px;margin:0 auto;padding:24px;position:relative;z-index:1}
+/* ══════════ ORANGE DSL TRAINING — SINGLE FILE ══════════ */
+:root{
+  --bg:#f7f1e7; --surface:#fffdf8; --surface2:#fbf6ec; --ink:#241b10; --ink2:#6b5d4b;
+  --line:#e7dcc8; --line2:#d9c9ac; --brand:#f16a00; --brand-deep:#c85300; --brand-soft:#ffe7d0;
+  --chip:#f3e9d6; --phys:#df5e00; --net:#0d7f8c; --bill:#a87a10; --trk:#8a49a3;
+  --ok:#1e7d43; --warn:#b45309; --bad:#b3362b;
+  --shadow:0 10px 30px rgba(90,60,20,.10); --shadow-sm:0 4px 14px rgba(90,60,20,.08);
+  --r:14px; --f-display:'Cairo','Segoe UI',Tahoma,sans-serif; --f-body:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
+}
+html[data-theme="dark"]{
+  --bg:#141009; --surface:#201a10; --surface2:#272012; --ink:#f5ecdb; --ink2:#b3a48b;
+  --line:#3b3220; --line2:#4d4128; --brand:#ff8b2b; --brand-deep:#ffa254; --brand-soft:#3a2410;
+  --chip:#2d2513; --phys:#ff8b2b; --net:#41c6d6; --bill:#e6b34c; --trk:#c98bf0;
+  --ok:#4cc07d; --warn:#ffb15e; --bad:#ff7c6e;
+  --shadow:0 12px 34px rgba(0,0,0,.45); --shadow-sm:0 4px 16px rgba(0,0,0,.35);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-body);background:var(--bg);color:var(--ink);line-height:1.85;font-size:16px;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(900px 420px at 85% -80px, color-mix(in srgb,var(--brand) 14%, transparent), transparent 70%),
+  repeating-linear-gradient(-45deg, color-mix(in srgb,var(--ink) 3%, transparent) 0 2px, transparent 2px 22px);}
+::selection{background:var(--brand);color:#fff}
+button{font-family:inherit;cursor:pointer}
+a{color:inherit}
+.en{direction:ltr;unicode-bidi:embed;font-weight:600}
+.wrap{width:min(1100px,92%);margin-inline:auto}
 
-  /* Header */
-  .topbar{
-    position:sticky;top:0;z-index:50;
-    background:rgba(13,13,18,.85);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--border);
-  }
-  .topbar-inner{
-    max-width:1100px;margin:0 auto;padding:14px 24px;
-    display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
-  }
-  .brand{display:flex;align-items:center;gap:12px}
-  .logo{
-    width:42px;height:42px;border-radius:12px;
-    background:linear-gradient(135deg,var(--orange),#ff3d00);
-    display:grid;place-items:center;font-weight:800;color:#fff;
-    box-shadow:0 6px 20px rgba(255,106,0,.35);
-  }
-  .brand-text h1{font-size:16px;font-weight:700;letter-spacing:.2px}
-  .brand-text p{font-size:12px;color:var(--muted)}
-  .trainer-badge{
-    display:flex;align-items:center;gap:10px;
-    background:var(--orange-soft);
-    border:1px solid rgba(255,106,0,.3);
-    padding:8px 14px;border-radius:999px;
-    font-size:13px;font-weight:600;color:var(--orange-2);
-  }
-  .trainer-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange)}
-  .top-actions{display:flex;gap:8px;flex-wrap:wrap}
-  .btn{
-    background:var(--card);border:1px solid var(--border);color:var(--text);
-    padding:8px 14px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;
-    transition:all .2s;display:inline-flex;align-items:center;gap:6px;
-  }
-  .btn:hover{background:var(--card-2);border-color:var(--orange);transform:translateY(-1px)}
-  .btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
-  .btn.primary:hover{background:var(--orange-2)}
+/* ---------- Header ---------- */
+header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar{display:flex;align-items:center;gap:10px;padding:10px 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;border:0;background:none;color:var(--ink);font-family:var(--f-display);font-weight:900;font-size:1.05rem;padding:8px 10px;border-radius:12px;transition:background .25s}
+.brand:hover{background:var(--chip)}
+.brand .cube{width:34px;height:34px;border-radius:9px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:1rem;flex:none;box-shadow:0 4px 12px color-mix(in srgb,var(--brand) 45%, transparent)}
+.brand small{display:block;font-family:var(--f-body);font-weight:500;color:var(--ink2);font-size:.68rem;line-height:1.3}
+.srch{position:relative;flex:1;min-width:170px;max-width:520px;margin-inline-start:auto}
+.srch input{width:100%;padding:11px 42px 11px 14px;border-radius:12px;border:1.5px solid var(--line2);background:var(--surface);color:var(--ink);font-family:inherit;font-size:.92rem;transition:border-color .25s,box-shadow .25s}
+.srch input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 22%, transparent)}
+.srch .ic{position:absolute;inset-inline-start:13px;top:50%;transform:translateY(-50%);opacity:.55;pointer-events:none;font-size:.95rem}
+.srch-panel{position:absolute;top:calc(100% + 8px);inset-inline-end:0;width:min(600px,94vw);max-height:min(62vh,480px);overflow:auto;background:var(--surface);border:1px solid var(--line2);border-radius:var(--r);box-shadow:var(--shadow);padding:8px;display:none;z-index:80}
+.srch-panel.on{display:block;animation:pop .18s ease}
+@keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.srch-meta{font-size:.78rem;color:var(--ink2);padding:6px 10px;border-bottom:1px dashed var(--line)}
+.srch-item{display:block;width:100%;text-align:start;border:0;background:none;color:var(--ink);padding:10px 12px;border-radius:10px;transition:background .2s;line-height:1.6}
+.srch-item:hover{background:var(--chip)}
+.srch-item .t{font-weight:700;font-size:.92rem}
+.srch-item .s{display:block;font-size:.8rem;color:var(--ink2)}
+.srch-item mark,.acc-b mark,.trick mark,.kv mark{background:var(--brand-soft);color:inherit;border-radius:4px;padding:0 3px;box-shadow:inset 0 -2px 0 var(--brand)}
+.schip{display:inline-block;font-size:.68rem;font-weight:700;padding:1px 9px;border-radius:99px;color:var(--c);border:1px solid color-mix(in srgb,var(--c) 45%, transparent);background:color-mix(in srgb,var(--c) 10%, transparent);margin-inline-start:8px;vertical-align:middle}
+.theme-btn{width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line2);background:var(--surface);font-size:1.1rem;flex:none;transition:transform .3s,border-color .25s}
+.theme-btn:hover{transform:rotate(18deg);border-color:var(--brand)}
+.navrow{display:flex;gap:8px;padding:0 0 12px;overflow-x:auto;scrollbar-width:none}
+.navrow::-webkit-scrollbar{display:none}
+.navbtn{flex:none;display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:99px;border:1.5px solid var(--line2);background:var(--surface);color:var(--ink);font-weight:700;font-size:.92rem;transition:all .25s;min-height:46px}
+.navbtn:hover{border-color:var(--acc,var(--brand));transform:translateY(-1px)}
+.navbtn.on{background:var(--acc,var(--brand));border-color:var(--acc,var(--brand));color:#fff;box-shadow:0 6px 16px color-mix(in srgb,var(--acc,var(--brand)) 40%, transparent)}
+.home-ic{flex:none;width:46px;height:46px;display:grid;place-items:center;border-radius:99px;border:1.5px solid var(--line2);background:var(--surface);font-size:1.05rem;transition:all .25s}
+.home-ic:hover{border-color:var(--brand);transform:translateY(-1px)}
 
-  /* Hero */
-  .hero{
-    margin-top:24px;padding:32px;border-radius:var(--radius);
-    background:linear-gradient(135deg,rgba(255,106,0,.1),rgba(255,106,0,.02));
-    border:1px solid rgba(255,106,0,.2);
-    position:relative;overflow:hidden;
-  }
-  .hero::before{
-    content:"";position:absolute;top:-50%;left:-20%;width:400px;height:400px;
-    background:radial-gradient(circle,rgba(255,106,0,.15),transparent 70%);
-    filter:blur(40px);
-  }
-  .hero h2{font-size:28px;margin-bottom:8px;position:relative}
-  .hero h2 span{color:var(--orange)}
-  .hero p{color:var(--muted);font-size:15px;position:relative;max-width:700px}
-  .hero-stats{display:flex;gap:20px;margin-top:20px;flex-wrap:wrap;position:relative}
-  .stat{background:var(--card);padding:12px 18px;border-radius:12px;border:1px solid var(--border)}
-  .stat b{display:block;font-size:20px;color:var(--orange)}
-  .stat span{font-size:12px;color:var(--muted)}
+/* ---------- Views ---------- */
+.view{display:none}
+.view.on{display:block;animation:viewIn .45s ease}
+@keyframes viewIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-  /* Search */
-  .search-box{
-    margin-top:20px;position:relative;
-  }
-  .search-box input{
-    width:100%;padding:16px 50px 16px 20px;
-    background:var(--card);border:1px solid var(--border);
-    border-radius:14px;color:var(--text);font-size:15px;
-    transition:all .2s;font-family:inherit;
-  }
-  .search-box input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-soft)}
-  .search-box .icon{
-    position:absolute;top:50%;right:18px;transform:translateY(-50%);
-    color:var(--muted);font-size:18px;pointer-events:none;
-  }
-  .search-results{
-    margin-top:10px;background:var(--card);border:1px solid var(--border);
-    border-radius:12px;max-height:300px;overflow-y:auto;display:none;
-  }
-  .search-results.show{display:block}
-  .search-item{
-    padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--border);
-    display:flex;align-items:center;gap:10px;transition:background .15s;
-  }
-  .search-item:last-child{border-bottom:none}
-  .search-item:hover{background:var(--card-2)}
-  .search-item .emoji{font-size:20px}
-  .search-item .title{font-weight:600}
-  .search-item .cat{font-size:11px;color:var(--muted);margin-right:auto}
-  mark{background:var(--orange-soft);color:var(--orange-2);padding:0 4px;border-radius:4px}
+/* ---------- Home ---------- */
+.cover{padding:46px 0 22px}
+.cover-grid{display:grid;gap:28px;align-items:center}
+@media(min-width:900px){.cover-grid{grid-template-columns:1.15fr .85fr}}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;color:var(--brand-deep);background:var(--brand-soft);border:1px dashed color-mix(in srgb,var(--brand) 50%, transparent);padding:5px 14px;border-radius:99px;margin-bottom:16px}
+.cover h1{font-family:var(--f-display);font-weight:900;line-height:1.15;font-size:clamp(2.3rem,7vw,3.9rem);letter-spacing:-.5px}
+.cover h1 .word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.cover h1 .word > span{display:inline-block;transform:translateY(110%);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+.cover h1 .word:nth-child(2) > span{animation-delay:.12s;color:var(--brand)}
+@keyframes rise{to{transform:none}}
+.trainer{display:inline-flex;align-items:center;gap:10px;margin-top:18px;background:var(--surface);border:1.5px solid var(--line2);border-radius:99px;padding:8px 18px 8px 22px;box-shadow:var(--shadow-sm)}
+.trainer .av{width:38px;height:38px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:1.1rem;flex:none}
+.trainer b{font-family:var(--f-display);font-size:1rem}
+.trainer small{display:block;color:var(--ink2);font-size:.72rem;font-weight:600}
+.cover .desc{margin-top:16px;font-size:1.05rem;color:var(--ink2);max-width:46ch;border-inline-start:4px solid var(--brand);padding-inline-start:14px}
+.index-card{background:var(--surface);border:1px solid var(--line2);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.index-card::before{content:"📚";position:absolute;inset-inline-end:-14px;bottom:-22px;font-size:6rem;opacity:.07;pointer-events:none}
+.index-card h3{font-family:var(--f-display);font-size:.95rem;padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.index-card h3 span{font-size:.72rem;color:var(--ink2);font-weight:600}
+.idx-row{display:flex;align-items:center;gap:12px;width:100%;text-align:start;background:none;border:0;padding:13px 18px;border-bottom:1px solid var(--line);color:var(--ink);transition:background .2s,padding .25s}
+.idx-row:last-child{border-bottom:0}
+.idx-row:hover{background:var(--chip);padding-inline-start:26px}
+.idx-row .e{font-size:1.3rem;width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:11px;background:color-mix(in srgb,var(--c) 12%, transparent);border:1px solid color-mix(in srgb,var(--c) 30%, transparent)}
+.idx-row b{font-family:var(--f-display);font-size:.98rem;display:block;line-height:1.4}
+.idx-row small{color:var(--ink2);font-size:.74rem}
+.idx-row .n{margin-inline-start:auto;font-family:var(--f-display);font-weight:900;font-size:1.35rem;color:var(--c);opacity:.55}
+.ticker{margin-top:30px;border-block:1px solid var(--line);overflow:hidden;direction:ltr;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.tk-track{display:flex;gap:38px;width:max-content;padding:11px 0;animation:tick 55s linear infinite}
+.ticker:hover .tk-track{animation-play-state:paused}
+.tk-track span{font-size:.82rem;font-weight:600;color:var(--ink2);white-space:nowrap;display:flex;align-items:center;gap:38px}
+.tk-track i{font-style:normal;color:var(--brand);font-size:.6rem}
+@keyframes tick{to{transform:translateX(-50%)}}
+.notice{display:flex;gap:12px;align-items:flex-start;margin:26px 0;padding:14px 18px;background:var(--brand-soft);border:1px solid color-mix(in srgb,var(--brand) 35%, transparent);border-radius:var(--r);font-size:.92rem}
+.notice .ic{font-size:1.25rem;flex:none;margin-top:2px}
+.notice b{color:var(--brand-deep)}
+.tiles{display:grid;gap:16px;grid-template-columns:1fr;padding-bottom:44px}
+@media(min-width:640px){.tiles{grid-template-columns:1fr 1fr}}
+.tile{position:relative;text-align:start;background:var(--surface);border:1px solid var(--line2);border-radius:18px;padding:24px 22px 20px;overflow:hidden;color:var(--ink);transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s;box-shadow:var(--shadow-sm)}
+.tile::before{content:"";position:absolute;inset-inline:0;top:0;height:5px;background:var(--c)}
+.tile .num{position:absolute;inset-inline-end:12px;top:2px;font-family:var(--f-display);font-weight:900;font-size:4.4rem;line-height:1;color:var(--c);opacity:.12;pointer-events:none}
+.tile .e{font-size:1.9rem}
+.tile h3{font-family:var(--f-display);font-weight:900;font-size:1.5rem;margin-top:8px;color:var(--c)}
+.tile p{color:var(--ink2);font-size:.94rem;margin-top:4px}
+.tile .go{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:700;color:var(--c);border-top:1px dashed var(--line2);padding-top:12px;width:100%;transition:gap .3s}
+.tile:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--c) 50%, var(--line2))}
+.tile:hover .go{gap:14px}
 
-  /* Tabs / Categories */
-  .tabs{
-    display:flex;gap:8px;margin:28px 0 18px;flex-wrap:wrap;
-    background:var(--card);padding:6px;border-radius:14px;border:1px solid var(--border);
-  }
-  .tab{
-    flex:1;min-width:120px;padding:10px 16px;border-radius:10px;
-    cursor:pointer;text-align:center;font-weight:600;font-size:14px;
-    color:var(--muted);transition:all .2s;border:none;background:transparent;
-  }
-  .tab:hover{color:var(--text)}
-  .tab.active{background:var(--orange);color:#fff;box-shadow:0 4px 14px rgba(255,106,0,.3)}
+/* ---------- Section heads ---------- */
+.sec-head{padding:34px 0 8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.sec-emoji{width:62px;height:62px;border-radius:16px;display:grid;place-items:center;font-size:1.8rem;flex:none;background:color-mix(in srgb,var(--acc) 13%, transparent);border:1.5px solid color-mix(in srgb,var(--acc) 35%, transparent);box-shadow:0 8px 20px color-mix(in srgb,var(--acc) 18%, transparent)}
+.sec-head h2{font-family:var(--f-display);font-weight:900;font-size:clamp(1.7rem,4.5vw,2.4rem);color:var(--acc);line-height:1.2}
+.sec-head p{color:var(--ink2);font-size:.95rem}
+.count-chip{margin-inline-start:auto;font-size:.78rem;font-weight:700;padding:6px 14px;border-radius:99px;border:1.5px solid color-mix(in srgb,var(--acc) 45%, transparent);color:var(--acc);background:color-mix(in srgb,var(--acc) 8%, transparent)}
+.rule-banner{margin:14px 0 22px;padding:16px 20px;border-radius:var(--r);background:color-mix(in srgb,var(--bad) 9%, var(--surface));border:1.5px solid color-mix(in srgb,var(--bad) 45%, transparent);font-weight:700;font-size:1.02rem;display:flex;gap:12px;align-items:center}
+.rule-banner.gold{background:color-mix(in srgb,var(--warn) 10%, var(--surface));border-color:color-mix(in srgb,var(--warn) 50%, transparent)}
+.rule-banner .ic{font-size:1.4rem;flex:none}
 
-  /* Category Section */
-  .category{margin-bottom:32px;animation:fadeUp .4s ease}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-  .category-header{
-    display:flex;align-items:center;gap:12px;padding:18px 20px;
-    background:var(--card);border:1px solid var(--border);
-    border-radius:var(--radius);cursor:pointer;
-    transition:all .2s;
-  }
-  .category-header:hover{border-color:var(--orange)}
-  .category-header .icon-big{
-    width:44px;height:44px;border-radius:12px;
-    display:grid;place-items:center;font-size:22px;
-    background:var(--orange-soft);color:var(--orange);
-  }
-  .category-header h3{font-size:18px;flex:1}
-  .category-header .count{color:var(--muted);font-size:13px}
-  .category-header .chev{transition:transform .3s;color:var(--muted)}
-  .category.open .chev{transform:rotate(180deg)}
-  .category-body{
-    max-height:0;overflow:hidden;transition:max-height .4s ease;
-  }
-  .category.open .category-body{max-height:5000px}
-  .topics-grid{
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-    gap:12px;margin-top:12px;
-  }
-  .topic-card{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:14px;padding:16px;cursor:pointer;
-    transition:all .25s;position:relative;
-  }
-  .topic-card:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:var(--shadow)}
-  .topic-card .emoji{font-size:26px;margin-bottom:8px}
-  .topic-card h4{font-size:15px;margin-bottom:4px}
-  .topic-card p{font-size:12px;color:var(--muted);line-height:1.5}
-  .topic-card .status{
-    position:absolute;top:12px;left:12px;
-    display:flex;gap:4px;
-  }
-  .topic-card .status .badge{
-    font-size:10px;padding:2px 6px;border-radius:6px;font-weight:700;
-  }
-  .badge.reviewed{background:rgba(34,197,94,.15);color:var(--green)}
-  .badge.need{background:rgba(234,179,8,.15);color:var(--yellow)}
-  .badge.fav{background:rgba(255,106,0,.15);color:var(--orange)}
-  .badge.bookmark{background:rgba(168,85,247,.15);color:var(--purple)}
+/* بطاقات تمهيدية */
+.intro-grid{display:grid;gap:14px;grid-template-columns:1fr;margin:16px 0 22px}
+@media(min-width:700px){.intro-grid{grid-template-columns:1fr 1fr}}
+.intro-c{background:var(--surface);border:1.5px solid var(--line2);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow-sm)}
+.intro-c h4{font-family:var(--f-display);font-size:.95rem;margin-bottom:10px;display:flex;gap:8px;align-items:center}
+.intro-c h4::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--acc);transform:rotate(45deg);flex:none}
 
-  /* Topic Modal */
-  .modal-overlay{
-    position:fixed;inset:0;background:rgba(0,0,0,.7);
-    backdrop-filter:blur(8px);z-index:100;
-    display:none;align-items:flex-start;justify-content:center;
-    padding:20px;overflow-y:auto;
-  }
-  .modal-overlay.show{display:flex;animation:fadeIn .2s}
-  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-  .modal{
-    background:var(--bg-2);border:1px solid var(--border);
-    border-radius:20px;max-width:900px;width:100%;
-    margin:20px 0;position:relative;
-    animation:slideUp .3s ease;
-  }
-  @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-  .modal-header{
-    padding:24px;border-bottom:1px solid var(--border);
-    display:flex;align-items:center;gap:14px;position:sticky;top:0;
-    background:var(--bg-2);border-radius:20px 20px 0 0;z-index:2;
-  }
-  .modal-header .emoji-big{
-    width:54px;height:54px;border-radius:14px;
-    background:var(--orange-soft);display:grid;place-items:center;font-size:28px;
-  }
-  .modal-header h2{flex:1;font-size:22px}
-  .modal-header .close{
-    width:36px;height:36px;border-radius:10px;background:var(--card);
-    border:1px solid var(--border);cursor:pointer;color:var(--text);
-    font-size:18px;display:grid;place-items:center;
-  }
-  .modal-header .close:hover{background:var(--red);border-color:var(--red)}
-  .modal-actions{
-    display:flex;gap:8px;padding:16px 24px;border-bottom:1px solid var(--border);
-    flex-wrap:wrap;background:var(--card);
-  }
-  .action-btn{
-    padding:8px 12px;border-radius:10px;border:1px solid var(--border);
-    background:var(--bg-2);color:var(--text);cursor:pointer;font-size:12px;
-    font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:all .2s;
-    font-family:inherit;
-  }
-  .action-btn:hover{border-color:var(--orange)}
-  .action-btn.active-review{background:rgba(34,197,94,.15);border-color:var(--green);color:var(--green)}
-  .action-btn.active-need{background:rgba(234,179,8,.15);border-color:var(--yellow);color:var(--yellow)}
-  .action-btn.active-fav{background:rgba(255,106,0,.15);border-color:var(--orange);color:var(--orange)}
-  .action-btn.active-bookmark{background:rgba(168,85,247,.15);border-color:var(--purple);color:var(--purple)}
-  .modal-body{padding:24px}
-  .section-block{margin-bottom:24px}
-  .section-title{
-    display:flex;align-items:center;gap:10px;
-    font-size:16px;font-weight:700;margin-bottom:12px;
-    color:var(--orange-2);
-  }
-  .section-title .num{
-    width:28px;height:28px;border-radius:8px;
-    background:var(--orange-soft);color:var(--orange);
-    display:grid;place-items:center;font-size:13px;font-weight:800;
-  }
-  .content-box{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:12px;padding:16px;font-size:14px;line-height:1.9;
-  }
-  .content-box p{margin-bottom:8px}
-  .content-box p:last-child{margin-bottom:0}
-  .content-box b,.content-box strong{color:var(--orange-2)}
-  .content-box code{
-    background:var(--bg);padding:2px 8px;border-radius:6px;
-    font-family:"Courier New",monospace;font-size:13px;color:var(--orange-2);
-    border:1px solid var(--border);
-  }
-  .content-box ul{padding-right:20px;margin:8px 0}
-  .content-box li{margin-bottom:6px}
-  .content-box .highlight{
-    background:var(--orange-soft);padding:2px 8px;border-radius:6px;
-    color:var(--orange-2);font-weight:600;
-  }
+/* ---------- Accordion ---------- */
+.accs{display:grid;gap:14px;padding-bottom:30px}
+.acc{border:1.5px solid var(--line2);border-radius:var(--r);background:var(--surface);overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.acc.open{border-color:color-mix(in srgb,var(--acc) 55%, var(--line2));box-shadow:var(--shadow-sm)}
+.acc-h{width:100%;display:flex;align-items:center;gap:14px;padding:16px 18px;background:none;border:0;color:var(--ink);text-align:start;min-height:58px;position:relative;transition:background .2s}
+.acc-h:hover{background:var(--surface2)}
+.acc-h::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--acc);opacity:.35;transition:opacity .3s}
+.acc.open .acc-h::before{opacity:1}
+.acc-h .ae{font-size:1.35rem;flex:none}
+.acc-h .tt{flex:1}
+.acc-h .tt b{font-family:var(--f-display);font-weight:800;font-size:1.06rem;display:block;line-height:1.5}
+.acc-h .tt small{color:var(--ink2);font-size:.76rem;font-weight:600}
+.acc-h .bdg{flex:none;font-size:.72rem;font-weight:700;color:var(--acc);background:color-mix(in srgb,var(--acc) 10%, transparent);border:1px solid color-mix(in srgb,var(--acc) 35%, transparent);padding:3px 11px;border-radius:99px}
+.acc-h .chv{flex:none;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;border:1.5px solid var(--line2);font-size:.7rem;transition:transform .35s,border-color .3s,color .3s}
+.acc.open .chv{transform:rotate(180deg);border-color:var(--acc);color:var(--acc)}
+.acc-p{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.2,.7,.2,1)}
+.acc.open .acc-p{grid-template-rows:1fr}
+.acc-p > div{overflow:hidden;min-height:0}
+.acc-b{padding:6px 20px 24px;border-top:1px dashed var(--line)}
+.acc.flash{animation:flash 1.2s ease 2}
+@keyframes flash{0%,100%{box-shadow:var(--shadow-sm)}50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--brand) 45%, transparent)}}
 
-  /* Conditions cards */
-  .conditions{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-  .cond-card{
-    padding:14px;border-radius:12px;border:2px solid;
-    position:relative;
-  }
-  .cond-card.green{background:rgba(34,197,94,.08);border-color:var(--green);color:var(--green)}
-  .cond-card.yellow{background:rgba(234,179,8,.08);border-color:var(--yellow);color:var(--yellow)}
-  .cond-card.red{background:rgba(239,68,68,.08);border-color:var(--red);color:var(--red)}
-  .cond-card .cond-head{font-weight:800;margin-bottom:6px;font-size:13px;display:flex;align-items:center;gap:6px}
-  .cond-card .cond-body{font-size:13px;color:var(--text);line-height:1.7}
+/* ---------- مكوّنات المحتوى ---------- */
+.blk{margin-top:20px}
+.blk > h4{font-family:var(--f-display);font-size:.98rem;font-weight:800;display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.blk > h4::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--acc);flex:none;transform:rotate(45deg)}
+.blk > p,.blk > .lead{font-size:.94rem;color:var(--ink2)}
+.blk > p b,.blk > .lead b{color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--chip);border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.82rem;font-weight:600;transition:transform .2s,border-color .2s}
+.chip:hover{transform:translateY(-2px);border-color:var(--acc)}
+.chip.g{border-color:color-mix(in srgb,var(--ok) 50%, transparent);background:color-mix(in srgb,var(--ok) 9%, transparent)}
+.chip.r{border-color:color-mix(in srgb,var(--bad) 50%, transparent);background:color-mix(in srgb,var(--bad) 8%, transparent)}
+.slot{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;margin-top:12px;border:2px dashed color-mix(in srgb,var(--acc) 45%, var(--line2));border-radius:12px;background:color-mix(in srgb,var(--acc) 4%, transparent);font-size:.86rem;color:var(--ink2)}
+.slot .si{font-size:1.2rem;flex:none}
+.slot b{color:var(--ink);display:block;font-size:.88rem}
+.callout{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin-top:14px;border:1.5px solid;font-size:.93rem;line-height:1.9}
+.callout .ci{font-size:1.25rem;flex:none;margin-top:2px}
+.callout.warn{border-color:color-mix(in srgb,var(--warn) 55%, transparent);background:color-mix(in srgb,var(--warn) 9%, var(--surface))}
+.callout.bad{border-color:color-mix(in srgb,var(--bad) 55%, transparent);background:color-mix(in srgb,var(--bad) 8%, var(--surface))}
+.callout.ok{border-color:color-mix(in srgb,var(--ok) 55%, transparent);background:color-mix(in srgb,var(--ok) 8%, var(--surface))}
+.callout.pin{border-color:color-mix(in srgb,var(--net) 55%, transparent);background:color-mix(in srgb,var(--net) 8%, var(--surface))}
+.callout b{display:block;margin-bottom:2px}
+.callout ul{margin-inline-start:18px;margin-top:4px}
+.cond-list{display:grid;gap:10px;margin-top:8px}
+.cond{display:flex;gap:14px;align-items:flex-start;padding:13px 16px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;font-weight:600;font-size:.95rem}
+.cond .cn{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;background:var(--acc);color:#fff;margin-top:2px}
+.cond small{display:block;font-weight:500;color:var(--ink2)}
+.result-box{margin-top:14px;padding:15px 18px;border-radius:12px;font-weight:800;font-size:1rem;text-align:center;background:color-mix(in srgb,var(--ok) 12%, var(--surface));border:1.5px solid color-mix(in srgb,var(--ok) 50%, transparent)}
+.cases{display:grid;gap:14px;margin-top:12px}
+@media(min-width:820px){.cases.c3{grid-template-columns:repeat(3,1fr)}}
+.case{border-radius:12px;border:1.5px solid color-mix(in srgb,var(--cc) 50%, transparent);overflow:hidden;background:var(--surface2)}
+.case .ch{padding:10px 16px;font-family:var(--f-display);font-weight:800;font-size:.95rem;color:var(--cc);background:color-mix(in srgb,var(--cc) 11%, transparent);border-bottom:1px solid color-mix(in srgb,var(--cc) 35%, transparent);display:flex;align-items:center;gap:8px}
+.case .cb{padding:14px 16px;font-size:.88rem}
+.case .cb p{color:var(--ink2);margin-bottom:6px}
+.case .cb b{color:var(--ink)}
 
-  /* Tip boxes */
-  .tip{
-    padding:14px 16px;border-radius:12px;margin:10px 0;
-    border-right:4px solid;
-  }
-  .tip.basel{background:rgba(255,106,0,.08);border-color:var(--orange)}
-  .tip.note{background:rgba(234,179,8,.08);border-color:var(--yellow)}
-  .tip.warn{background:rgba(239,68,68,.08);border-color:var(--red)}
-  .tip.good{background:rgba(34,197,94,.08);border-color:var(--green)}
-  .tip-head{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-  .tip.basel .tip-head{color:var(--orange-2)}
-  .tip.note .tip-head{color:var(--yellow)}
-  .tip.warn .tip-head{color:var(--red)}
-  .tip.good .tip-head{color:var(--green)}
+/* تعاريف (أسباب / بنود) */
+.defs{display:grid;gap:8px;margin-top:8px}
+.def{display:flex;gap:10px;align-items:flex-start;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem;transition:border-color .2s,transform .2s}
+.def:hover{border-color:color-mix(in srgb,var(--acc) 50%, var(--line));transform:translateX(-3px)}
+.def b{color:var(--acc);flex:none}
+.def span{color:var(--ink2)}
+.def span b{color:var(--ink)}
 
-  /* Flow diagram */
-  .flow{
-    display:flex;flex-direction:column;align-items:center;gap:0;
-    padding:20px;background:var(--card);border:1px solid var(--border);
-    border-radius:12px;
-  }
-  .flow-node{
-    padding:12px 20px;border-radius:10px;
-    background:var(--bg-2);border:2px solid var(--border);
-    font-weight:600;font-size:13px;text-align:center;
-    min-width:200px;max-width:300px;
-    transition:all .2s;
-  }
-  .flow-node.start{background:var(--orange-soft);border-color:var(--orange);color:var(--orange-2)}
-  .flow-node.decision{background:rgba(59,130,246,.1);border-color:var(--blue);color:var(--blue);transform:rotate(0)}
-  .flow-node.result{background:rgba(34,197,94,.1);border-color:var(--green);color:var(--green)}
-  .flow-node.result-red{background:rgba(239,68,68,.1);border-color:var(--red);color:var(--red)}
-  .flow-node.result-yellow{background:rgba(234,179,8,.1);border-color:var(--yellow);color:var(--yellow)}
-  .flow-arrow{
-    color:var(--muted);font-size:18px;padding:4px 0;
-  }
-  .flow-branch{
-    display:flex;gap:12px;width:100%;justify-content:center;flex-wrap:wrap;
-  }
-  .flow-branch-col{display:flex;flex-direction:column;align-items:center;gap:0}
-  .flow-label{font-size:11px;color:var(--muted);font-weight:700;margin:2px 0}
+/* مسار Pedia */
+.path{display:flex;flex-wrap:wrap;align-items:center;gap:6px;direction:ltr;justify-content:flex-start;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:.8rem;font-weight:700}
+.path span{background:var(--chip);border:1px solid var(--line);padding:3px 10px;border-radius:8px;white-space:nowrap}
+.path i{color:var(--acc);font-style:normal}
 
-  /* Compare */
-  .compare{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch}
-  .compare-card{
-    padding:16px;border-radius:12px;background:var(--card);border:1px solid var(--border);
-  }
-  .compare-card h5{color:var(--orange-2);margin-bottom:8px;font-size:14px}
-  .compare-card ul{padding-right:18px;font-size:13px}
-  .compare-vs{
-    display:grid;place-items:center;
-    background:var(--orange);color:#fff;font-weight:800;
-    width:44px;height:44px;border-radius:50%;align-self:center;
-  }
+/* المحادثة الهاتفية */
+.dialog{display:flex;flex-direction:column;gap:10px;margin-top:10px;padding:14px;background:color-mix(in srgb,var(--acc) 4%, transparent);border:1px dashed color-mix(in srgb,var(--acc) 35%, var(--line2));border-radius:14px}
+.msg{max-width:88%;padding:9px 14px;border-radius:14px;font-size:.9rem;line-height:1.85}
+.msg .who{display:block;font-size:.66rem;font-weight:800;opacity:.7;margin-bottom:1px}
+.msg.agent{align-self:flex-end;background:color-mix(in srgb,var(--acc) 13%, var(--surface));border:1px solid color-mix(in srgb,var(--acc) 35%, transparent)}
+.msg.cust{align-self:flex-start;background:var(--surface);border:1px solid var(--line2)}
+.msg.note{align-self:center;background:none;border:0;color:var(--ink2);font-size:.8rem;font-weight:700;padding:2px}
 
-  /* Summary */
-  .summary-card{
-    background:linear-gradient(135deg,rgba(255,106,0,.1),rgba(255,106,0,.02));
-    border:1px solid rgba(255,106,0,.3);
-    border-radius:14px;padding:20px;
-  }
-  .summary-card .row{
-    display:flex;align-items:center;gap:10px;padding:6px 0;
-    font-size:14px;
-  }
-  .summary-card .arrow{color:var(--orange);font-size:18px;text-align:center;padding:4px 0}
+/* معادلة / اقتباس / أمثلة */
+.formula{direction:ltr;text-align:center;font-weight:800;font-family:var(--f-display);background:var(--surface2);border:1.5px dashed var(--acc);border-radius:12px;padding:12px;margin-top:10px;font-size:1.02rem}
+.quote{background:var(--surface2);border-inline-start:4px solid var(--acc);padding:12px 16px;border-radius:10px;font-size:.93rem;margin-top:10px}
+.exs{display:grid;gap:10px;margin-top:10px}
+@media(min-width:700px){.exs{grid-template-columns:1fr 1fr}}
+.ex{border-radius:12px;padding:12px 16px;border:1.5px solid;font-size:.9rem;line-height:1.9}
+.ex.good{border-color:color-mix(in srgb,var(--ok) 55%, transparent);background:color-mix(in srgb,var(--ok) 8%, var(--surface))}
+.ex.bad{border-color:color-mix(in srgb,var(--bad) 55%, transparent);background:color-mix(in srgb,var(--bad) 8%, var(--surface))}
+.ex b{display:block;margin-bottom:2px}
 
-  /* Floating nav */
-  .float-nav{
-    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-    background:var(--card);border:1px solid var(--border);
-    border-radius:999px;padding:8px;display:flex;gap:6px;
-    box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:40;
-    backdrop-filter:blur(10px);
-  }
-  .float-nav button{
-    width:40px;height:40px;border-radius:50%;border:none;
-    background:transparent;color:var(--text);cursor:pointer;
-    font-size:16px;transition:all .2s;
-  }
-  .float-nav button:hover{background:var(--orange-soft);color:var(--orange)}
-  .float-nav button.active{background:var(--orange);color:#fff}
+/* جداول */
+.tbl-wrap{overflow-x:auto;margin-top:10px;border:1px solid var(--line);border-radius:12px}
+.tbl{width:100%;border-collapse:collapse;font-size:.87rem;min-width:420px}
+.tbl th{background:color-mix(in srgb,var(--acc) 12%, transparent);font-family:var(--f-display);font-weight:800}
+.tbl th,.tbl td{border:1px solid var(--line);padding:10px 12px;text-align:center}
+.tbl td b{color:var(--acc)}
 
-  /* Back to top */
-  .back-top{
-    position:fixed;bottom:80px;left:20px;
-    width:44px;height:44px;border-radius:50%;
-    background:var(--orange);color:#fff;border:none;cursor:pointer;
-    box-shadow:0 6px 20px rgba(255,106,0,.4);
-    display:none;align-items:center;justify-content:center;font-size:18px;
-    z-index:40;transition:all .2s;
-  }
-  .back-top.show{display:flex}
-  .back-top:hover{transform:translateY(-3px)}
+/* بطاقات تركات */
+.tricks{display:grid;gap:14px;grid-template-columns:1fr;padding-bottom:10px}
+@media(min-width:680px){.tricks{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.tricks{grid-template-columns:1fr 1fr 1fr}}
+.trick{background:var(--surface);border:1.5px solid var(--line2);border-radius:16px;padding:18px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+.trick::before{content:"";position:absolute;inset-inline:0;top:0;height:4px;background:var(--trk);opacity:.5}
+.trick:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--trk) 55%, var(--line2));box-shadow:var(--shadow-sm)}
+.trick .tg{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.trick .tg small{font-size:.68rem;font-weight:800;letter-spacing:2px;color:var(--trk);text-transform:uppercase}
+.trick .tg .no{font-family:var(--f-display);font-weight:900;font-size:2rem;color:var(--trk);opacity:.75;line-height:1}
+.trick h4{font-family:var(--f-display);font-size:1.02rem;font-weight:800;margin-bottom:8px}
+.trick .tb{font-size:.88rem;color:var(--ink2)}
+.trick .tb b{color:var(--ink)}
+.trick .tb ul{margin-inline-start:18px;margin-top:4px}
 
-  /* Quick review modal */
-  .qr-modal{
-    position:fixed;inset:0;background:rgba(0,0,0,.8);
-    backdrop-filter:blur(10px);z-index:200;
-    display:none;overflow-y:auto;padding:20px;
-  }
-  .qr-modal.show{display:block}
-  .qr-content{
-    max-width:800px;margin:20px auto;background:var(--bg-2);
-    border:1px solid var(--border);border-radius:20px;padding:24px;
-  }
-  .qr-header{
-    display:flex;justify-content:space-between;align-items:center;
-    margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);
-  }
-  .qr-header h2{color:var(--orange-2)}
-  .qr-topic{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:14px;padding:16px;margin-bottom:12px;
-  }
-  .qr-topic h4{color:var(--orange-2);margin-bottom:8px;display:flex;align-items:center;gap:8px}
-  .qr-topic .qr-summary{font-size:13px;color:var(--muted);line-height:1.8}
-  .qr-topic .qr-summary b{color:var(--text)}
+/* أرقام مهمة */
+.nums-head{display:flex;align-items:center;gap:12px;margin:34px 0 6px;flex-wrap:wrap}
+.nums-head h3{font-family:var(--f-display);font-weight:900;font-size:1.35rem;color:var(--trk)}
+.nums-head .ln{flex:1;height:1px;background:var(--line2)}
+.nums-note{font-size:.85rem;color:var(--ink2);margin-bottom:14px}
+.kvs{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));padding-bottom:56px}
+.kv{background:var(--surface);border:1.5px solid var(--line2);border-radius:14px;padding:16px 14px;text-align:center;transition:transform .25s,border-color .25s;position:relative;overflow:hidden}
+.kv::after{content:"";position:absolute;inset-inline:0;bottom:0;height:3px;background:var(--trk);opacity:0;transition:opacity .3s}
+.kv:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--trk) 55%, var(--line2))}
+.kv:hover::after{opacity:.7}
+.kv .v{font-family:var(--f-display);font-weight:900;font-size:1.7rem;color:var(--brand);direction:ltr;line-height:1.3}
+html[data-theme="dark"] .kv .v{color:var(--trk)}
+.kv .l{font-size:.76rem;font-weight:600;color:var(--ink2);margin-top:4px}
 
-  /* Scrollbar */
-  ::-webkit-scrollbar{width:10px;height:10px}
-  ::-webkit-scrollbar-track{background:var(--bg)}
-  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
-  ::-webkit-scrollbar-thumb:hover{background:var(--orange)}
+/* خريطة الحفظ */
+.map-card{background:var(--surface);border:1.5px solid color-mix(in srgb,var(--bill) 50%, var(--line2));border-radius:16px;padding:20px;margin-top:6px;box-shadow:var(--shadow-sm)}
+.map-card > h4{font-family:var(--f-display);font-weight:900;font-size:1.1rem;color:var(--bill);margin-bottom:12px}
+.map-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+.map-c{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:.84rem;color:var(--ink2)}
+.map-c b{display:block;color:var(--bill);font-size:.87rem;margin-bottom:4px;direction:ltr;text-align:right}
 
-  /* Responsive */
-  @media (max-width:700px){
-    .wrap{padding:14px}
-    .hero{padding:20px}
-    .hero h2{font-size:22px}
-    .modal-body{padding:16px}
-    .modal-header{padding:16px}
-    .compare{grid-template-columns:1fr}
-    .compare-vs{margin:0 auto}
-    .float-nav{bottom:14px}
-    .trainer-badge{font-size:11px;padding:6px 10px}
-    .brand-text h1{font-size:14px}
-    .brand-text p{font-size:10px}
-  }
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20px}
+.foot{display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;padding:30px 0}
+.foot .fb{font-family:var(--f-display);font-weight:900;font-size:1.05rem}
+.foot .ft{font-size:.85rem;color:var(--ink2)}
+.foot .fp{margin-top:8px;font-weight:800;color:var(--brand-deep);border:1.5px solid color-mix(in srgb,var(--brand) 40%, transparent);padding:6px 22px;border-radius:99px;background:var(--brand-soft);font-size:.88rem}
+
+.rv{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--line2);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--brand)}
+@media(max-width:560px){
+  .topbar{gap:8px}
+  .srch{order:3;flex-basis:100%;max-width:none}
+  .acc-h .bdg{display:none}
+  .count-chip{margin-inline-start:0}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none}
+  .cover h1 .word > span{transform:none}
+}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="brand">
-      <div class="logo">O</div>
-      <div class="brand-text">
-        <h1>Orange DSL Technical Handbook</h1>
-        <p>Interactive Study Guide — Offline Edition</p>
+<header class="top">
+  <div class="wrap">
+    <div class="topbar">
+      <button class="brand" data-go="home" aria-label="الصفحة الرئيسية">
+        <span class="cube">🧡</span>
+        <span><span dir="ltr">Orange DSL Training</span><small>Trainer: Basel Magdy | باسل مجدي</small></span>
+      </button>
+      <div class="srch">
+        <span class="ic">🔎</span>
+        <input id="searchInput" type="search" placeholder="ابحث في كل المحتوى… (Physical / Network / Billing / تركات)" autocomplete="off" aria-label="بحث في المحتوى">
+        <div class="srch-panel" id="srchPanel" role="listbox"></div>
       </div>
+      <button class="theme-btn" id="themeBtn" aria-label="تبديل الوضع الليلي">🌙</button>
     </div>
-    <div class="trainer-badge">
-      <span class="dot"></span>
-      <span>Trainer: Basel Magdy</span>
-    </div>
-    <div class="top-actions">
-      <button class="btn" onclick="openQuickReview()">⚡ Quick Review</button>
-      <button class="btn" onclick="showBookmarks()">🔖 Bookmarks</button>
-    </div>
+    <nav class="navrow" aria-label="الأقسام الرئيسية">
+      <button class="home-ic" data-go="home" title="الرئيسية">🏠</button>
+      <button class="navbtn" data-go="physical" style="--acc:var(--phys)">🛠️ Physical</button>
+      <button class="navbtn" data-go="network"  style="--acc:var(--net)">🌐 Network</button>
+      <button class="navbtn" data-go="billing"  style="--acc:var(--bill)">💰 Billing</button>
+      <button class="navbtn" data-go="tricks"   style="--acc:var(--trk)">🧠 تركات</button>
+    </nav>
   </div>
-</div>
+</header>
 
-<div class="wrap">
+<main>
 
-  <!-- Hero -->
-  <div class="hero">
-    <h2>أهلاً بيك في <span>Handbook</span> الـ DSL</h2>
-    <p>ده مش كتاب… ده زي ما تكون قاعد مع <b style="color:var(--orange-2)">Basel Magdy</b> قبل الشيفت بتراجعه. كل موضوع مشروح بالعامية، ومعاه Flow و Decision Tree عشان تفهم المنطق مش تحفظ.</p>
-    <div class="hero-stats">
-      <div class="stat"><b id="stat-total">0</b><span>موضوع</span></div>
-      <div class="stat"><b id="stat-reviewed">0</b><span>تم مراجعته ✔</span></div>
-      <div class="stat"><b id="stat-bookmarks">0</b><span>معلم 🔖</span></div>
-    </div>
-
-    <div class="search-box">
-      <input type="text" id="search" placeholder="ابحث… مثلاً: Bad, Gaming, No Browsing, Reset" autocomplete="off">
-      <span class="icon">🔍</span>
-      <div class="search-results" id="searchResults"></div>
-    </div>
-  </div>
-
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab active" data-filter="all">📋 الكل</button>
-    <button class="tab" data-filter="physical">📚 Physical Issues</button>
-    <button class="tab" data-filter="network">🌐 Network Issues</button>
-    <button class="tab" data-filter="reviewed">✔ تمت مراجعته</button>
-    <button class="tab" data-filter="bookmarked">🔖 Bookmarks</button>
-  </div>
-
-  <!-- Categories Container -->
-  <div id="categories"></div>
-
-</div>
-
-<!-- Topic Modal -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="emoji-big" id="mEmoji">📡</div>
+<!-- ════════════════ الرئيسية ════════════════ -->
+<section class="view" id="view-home">
+  <div class="wrap cover">
+    <div class="cover-grid">
       <div>
-        <h2 id="mTitle">Topic Title</h2>
-        <p style="color:var(--muted);font-size:13px" id="mCat">Category</p>
+        <span class="kicker">📞 <span dir="ltr">Orange Home DSL</span> — Call Center Training &amp; Revision</span>
+        <h1><span class="word"><span dir="ltr">Orange</span></span> <span class="word"><span dir="ltr">DSL&nbsp;Training</span></span></h1>
+        <div class="trainer">
+          <span class="av">👨‍🏫</span>
+          <span><b>Basel Magdy | باسل مجدي</b><small>Trainer</small></span>
+        </div>
+        <p class="desc">مرجع تدريبي مبسط لمشاكل <span class="en">Orange Home DSL</span> والـ<span class="en">Scripts</span> والـ<span class="en">Troubleshooting</span>.</p>
       </div>
-      <button class="close" onclick="closeModal()">✕</button>
+      <aside class="index-card rv">
+        <h3>📚 فهرس المرجع <span>٤ أقسام فقط</span></h3>
+        <button class="idx-row" data-go="physical" style="--c:var(--phys)"><span class="e">🛠️</span><span><b>Physical</b><small>مشاكل الـPhysical والـDSL والـLine</small></span><span class="n">٣</span></button>
+        <button class="idx-row" data-go="network" style="--c:var(--net)"><span class="e">🌐</span><span><b>Network</b><small>مشاكل الإنترنت والـWiFi والـIP</small></span><span class="n">٧</span></button>
+        <button class="idx-row" data-go="billing" style="--c:var(--bill)"><span class="e">💰</span><span><b>Billing</b><small>الفواتير والدفع والباقات والخدمات المتعلقة بالحساب</small></span><span class="n">١١</span></button>
+        <button class="idx-row" data-go="tricks" style="--c:var(--trk)"><span class="e">🧠</span><span><b>تركات</b><small>أهم الملاحظات والنقاط اللي ممكن تسبب لخبطة أو تتنسي</small></span><span class="n">١٣</span></button>
+      </aside>
     </div>
-    <div class="modal-actions">
-      <button class="action-btn" id="btnReview" onclick="toggleStatus('reviewed')">✔ Reviewed</button>
-      <button class="action-btn" id="btnNeed" onclick="toggleStatus('need')">🔄 Need Review</button>
-      <button class="action-btn" id="btnFav" onclick="toggleStatus('fav')">⭐ Favorite</button>
-      <button class="action-btn" id="btnBookmark" onclick="toggleStatus('bookmark')">🔖 Bookmark</button>
+
+    <div class="notice rv">
+      <span class="ic">🔄</span>
+      <div><b>الموقع يتم تحديثه باستمرار</b><br>
+      سيتم إضافة أي أجزاء شرح أو ملاحظات جديدة مستقبلًا بشكل تدريجي، لذلك يُفضل الرجوع للموقع من وقت لآخر لمراجعة آخر التحديثات.</div>
     </div>
-    <div class="modal-body" id="mBody"></div>
+
+    <div class="tiles">
+      <button class="tile rv" data-go="physical" style="--c:var(--phys)">
+        <span class="num">01</span><span class="e">🛠️</span>
+        <h3 dir="ltr">Physical</h3>
+        <p>مشاكل الـPhysical والـDSL والـLine.</p>
+        <span class="go">Line Down · Bad Line · Line Unstable <span>←</span></span>
+      </button>
+      <button class="tile rv" data-go="network" style="--c:var(--net)">
+        <span class="num">02</span><span class="e">🌐</span>
+        <h3 dir="ltr">Network</h3>
+        <p>مشاكل الإنترنت والـWiFi والـIP.</p>
+        <span class="go">No Browsing · Authentication · Connection Unstable · WiFi <span>←</span></span>
+      </button>
+      <button class="tile rv" data-go="billing" style="--c:var(--bill)">
+        <span class="num">03</span><span class="e">💰</span>
+        <h3 dir="ltr">Billing</h3>
+        <p>الفواتير والدفع والباقات والخدمات المتعلقة بالحساب.</p>
+        <span class="go">Bill Amount · Invoice · Upgrade · Payment Dispute… <span>←</span></span>
+      </button>
+      <button class="tile rv" data-go="tricks" style="--c:var(--trk)">
+        <span class="num">04</span><span class="e">🧠</span>
+        <h3>تركات</h3>
+        <p>أهم الملاحظات والنقاط اللي ممكن تسبب لخبطة أو تتنسي.</p>
+        <span class="go">١٣ تريكة + الأرقام المهمة <span>←</span></span>
+      </button>
+    </div>
   </div>
-</div>
 
-<!-- Quick Review Modal -->
-<div class="qr-modal" id="qrModal">
-  <div class="qr-content">
-    <div class="qr-header">
-      <h2>⚡ Quick Review Mode</h2>
-      <button class="btn" onclick="closeQuickReview()">✕ Close</button>
+  <div class="ticker" aria-hidden="true">
+    <div class="tk-track">
+      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Extension Offer <i>◆</i> Payment Dispute <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Extra Quote <i>◆</i> Consumption Info <i>◆</i> MSAN <i>◆</i> CIBEL <i>◆</i> Pedia Script <i>◆</i> تركات <i>◆</i></span>
+      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Extension Offer <i>◆</i> Payment Dispute <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Extra Quote <i>◆</i> Consumption Info <i>◆</i> MSAN <i>◆</i> CIBEL <i>◆</i> Pedia Script <i>◆</i> تركات <i>◆</i></span>
     </div>
-    <div id="qrBody"></div>
   </div>
-</div>
+</section>
 
-<!-- Floating Nav -->
-<div class="float-nav">
-  <button onclick="scrollToCat('physical')" title="Physical">📚</button>
-  <button onclick="scrollToCat('network')" title="Network">🌐</button>
-  <button onclick="openQuickReview()" title="Quick Review">⚡</button>
-  <button onclick="resetAll()" title="Reset Progress">🗑</button>
-</div>
+<!-- ════════════════ 1) PHYSICAL ════════════════ -->
+<section class="view" id="view-physical" style="--acc:var(--phys)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-emoji">🛠️</span>
+      <div><h2 dir="ltr">Physical</h2><p>مشاكل الـPhysical والـDSL والـLine.</p></div>
+      <span class="count-chip">٣ موضوعات</span>
+    </div>
 
-<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+    <div class="rule-banner gold rv"><span class="ic">⚠️</span><span><b>القاعدة الذهبية:</b> دايماً نتأكد إن الـ<span class="en">Physical</span> سليم 100% قبل ما ندخل على أي مشكلة <span class="en">Network</span>.</span></div>
+
+    <div class="intro-grid">
+      <div class="intro-c rv">
+        <h4>🧩 أنواع المشاكل</h4>
+        <div class="defs">
+          <div class="def"><b>🛠️ Physical</b><span>مشاكل الأسلاك والخط</span></div>
+          <div class="def"><b>🌐 Network</b><span>مشاكل الشبكة</span></div>
+        </div>
+      </div>
+      <div class="intro-c rv">
+        <h4>🔌 أنواع الخطوط</h4>
+        <div class="defs">
+          <div class="def"><b>🟢 FTTH</b><span>فايبر</span></div>
+          <div class="def"><b>🟡 MSAN</b><span>كابينة فايبر</span></div>
+          <div class="def"><b>🟠 Copper</b><span>نحاس</span></div>
+        </div>
+      </div>
+      <div class="intro-c rv">
+        <h4>🛠️ أدوات الفحص</h4>
+        <div class="defs">
+          <div class="def"><b>🟢 Fiber &amp; 🟡 MSAN</b><span>نستخدم <span class="en">Assurance</span></span></div>
+          <div class="def"><b>🟠 Copper</b><span>نستخدم <span class="en">Octopus</span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accs">
+
+      <!-- ── Line Down ── -->
+      <article class="acc rv" id="physical-line-down" data-sec="physical">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">📵</span>
+          <span class="tt"><b dir="ltr">Line Down</b><small>النت فاصل</small></span>
+          <span class="bdg">٥ أسباب</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>الأسباب المحتملة</h4>
+            <div class="defs">
+              <div class="def"><b>💰 TE Bill</b><span>فاتورة الأرضي غير مدفوعة</span></div>
+              <div class="def"><b>⚡ MSAN Cabinet Offline</b><span>الكابينة واقعة</span></div>
+              <div class="def"><b>🔴 Line Down Matched</b><span>الـ<span class="en">DSL</span> فاصل عند العميل وعند السيستم</span></div>
+              <div class="def"><b>🔄 Wrong Port Not Matched</b><span>حالة الـ<span class="en">DSL</span> مختلفة بين العميل والسيستم</span></div>
+              <div class="def"><b>🔓 MSAN Unlock</b><span>اعمل <span class="en">Lock &amp; Unlock</span> للبورت وبعدين كمل تشخيص</span></div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>☎️ سيناريو المكالمة</h4>
+            <div class="dialog">
+              <div class="msg agent"><span class="who">🎧 أنت — أول سؤال</span>إيه اللمبات اللي منورة في الراوتر؟</div>
+            </div>
+
+            <p style="margin-top:14px"><b>لو DSL والإنترنت فاصلين:</b></p>
+            <div class="path"><span>CIBEL</span><i>→</i><span>ADSL Account</span><i>→</i><span>Service#</span><i>→</i><span>رقم الأرضي</span></div>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span>حدد نوع الخط: <span class="en">MSAN</span> ولا <span class="en">Copper</span></span></div>
+              <div class="cond"><span class="cn">٢</span><span>افحص بالترتيب: 💰 فاتورة ← ⚡ Cabinet ← 🔴 Line Down ← 🔄 Wrong Port</span></div>
+              <div class="cond"><span class="cn">٣</span><span>امشي على <span class="en">Pedia Script</span> خطوة بخطوة</span></div>
+            </div>
+
+            <p style="margin-top:14px"><b>لو لمبة DSL منورة:</b></p>
+            <div class="dialog">
+              <div class="msg agent"><span class="who">🎧 أنت</span>ثابتة ولا بتعمل Flash؟</div>
+            </div>
+            <div class="exs">
+              <div class="ex good"><b>ثابتة ✔</b>غالباً المشكلة مش <span class="en">Physical</span></div>
+              <div class="ex bad"><b>Flash ⚡</b>بتساعدك تحدد <span class="en">Matched</span> ولا <span class="en">Not Matched</span></div>
+            </div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Bad Line ── -->
+      <article class="acc rv" id="physical-bad-line" data-sec="physical">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">📉</span>
+          <span class="tt"><b dir="ltr">Bad Line</b><small>جودة الخط ضعيفة</small></span>
+          <span class="bdg">٦ خطوات</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>بتعتمد على</h4>
+            <div class="chips">
+              <span class="chip">📡 نوع الـ<span class="en">Port</span></span>
+              <span class="chip">📶 نوع الراوتر</span>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>أقل Max طبيعي</h4>
+            <div class="tbl-wrap">
+              <table class="tbl">
+                <tr><th>التركيب</th><th>أقل Max</th></tr>
+                <tr><td>✅ <span class="en">VDSL + VDSL Router</span></td><td><b>36 Mbps</b></td></tr>
+                <tr><td>✅ <span class="en">VDSL + ADSL Router</span> أو العكس</td><td><b>15 Mbps</b></td></tr>
+                <tr><td>✅ <span class="en">Copper ADSL + ADSL Router</span></td><td><b>15 Mbps</b></td></tr>
+              </table>
+            </div>
+            <div class="callout warn"><span class="ci">⚠️</span><div><b>Quality</b>لازم متقلش عن <b>6</b></div></div>
+          </div>
+
+          <div class="callout ok"><span class="ci">🥇</span><div><b>الأولوية</b>لو عند العميل <span class="en">Line Down</span> + <span class="en">Bad Line</span> ← نحل <span class="en">Line Down</span> الأول.</div></div>
+
+          <div class="blk">
+            <h4>أسماء الـMax في Port Parameters</h4>
+            <div class="chips">
+              <span class="chip en">Maximum Attainable Rate</span>
+              <span class="chip en">Downstream Max Attainable Rate</span>
+            </div>
+            <div class="callout warn"><span class="ci">⚠️</span><div><b>ملحوظة</b><span class="en">Attained Bitrate</span> اسمه خادع، ده مش الـ<span class="en">Max</span> الحقيقي.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>☎️ سيناريو Bad Line</h4>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span><b>أولاً:</b> اتأكد إن عنده جيجات من <span class="en">PCRF</span> في <span class="en">CIBEL</span></span></div>
+              <div class="cond"><span class="cn">٢</span><span><b>ثانياً:</b> ادخل
+                <span class="path" style="margin:6px 0 0"><span>Assurance</span><i>→</i><span>CPE Status</span><i>→</i><span>Get Port Parameters</span></span>
+                لو الـ<span class="en">Max</span> سيئ: اختار <span class="en">Not Accepted</span></span></div>
+              <div class="cond"><span class="cn">٣</span><span><b>حساب السرعة الصحيحة:</b>
+                <span class="formula">السرعة المناسبة = Max × 80% إلى 85%</span>
+                <small style="display:block;color:var(--ink2)">مثال: Max = 20 ← السرعة من 16 لـ 17</small></span></div>
+              <div class="cond"><span class="cn">٤</span><span>راجع السرعة الحالية من: <span class="en">Get Configured Speed</span></span></div>
+              <div class="cond"><span class="cn">٥</span><span>لو السرعة صحيحة: اختار <span class="en">Right Speed Profile</span> وكمل <span class="en">Pedia</span></span></div>
+              <div class="cond"><span class="cn">٦</span><span>لو السرعة غلط: عدّلها يدوي للسرعة الصح
+                <small>← استنى الراوتر يعمل <span class="en">Restart</span> ← افحص الـ<span class="en">Max</span> تاني</small></span></div>
+            </div>
+            <div class="exs">
+              <div class="ex good"><b>اتحسن ✅</b><span class="en">Solved after adjustment</span></div>
+              <div class="ex bad"><b>متحسنش ❌</b><span class="en">Not Solved after adjustment</span> وكمل باقي خطوات <span class="en">Pedia</span></div>
+            </div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Line Unstable ── -->
+      <article class="acc rv" id="physical-line-unstable" data-sec="physical">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">〰️</span>
+          <span class="tt"><b dir="ltr">Line Unstable</b><small>فصل ووصل الـDSL</small></span>
+          <span class="bdg">٤ شروط</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>يعني إيه Line Unstable؟</h4>
+            <p>مشكلة <span class="en">Physical</span> بيكون فيها <b>لمبة الـ<span class="en">DSL</span> بتفصل وتشتغل بشكل متكرر</b>.</p>
+            <div class="quote">العميل بيقول: "النت بيفصل ويرجع" أو "الراوتر بيفصل ويشتغل لوحده"</div>
+          </div>
+
+          <div class="blk">
+            <h4>📞 شروط التأكد قبل ما تمشي Line Unstable</h4>
+            <p>لازم الـ4 شروط دول يتحققوا مع بعض:</p>
+
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span><b>استبعاد Line Down</b> — مينفعش يكون فيه أي سبب من أسباب الـ<span class="en">Line Down</span>
+                <small>• لو الـ<span class="en">DSL</span> Down عندك وعند العميل ← دي <span class="en">Line Down</span><br>
+                • لو عند العميل Down وعندك Up أو العكس ← دي <span class="en">Not Matched / Wrong Port</span><br>
+                ✅ لازم كل حالات الـ<span class="en">Line Down</span> تكون مستبعدة تماماً</small></span></div>
+
+              <div class="cond"><span class="cn">٢</span><span><b>استبعاد Bad Line</b> — لازم كل القيم تكون سليمة:
+                <small>• 📌 <span class="en">Max Rate</span> طبيعي حسب نوع الراوتر والبورت<br>
+                • 📌 <span class="en">SNR / Noise Margin</span> يكون <b>6 dB</b> أو أعلى<br>
+                ❌ لو فيه <span class="en">Bad Line</span> ← افتح <span class="en">Pedia Bad Line</span> مش <span class="en">Line Unstable</span></small></span></div>
+
+              <div class="cond"><span class="cn">٣</span><span><b>التأكد إن السرعة صحيحة</b>
+                <span class="formula">السرعة المتوقعة = Max Rate × 80% إلى 85%</span>
+                <small>✅ السرعة صح ← كمل عادي<br>
+                ❌ السرعة غلط ← 1) عدّل السرعة للرقم الصح 2) بلغ العميل إن السرعة اتظبطت 3) <b>وقف هنا</b> ومتكملش <span class="en">Line Unstable</span> عشان عملت <span class="en">Human Intervention</span></small></span></div>
+
+              <div class="cond"><span class="cn">٤</span><span><b>مراجعة Port Up Time</b> — آخر <span class="en">Restart</span> للراوتر يكون خلال آخر <b>6 ساعات</b> من وقت المكالمة
+                <small>🕒 <b>يعني إيه Port Up Time؟</b> هو الوقت اللي في <span class="en">Assurance → CPE Status</span> وبيبين آخر مرة الراوتر فصل واشتغل</small></span></div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>أمثلة على Port Up Time</h4>
+            <div class="exs">
+              <div class="ex good"><b>مثال 1 ✔</b>☎️ وقت المكالمة: 6:00 مساءً<br>✅ Port Up Time: 12:30 ظهراً / 2:00 عصراً / 5:30 مساءً<br>➡️ كله داخل آخر 6 ساعات ➡️ <b>تعتبر Line Unstable</b></div>
+              <div class="ex bad"><b>مثال 2 ❌</b>☎️ وقت المكالمة: 9:00 مساءً<br>❌ Port Up Time: 12:00 ظهراً<br>➡️ الفرق أكبر من 6 ساعات ➡️ <b>لا تعتبر Line Unstable</b></div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>💬 الرد المناسب للعميل لو الشرط الرابع مش متحقق</h4>
+            <div class="quote">"بعتذر لحضرتك يا فندم، حالياً مش ظاهر عندي إن الخدمة بتفصل وتشتغل، لأن آخر مرة الراوتر فصل واشتغل كانت من أكثر من 6 ساعات"</div>
+          </div>
+
+          <div class="blk">
+            <h4>🎯 الخلاصة السريعة — Checklist</h4>
+            <p>عشان تقول دي <span class="en">Line Unstable</span> لازم:</p>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">✓</span><span>ليست <span class="en">Line Down</span></span></div>
+              <div class="cond"><span class="cn">✓</span><span>ليست <span class="en">Bad Line</span></span></div>
+              <div class="cond"><span class="cn">✓</span><span>السرعة صحيحة <b>80–85%</b> من الـ<span class="en">Max</span></span></div>
+              <div class="cond"><span class="cn">✓</span><span><span class="en">Port Up Time</span> خلال آخر <b>6 ساعات</b></span></div>
+            </div>
+            <div class="result-box">🎉 لو الأربع شروط متحققين ← امشي على خطوات <span dir="ltr">Pedia Line Unstable</span></div>
+          </div>
+
+          <div class="callout bad"><span class="ci">⚠️</span><div><b>ممنوع الخلط</b>لا تخلط <span class="en">Line Unstable</span> مع <span class="en">Connection Unstable</span> الموجودة في <span class="en">Network</span>.</div></div>
+
+        </div></div></div>
+      </article>
+    </div>
+
+    <!-- أهم 5 قواعد -->
+    <div class="intro-c rv" style="margin-bottom:56px">
+      <h4>📝 أهم ٥ قواعد تحفظهم</h4>
+      <div class="cond-list">
+        <div class="cond"><span class="cn">١</span><span>✅ <span class="en">Physical</span> أولاً دايماً</span></div>
+        <div class="cond"><span class="cn">٢</span><span>✅ اسأل عن لمبات الراوتر قبل أي حاجة</span></div>
+        <div class="cond"><span class="cn">٣</span><span>✅ حدد نوع الخط أولاً: <span class="en">Fiber / MSAN / Copper</span></span></div>
+        <div class="cond"><span class="cn">٤</span><span>✅ امشي على الـ<span class="en">Pedia</span> وماتتخطاش ولا خطوة</span></div>
+        <div class="cond"><span class="cn">٥</span><span>✅ النهاية دايماً واحدة من اتنين:
+          <small>🎉 المشكلة اتحلت أثناء المكالمة &nbsp;|&nbsp; 📋 يتم تسجيل شكوى <span class="en">Ticket</span></small></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ 2) NETWORK ════════════════ -->
+<section class="view" id="view-network" style="--acc:var(--net)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-emoji">🌐</span>
+      <div><h2 dir="ltr">Network</h2><p>مشاكل الإنترنت والـWiFi والـIP.</p></div>
+      <span class="count-chip">٧ موضوعات</span>
+    </div>
+
+    <div class="rule-banner rv"><span class="ic">⚠️</span><span>قاعدة أساسية: أي <span class="en">Network Issue</span> لازم أتأكد من الـ<span class="en">Physical</span> الأول.</span></div>
+
+    <div class="accs">
+
+      <!-- ── No Browsing ── -->
+      <article class="acc rv" id="network-no-browsing" data-sec="network">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">🚫</span>
+          <span class="tt"><b dir="ltr">No Browsing</b><small>كل حاجة تمام… بس النت مش شغال</small></span>
+          <span class="bdg">الرسالة هي الفيصل</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>يعني إيه No Browsing؟</h4>
+            <p>كل حاجة شغالة عند العميل في اللمبات في الراوتر، وانت حتي عندك علي السيستم تلاقي كله تمام:</p>
+            <div class="chips" style="margin-top:8px">
+              <span class="chip g">فيزيكل ✅</span>
+              <span class="chip g">سرعة أورانج ✅</span>
+              <span class="chip g">الخط ساحب IP ✅</span>
+            </div>
+            <div class="callout pin"><span class="ci">📌</span><div><b>معنى "ساحب IP"</b>لمبة الإنترنت فعلا منورة وشغالة وزي الفل.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>الفرق بين No Browsing و Slow Download</h4>
+            <p>المعطيات دي هي هي نفس معطيات الـ<span class="en">Slow Download</span> (فيزيكل ✅ وسرعة أورانج ✅ وساحب IP ✅)… بنفرق بينهم بسؤال بسيط للعميل:</p>
+            <div class="quote">جرّب بس كدا تبعت رسالة، شوفها بتوصل ولا لا</div>
+            <div class="exs">
+              <div class="ex good"><b>الرسالة بتوصل ✔</b>بتكلم علي <span class="en">Slow Download</span></div>
+              <div class="ex bad"><b>مبتوصلش ❌</b>بتكلم علي <span class="en">No Browsing</span> — حتي الرسالة مبتوصلش</div>
+            </div>
+            <div class="callout ok"><span class="ci">🧠</span><div><b>الخلاصة</b>الـ<span class="en">No Browsing</span> هو إن كل حاجة تمام عند العميل وفي السيستم، ومع ذلك النت مش شغال خالص، حتي الرسالة مبتوصلش.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>☎️ المكالمة بتدخل إزاي؟</h4>
+            <div class="dialog">
+              <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت مش شغال، فاصل خالص</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>إيه اللمبات اللي منورة عند حضرتك؟</div>
+              <div class="msg cust"><span class="who">👤 العميل</span>كله منور في الراوتر بس النت مش شغال علي التليفون، مش عارف ليه</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>طيب لحظات معايا يا فندم أراجع البيانات</div>
+              <div class="msg note">— بتبدأ تشوف الخط: كل حاجة تمام وزي الفل —</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>أستأذنك يا فندم، جرّب تبعت رسالة كدا تشوفها بتوصل — يعني الخدمة شغالة بس بطيئة عند حضرتك — ولا مبتوصلش خالص؟</div>
+              <div class="msg cust"><span class="who">👤 العميل</span>استني كدا هجرب أبعت… لا، حتي الرسالة مبتوصلش / ظاهر علامة تعجب مبتتشالش خالص</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>يلا بينا No Browsing يا فندم 🚀</div>
+            </div>
+          </div>
+
+          <div class="callout pin"><span class="ci">📚</span><div><b>بعد تحديد الـCase</b>خلاص انت عرفت تحدد الـ<span class="en">Case</span> — خش <span class="en">Pedia</span> وشوف بتقولك إيه واعملها. اقرأ… مش عايزك تحفظ خطوات، المهم عرفنا الـ<span class="en">No Browsing</span>.</div></div>
+
+          <div class="callout bad"><span class="ci">🚨</span><div>
+            <b>ارجوك متنساش متنساش متنسااااش:</b>
+            آخر صفحة في الـ<span class="en">No Browsing</span> فيها <b>خطوتين مش خطوة واحدة</b>:
+            <ul>
+              <li><b>١.</b> العميل يعمل نسيان للشبكة <span class="en">Forget Network</span> ويرجع يشغلها</li>
+              <li><b>٢.</b> ولو متحلتش — ارجوووك <b>متدخلش <span class="en">Not Solved</span></b>، عشان في سطر تاني بيقولك: نعمل <span class="en">Reset</span> وندخل صفحة الراوتر</li>
+            </ul>
+          </div></div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Authentication ── -->
+      <article class="acc rv" id="network-authentication" data-sec="network">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">🔐</span>
+          <span class="tt"><b dir="ltr">Authentication</b><small>نفس No Browsing… بس مش ساحب IP</small></span>
+          <span class="bdg">٣ خانات</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>يعني إيه Authentication؟</h4>
+            <p>هي نفس الـ<span class="en">No Browsing</span>، الفرق إنه <b>مش ساحب IP</b>. يعني بتيجي تعمل <span class="en">Check</span> للخط بتلاقي:</p>
+            <div class="chips" style="margin-top:8px">
+              <span class="chip g">فيزيكل ✅</span>
+              <span class="chip g">سرعة أورانج ✅</span>
+              <span class="chip r">الـ IP ❌</span>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>☎️ المكالمة بتدخل إزاي؟</h4>
+            <div class="dialog">
+              <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت عندي فاصل</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>إيه اللمبات اللي منورة عند حضرتك؟</div>
+              <div class="msg cust"><span class="who">👤 العميل</span>كله شغال ما عدا لمبة الإنترنت منورة أحمر (أو فاصلة خالص)</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>الـ<span class="en">DSL</span> ثابتة ولا بتفلاش؟</div>
+              <div class="msg cust"><span class="who">👤 العميل</span>ثابتة، المشكلة كلها في لمبة الإنترنت بس</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>تمام يا فندم، لحظات أراجع بعض البيانات</div>
+              <div class="msg note">— الخط فيزيكل تمام وكله تمام… ما عدا IP ❌❌ —</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>خلاص حددنا الـCase إنها Authentication — يلا بينا Pedia 🚀</div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>أول ما تدخل Pedia</h4>
+            <p>تنزل تحت خالص، بتلاقي ٣ خانات:</p>
+            <div class="chips" style="margin-top:8px">
+              <span class="chip en">Login OK</span>
+              <span class="chip en">Login Failed</span>
+              <span class="chip en">No Logs</span>
+            </div>
+            <div class="callout pin"><span class="ci">🐙</span><div><b>بحددها على أساس إيه؟ — Octopus</b>
+            بخش علي الـ<span class="en">Octopus</span>:<br>
+            ✅ علامة صح علي اليمين ← <span class="en">Login OK</span><br>
+            ❌ علامة غلط ← <span class="en">Login Failed</span><br>
+            مفيش ولا صح ولا غلط ← <span class="en">No Logs</span></div></div>
+          </div>
+
+          <!-- الحالات الثلاث — منفصلة تمامًا -->
+          <div class="blk">
+            <h4>الحالات الثلاث — خطوات كل خانة على حدة</h4>
+            <div class="cases">
+
+              <div class="case" style="--cc:var(--ok)">
+                <div class="ch">✅ <span dir="ltr">Login OK</span> <small style="font-weight:600;opacity:.8">— خطوتين بس</small></div>
+                <div class="cb">
+                  <div class="cond-list">
+                    <div class="cond"><span class="cn">١</span><span><span class="en">Lock &amp; Unlock</span><small>اتحلت تمام — متحلتش؟ هعمل اللي بعدها</small></span></div>
+                    <div class="cond"><span class="cn">٢</span><span><span class="en">Restart Router</span><small>اتحلت المشكلة تمام الحمد لله</small></span></div>
+                  </div>
+                  <div class="result-box" style="font-size:.9rem">متحلتش؟ نفتح شكوى — وفي خلال <b>24 ساعة</b> مشكلة حضرتك هتتحل إن شاء الله</div>
+                </div>
+              </div>
+
+              <div class="case" style="--cc:var(--bad)">
+                <div class="ch">❌ <span dir="ltr">Login Failed</span></div>
+                <div class="cb">
+                  <p>أول ما أدخل <span class="en">Login Failed</span> هخش علي إن الخطأ في الـ<span class="en">Username</span> — لأن زي ما اتفقنا العمودين اللي في النص ليهم علاقة بالكابينة، <b>انت ملكش دعوة بيهم خالص في الحالة دي</b>.</p>
+                  <p>دخلت علي <span class="en">Press here</span> (مشكلة الـ<span class="en">Username</span>)، بلاقي ٣ خانات:</p>
+
+                  <div class="defs">
+                    <div class="def" style="flex-direction:column;gap:4px"><b>1️⃣ Wrong Username</b>
+                      <span>معناها إن الرقم مكتوب ناقصه رقم أو في حرف ناقص أو رقمين متبدلين — عموماً العميل مش كاتب الـ<span class="en">Service ID</span> صح أو مش مظبوط.<br>
+                      ← علطول بخش معاه صفحة الراوتر أعدّله:<br>
+                      • اتعدل تمام خير<br>
+                      • لو مظبطش؟ بعمل <span class="en">Reset</span> و<span class="en">Configuration</span> وأخش صفحة الراوتر من جديد</span>
+                    </div>
+                    <div class="def" style="flex-direction:column;gap:4px"><b>2️⃣ TR069</b>
+                      <span>معناها إن الرقم أصلاً مختلف كله على بعضه.<br>
+                      ← علطول بخش صفحة الراوتر مع العميل بعمل حاجتين:<br>
+                      ١) بشيل علامة الـ✅ من خانة اسمها <span class="en">TR069</span><br>
+                      ٢) بعدين أكتب الرقم الأرضي الصح وخلاص<br>
+                      • اتحلت الحمد لله — متحلتش؟ هفتح شكوى</span>
+                    </div>
+                    <div class="def" style="flex-direction:column;gap:4px"><b>3️⃣ Another ISP</b>
+                      <span>بلاقي جنب الرقم الأرضي علطول اسم شركة إنترنت تانية (وي / فودافون / اتصالات) — معناها إن الراوتر من شركة تانية.<br>
+                      ← بسأل العميل: "حضرتك الراوتر اشتريته من أورانج؟"<br>
+                      • <b>If yes</b> ← هعمل <span class="en">Reset</span> وأخش صفحة الراوتر وأحاول أحل المشكلة وأعمل تعريف<br>
+                      • <b>If no</b> ← "أستأذنك نعمل سوفت وير لراوتر حضرتك لأورانج وارجع كلمنا مرة تانية عشان نساعدك" — <b>مش هفتح أي شكوى</b>، هفتحها وأقفلها وخلاص، مش هسيبها مفتوحة</span>
+                    </div>
+                  </div>
+
+                  <div class="callout warn" style="margin-top:10px"><span class="ci">⚠️</span><div><b>اتفقنا — Verification قبل أي حاجة</b>الـ<span class="en">Service ID</span> لازم قبل ما أقوله للعميل، أعمل <span class="en">Verification</span> / تحقيق هوية: أسأله <b>اسم صاحب التعاقد الثلاثي</b> و<b>الرقم المحمول المسجل في التعاقد</b>.</div></div>
+                </div>
+              </div>
+
+              <div class="case" style="--cc:var(--warn)">
+                <div class="ch">🗂️ <span dir="ltr">No Logs</span></div>
+                <div class="cb">
+                  <div class="cond-list">
+                    <div class="cond"><span class="cn">١</span><span><span class="en">Lock &amp; Unlock</span><small>لو اتحلت تمام — لو متحلتش اللي بعدها</small></span></div>
+                    <div class="cond"><span class="cn">٢</span><span><span class="en">Restart Router</span><small>لو اتحلت تمام — لو متحلتش اللي بعدها</small></span></div>
+                    <div class="cond"><span class="cn">٣</span><span><span class="en">Reset &amp; Configuration</span><small>هعمل Reset وأخش صفحة الراوتر — لو اتحلت تمام، لو متحلتش هفتح شكوى علطول</small></span></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Connection Unstable ── -->
+      <article class="acc rv" id="network-connection-unstable" data-sec="network">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">🔌</span>
+          <span class="tt"><b dir="ltr">Connection Unstable</b><small>شرطين بس… وشكوى علطول</small></span>
+          <span class="bdg">بدون خطوات</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>يعني إيه Connection Unstable؟</h4>
+            <p>المشكلة عند العميل إن <b>لمبة الإنترنت بتفصل وتشتغل</b>، أو تقعد فترة فاصلة وترجع تشتغل — <b>إنما الـ<span class="en">DSL</span> مبتتأثرش، بتفضل ثابتة مبتفصلش خالص</b>.</p>
+          </div>
+
+          <div class="callout warn"><span class="ci">⚠️</span><div><b>زي ما متفقين — بنتشييك فيزيكل الأول (مرة كمان 😄)</b>لو <span class="en">Bad Line</span> همشي <span class="en">Bad Line</span> — لو <span class="en">Line Down</span> همشي <span class="en">Line Down</span>.</div></div>
+
+          <div class="blk">
+            <h4>الشرطين</h4>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span><b>الـ<span class="en">Port Up Time</span> يكون أكتر من 6 ساعات</b>
+                <small>لأنه لو في خلال 6 ساعات أو أقل، كدا احنا بنتكلم عن الـ<span class="en">Line Unstable</span> (ارجع لقسم Physical هتفهم).<br>
+                فلازم الـ<span class="en">Port Up Time</span> يكون مثلاً من 10 ساعات أو يوم أو يومين — عشان ده الـ<span class="en">DSL</span>، واحنا اتفقنا إن المشكلة مش في الـ<span class="en">DSL</span>، فطبيعي تفضل شغالة مدة طويلة وثابتة.</small></span></div>
+              <div class="cond"><span class="cn">٢</span><span><b>الفرق بين الـ<span class="en">Port Up Time</span> والـ<span class="en">IP</span> يكون أكتر من 5 دقايق</b>
+                <small>ميكنش في نفس التوقيت. يعني مثلاً:<br>
+                الـ<span class="en">Port Up Time</span> يوم 30/7/2026 الساعة 3PM… والـ<span class="en">IP</span> يوم 30/7/2026 الساعة 3:10PM — كدا في فرق أكتر من 5 دقايق.</small></span></div>
+            </div>
+            <div class="result-box">أول ما يتوفر الشرطين دول ← بفتح شكوى علطول من غير خطوات، وفي خلال <b>24 ساعة</b> المشكلة هتتحل إن شاء الله 🎫</div>
+            <div class="callout bad"><span class="ci">⛔</span><div><b>تنبيه</b>لا توجد خطوات <span class="en">Pedia</span> إضافية لهذه الحالة.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>☎️ المكالمة بتدخل إزاي؟</h4>
+            <div class="dialog">
+              <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت عندي بيفصل ويشتغل / لمبة الإنترنت بتنور أحمر فترة وترجع تشتغل لوحدها</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>تمام، هراجع بيانات خط حضرتك وأرجعلك يا فندم</div>
+              <div class="msg note">— الفيزيكل تمام… الـPort Up Time من بدري جداً (أكتر من 6 ساعات) 😯 تستغرب: إزاي بيفصل ويشتغل؟ —</div>
+              <div class="msg note">— تدخل على الـIP… تلاقي فرق أكتر من 5 دقايق —</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>هووووب… Connection Unstable يا معلم 🎯</div>
+            </div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── WiFi Instability ── -->
+      <article class="acc rv" id="network-wifi-instability" data-sec="network">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">📶</span>
+          <span class="tt"><b dir="ltr">WiFi Instability</b><small>الواي فاي بيظهر تعجب أو بيخرج من الأجهزة</small></span>
+          <span class="bdg">الراوتر سليم</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>يعني إيه WiFi Instability؟</h4>
+            <p>الواي فاي بيظهر <b>علامة تعجب سريعة كدا ويرجع يشتغل طبيعي</b>، أو الواي فاي <b>بيخرج من الأجهزة ويرجع</b>.</p>
+          </div>
+
+          <div class="blk">
+            <h4>☎️ المكالمة بتدخل إزاي؟</h4>
+            <div class="dialog">
+              <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت عندي بيفصل ويشتغل من الأجهزة / فجأة بيظهر علامة تعجب ويرجع تاني / فجأة الفيديو بيقف يحمل ويرجع يشتغل</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>تمام يا فندم، لحظات معايا أراجع بعض البيانات</div>
+              <div class="msg note">— بتخش تلاقي كل حاجة تمام: ولا Line Down ولا Bad Line —</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>يلا بينا WiFi Instability 🚀</div>
+            </div>
+          </div>
+
+          <div class="callout warn"><span class="ci">⚠️</span><div><b>قبل ما تدخل WiFi Instability</b>لازم تتأكد إن <span class="en">Line Up</span> والـ<span class="en">Max</span> ✅ — يعني الفيزيكل سليم الأول (راجع تريكة 6).</div></div>
+          <div class="callout pin"><span class="ci">💡</span><div><b>الحل الأساسي في الحالة دي</b>تغيير اسم الشبكة (الـ<span class="en">SSID</span>) إلى <b>اسم جديد ميكونش اتعمل قبل كدا</b> — تفاصيل أكتر في تريكة 12.</div></div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Slow Download ── -->
+      <article class="acc rv" id="network-slow-download" data-sec="network">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">🐢</span>
+          <span class="tt"><b dir="ltr">Slow Download</b><small>بطء التحميل</small></span>
+          <span class="bdg">الرسالة بتفرّقها</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="callout ok"><span class="ci">✉️</span><div><b>إزاي أفرّقها عن No Browsing؟</b>الرسالة <b>بتوصل</b> ← يبقى أنا كدا بتكلم علي <span class="en">Slow Download</span> (نفس المعطيات: فيزيكل ✅ سرعة أورانج ✅ ساحب IP ✅).</div></div>
+          <div class="callout pin"><span class="ci">📌</span><div><b>مكان الـScript في Pedia</b>مكان الـ<span class="en">Script</span> في <span class="en">Pedia</span> هو: <span class="en">Physical → Dsl-Slow Download</span> — في نفس الخانة بتاعة الـ<span class="en">Bad Line</span> (راجع تريكة 9).</div></div>
+          <div class="slot"><span class="si">📝</span><div><b>باقي الشرح</b>يُضاف هنا شرح <span class="en">Slow Download</span> عند إرساله — كما هو بدون تعديل.</div></div>
+        </div></div></div>
+      </article>
+
+      <!-- ── Online Gaming ── -->
+      <article class="acc rv" id="network-online-gaming" data-sec="network">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">🎮</span>
+          <span class="tt"><b dir="ltr">Online Gaming</b><small>البنج وحش؟ اسأل الأول كام</small></span>
+          <span class="bdg">اسأل عن الـPing</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="callout warn"><span class="ci">❓</span><div><b>أول حاجة — السؤال عن رقم الـPing</b>طبيعي أول ما العميل يدخل يقولك "البنج وحش" — فلازم تسأله: <b>"البنج كام عند حضرتك؟"</b> عشان تشوف هل هو وحش فعلاً ولا لا حسب الجدول اللي عندك في الـ<span class="en">Online Gaming</span> في <span class="en">Pedia</span> (تريكة 13).</div></div>
+          <div class="blk">
+            <h4>الأرقام المتعلقة بالحالة (المرجع: قسم تركات)</h4>
+            <div class="chips">
+              <span class="chip en">Max ≥ 40</span>
+              <span class="chip en">SNR ≥ 100</span>
+              <span class="chip en">Ping &gt; 100</span>
+            </div>
+          </div>
+          <div class="slot"><span class="si">📝</span><div><b>باقي الشرح</b>يُضاف هنا شرح <span class="en">Online Gaming</span> عند إرساله — كما هو بدون تعديل.</div></div>
+        </div></div></div>
+      </article>
+
+      <!-- ── Bit Rate Mismatch ── -->
+      <article class="acc rv" id="network-bitrate-mismatch" data-sec="network">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">⚖️</span>
+          <span class="tt"><b dir="ltr">Bit Rate Mismatch</b><small>مش لأي خط!</small></span>
+          <span class="bdg">قواعد الفتح</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="callout bad"><span class="ci">⛔</span><div><b>مبتتفتحش غير لـ:</b>خط الـ<span class="en">Copper</span> والخطوط الـ<span class="en">MSAN</span> سرعة <span class="en">70 / 100 / 200</span>.<br><b>محدش يفكر يفتح شكوى <span class="en">Bit Rate Mismatch</span> في خط <span class="en">MSAN</span> سرعة 30</b> (تريكة 8).</div></div>
+          <div class="callout warn"><span class="ci">🧩</span><div><b>حالة Speed 30 و Max 100</b>العميل مشترك سرعة 30 والخط الـ<span class="en">Max</span> بتاعه 100 — السرعة 30 مظبوطة؟ <b>أيوا</b> ← خش بقي علي <span class="en">Doesn't Have Bit Rate Mismatch</span> (التفاصيل في تريكة 11).</div></div>
+          <div class="slot"><span class="si">📝</span><div><b>باقي القواعد</b>تُضاف هنا باقي قواعد <span class="en">Bit Rate Mismatch</span> عند إرسالها — كما هي بدون إضافة قواعد جديدة.</div></div>
+        </div></div></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ 3) BILLING ════════════════ -->
+<section class="view" id="view-billing" style="--acc:var(--bill)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-emoji">💰</span>
+      <div><h2 dir="ltr">Billing</h2><p>الفواتير والدفع والباقات والخدمات المتعلقة بالحساب.</p></div>
+      <span class="count-chip">١١ موضوعًا</span>
+    </div>
+
+    <div class="accs">
+
+      <!-- ── Bill Amount ── -->
+      <article class="acc rv" id="billing-bill-amount" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">🧾</span>
+          <span class="tt"><b dir="ltr">Bill Amount</b><small>الفاتورة العادية</small></span>
+          <span class="bdg">٣ Scripts</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>لو العميل بيسأل:</h4>
+            <div class="chips">
+              <span class="chip">عليّا فاتورة بكام؟</span>
+              <span class="chip">هدفع إمتى؟</span>
+              <span class="chip">الفاتورة نزلت إمتى؟</span>
+              <span class="chip">الخدمة واقفة بسبب الفاتورة؟</span>
+            </div>
+            <div class="path"><span>Home DSL</span><i>→</i><span>How to Complain</span><i>→</i><span>Billing</span><i>→</i><span>Bill Amount</span></div>
+          </div>
+
+          <div class="blk">
+            <h4>عندنا 3 Scripts</h4>
+            <div class="defs">
+              <div class="def" style="flex-direction:column;gap:4px"><b>🔹 Active Customer</b><span>الخط <span class="en">Active</span> ولسه في فترة السماح.</span></div>
+              <div class="def" style="flex-direction:column;gap:4px"><b>🔹 Suspend &amp; Eligible</b>
+                <span>الخط <span class="en">Suspend</span> ويستحق يومين سماح. <b>لازم:</b><br>
+                • يكون عدّى <b>7 أيام</b><br>
+                • يكون داخل في الـ<b>5 أيام</b> اللي بعد الـ7 مباشرة<br>
+                • يكون مخدش يومين السماح قبل كده<br>
+                وتراجع: <span class="en">Service Request → Promise To Pay</span></span></div>
+              <div class="def" style="flex-direction:column;gap:4px"><b>🔹 Suspend &amp; Ineligible</b><span>الخط <span class="en">Suspend</span> ومش مستحق يومين سماح.</span></div>
+            </div>
+            <div class="callout pin"><span class="ci">💡</span><div><b>تقدر تفرق بينهم من الـScript نفسه:</b>
+            • لو مكتوب "أقدر أشغلك الخدمة لمدة يومين" ← <span class="en">Eligible</span><br>
+            • لو مفيش اليومين ← <span class="en">Ineligible</span><br>
+            أو من الاسم بالإنجليزي: <span class="en">Suspend &amp; Eligible / Suspend &amp; Ineligible</span></div></div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Price Update ── -->
+      <article class="acc rv" id="billing-price-update" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">🏷️</span>
+          <span class="tt"><b dir="ltr">Price Update</b><small>الأسعار زادت</small></span>
+          <span class="bdg">٣ Scripts</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="blk">
+            <h4>لو العميل عارف وضع الفاتورة لكن داخل يقول:</h4>
+            <div class="quote">"الأسعار غليت / الفاتورة غالية"</div>
+            <div class="path"><span>Home DSL</span><i>→</i><span>Related VAS</span><i>→</i><span>Price Updated</span></div>
+          </div>
+          <div class="blk">
+            <h4>أهم 3 Scripts</h4>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span>سبب زيادة الأسعار</span></div>
+              <div class="cond"><span class="cn">٢</span><span>طريقة احتساب الزيادة</span></div>
+              <div class="cond"><span class="cn">٣</span><span>لو الباقة نفسها اتغيرت في الجيجابايتس</span></div>
+            </div>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- ── Billing Details ── -->
+      <article class="acc rv" id="billing-billing-details" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">📋</span>
+          <span class="tt"><b dir="ltr">Billing Details</b><small>رصيد العميل والفاتورة من Seibal</small></span>
+          <span class="bdg">سالب / موجب / صفر</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>📌 ميعاد التجديد</h4>
+            <p>من <span class="en">PCRF</span> هتلاقي ميعاد التجديد في الجدول.</p>
+          </div>
+
+          <div class="blk">
+            <h4>📌 لمعرفة الفلوس</h4>
+            <div class="path"><span>Parent Account</span><i>→</i><span>Billing Details</span></div>
+            <div class="defs">
+              <div class="def"><b>رقم بالسالب ➖</b><span>العميل <b>له رصيد</b> / دفع زيادة</span></div>
+              <div class="def"><b>رقم بالموجب ➕</b><span>العميل <b>عليه فلوس</b></span></div>
+              <div class="def"><b>0️⃣ صفر</b><span>لا له ولا عليه</span></div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>📌 تحميل الفاتورة</h4>
+            <div class="path"><span>Billing Details</span><i>→</i><span>Invoices</span><i>→</i><span>Search</span></div>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span>اختار تاريخ قديم جدًا في الخانة الأولى، و<span class="en">Now</span> في الخانة الثانية</span></div>
+              <div class="cond"><span class="cn">٢</span><span>بعدها: <span class="en">Select Bill → Download Invoice</span></span></div>
+            </div>
+            <div class="callout pin"><span class="ci">💳</span><div><b>ولو عايز تعرف دفع إمتى ومنين؟</b>قف على الفاتورة وانزل تحت — هتلاقي <b>تاريخ الدفع</b> و<b>طريقة/مكان الدفع</b>.</div></div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Invoice ── -->
+      <article class="acc rv" id="billing-invoice" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">🧮</span>
+          <span class="tt"><b dir="ltr">Invoice</b><small>قراءة الفاتورة</small></span>
+          <span class="bdg">٧ بنود + معادلة</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="blk">
+            <h4>أهم البنود</h4>
+            <div class="defs">
+              <div class="def"><b>🔹 Home Internet</b><span>الباقة الأساسية</span></div>
+              <div class="def"><b>🔹 Gap Month</b><span>شهر فاتورة متسقط بسبب التأخير في الدفع</span></div>
+              <div class="def"><b>🔹 Add Item</b><span>فرق الباقة بسبب <span class="en">Upgrade</span></span></div>
+              <div class="def"><b>🔹 OCC Service</b><span>الباقات الإضافية</span></div>
+              <div class="def"><b>🔹 Discount</b><span>الخصم — وبيظهر بالسالب</span></div>
+              <div class="def"><b>🔹 14% Tax</b><span>ضريبة الدولة</span></div>
+              <div class="def"><b>🔹 Total</b><span>إجمالي الفاتورة</span></div>
+            </div>
+          </div>
+          <div class="blk">
+            <h4>حساب الـAdd Item</h4>
+            <div class="formula">(الباقة الكبيرة − الباقة الصغيرة) ÷ 30 × عدد الأيام المتبقية لميعاد التجديد</div>
+          </div>
+          <div class="callout pin"><span class="ci">📌</span><div><b>شرح الفاتورة ملوش Script ثابت</b>المهم تقول المعلومة الصح.</div></div>
+        </div></div></div>
+      </article>
+
+      <!-- ── Extension Offer ── -->
+      <article class="acc rv" id="billing-extension-offer" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">🎁</span>
+          <span class="tt"><b dir="ltr">Extension Offer</b><small>باقة إضافية نزلت تلقائيًا</small></span>
+          <span class="bdg">شكوى 5048</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="blk">
+            <h4>الحالة</h4>
+            <p>باقة إضافية نزلت تلقائيًا والعميل بيقول إنه مضيفهاش.</p>
+            <div class="path"><span>Home DSL</span><i>→</i><span>Related Offer</span><i>→</i><span>Extensions Offer</span></div>
+          </div>
+          <div class="blk">
+            <h4>هات Script التعويض:</h4>
+            <div class="quote">"عشان يهمنا رضا حضرتك، هيتم تعويض حضرتك بمبلغ… خلال <b>48 ساعة عمل</b> مع الاحتفاظ بالجيجات المضافة."</div>
+          </div>
+          <div class="callout warn"><span class="ci">📋</span><div><b>الشكوى: 5048</b>افتحها <b>وسيِبها مفتوحة</b>.</div></div>
+          <div class="callout bad"><span class="ci">❌</span><div><b>ممنوع تقول:</b>
+            <ul>
+              <li>نزلت بالغلط</li>
+              <li>نزلت من السيستم</li>
+              <li>هدية</li>
+            </ul>
+          </div></div>
+          <div class="callout bad"><span class="ci">❌</span><div><b>التعويض عن آخر فاتورة فقط.</b></div></div>
+        </div></div></div>
+      </article>
+
+      <!-- ── Payment Dispute ── -->
+      <article class="acc rv" id="billing-payment-dispute" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">💳</span>
+          <span class="tt"><b dir="ltr">Payment Dispute</b><small>الفاتورة لسه عليّا؟</small></span>
+          <span class="bdg">وكيل · Fawry · InstaPay</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="blk">
+            <h4>البداية</h4>
+            <div class="quote">العميل بيقول: "الفاتورة لسه عليّا؟"</div>
+            <p>➡️ الأول تعامل معاه كفاتورة عادية من <span class="en">Bill Amount</span>.</p>
+            <p>لو قال: <b>"إزاي؟ أنا دفعتها!"</b> — اسأله: <b>دفعت عن طريق إيه؟</b></p>
+          </div>
+          <div class="cases c3">
+            <div class="case" style="--cc:var(--ok)">
+              <div class="ch">🟢 1 — وكيل <small dir="ltr">(Reseller)</small></div>
+              <div class="cb">
+                <p><b>لو لسه مدفعش من 48 ساعة:</b><br>➡️ يستنى <b>48 ساعة عمل</b></p>
+                <p><b>لو عدّى 48 ساعة:</b><br>➡️ اطلب منه <span class="en">Receipt</span> صورة على الإيميل</p>
+                <p>ثم افتح:</p>
+                <p><b dir="ltr">Reseller Payment Not Exist PGW</b><br>⏱️ المدة: <b>24 ساعة عمل</b></p>
+              </div>
+            </div>
+            <div class="case" style="--cc:var(--warn)">
+              <div class="ch">🟡 2 — <span dir="ltr">Fawry</span></div>
+              <div class="cb">
+                <p><b>تأكد من:</b></p>
+                <div class="path" style="margin:4px 0 8px"><span>Related VAS</span><i>→</i><span>Payment Methods</span><i>→</i><span>Aggregator</span></div>
+                <p><b style="color:var(--bad)">❌ ممنوع تطلب Receipt</b></p>
+                <p><b>اطلب:</b><br>• الرقم المرجعي<br>• تاريخ الدفع<br>• المبلغ</p>
+                <p>وافتح: <b dir="ltr">Payment Dispute</b><br>⏱️ <b>48 ساعة عمل</b></p>
+              </div>
+            </div>
+            <div class="case" style="--cc:var(--bad)">
+              <div class="ch">🔴 3 — <span dir="ltr">InstaPay</span></div>
+              <div class="cb">
+                <p><b>لو مش مدعوم عندنا:</b></p>
+                <p>➡️ قوله يرجع للجهة اللي دفع من خلالها، لأن الدفع مش ظاهر على أنظمة <span class="en">Orange</span>.</p>
+              </div>
+            </div>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- ── Upgrade ── -->
+      <article class="acc rv" id="billing-upgrade" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">⬆️</span>
+          <span class="tt"><b dir="ltr">Upgrade</b><small>عايز أعلّي الباقة</small></span>
+          <span class="bdg">٥ خطوات</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>الخطوات</h4>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span><b>شوف العميل تحت وكيل ولا Orange</b>
+                <span class="path" style="margin:6px 0"><span>Seibal</span><i>→</i><span>More Details</span></span>
+                <small>• <span class="en">Orange Data / Mobinil</span> = <span class="en">Orange</span><br>
+                • أي حاجة تانية = وكيل<br>
+                ⚠️ متسألش العميل دلوقتي — اعرف المعلومة في سرك عشان تحدد أسئلة الـ<span class="en">Verification</span> بعدين.</small></span></div>
+
+              <div class="cond"><span class="cn">٢</span><span><b>شوف الخصم</b>
+                <small>• لو عنده خصم ← وضّحله إن الـ<span class="en">Upgrade</span> هيكون بنفس الخصم<br>
+                • لو مفيش ← <span class="en">Home DSL → Related Offer → Upselling Offer</span> وشوف العروض</small></span></div>
+
+              <div class="cond"><span class="cn">٣</span><span><b>وضّح الـAdd Item</b>
+                <small>لازم تقول للعميل إن مع الـ<span class="en">Upgrade</span> هينزل فرق جيجات/فلوس لحد ميعاد التجديد القادم.</small></span></div>
+
+              <div class="cond"><span class="cn">٤</span><span><b>Verification</b>
+                <small>• لو <span class="en">Orange</span>: اسم صاحب التعاقد ثلاثي + رقم المحمول<br>
+                • لو وكيل: اسم صاحب التعاقد + الرقم المسجل + آخر فاتورة دفعها من خلال إيه وإمتى<br>
+                • لو العميل بيتصل من نفس الرقم الأرضي اللي هيعمل عليه <span class="en">Upgrade</span> ← متسألوش <span class="en">Verification</span> ونده <span class="en">Assist</span></small></span></div>
+
+              <div class="cond"><span class="cn">٥</span><span><b>بعد الـAction</b>
+                <span class="path" style="margin:6px 0"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>DSL Package Upgrade</span></span>
+                <small>هات <span class="en">Upgrade Action Script</span></small></span></div>
+            </div>
+            <div class="callout bad"><span class="ci">⚠️</span><div><b>نقطة الـAdd Item مهمة جدًا — وتركها = Fail</b></div></div>
+            <div class="callout warn"><span class="ci">⚠️</span><div><b>لو Upgrade لسرعة 70 / 100 / 200</b>لازم تعمل <span class="en">Physical Check</span> للـ<span class="en">Max Speed</span> وتشوف الخط يستحمل السرعة ولا لأ — وليها <span class="en">Scripts</span> خاصة.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>📌 لمعرفة الخصم</h4>
+            <div class="defs">
+              <div class="def" style="flex-direction:column;gap:4px"><b>Discount Management</b><span>رتّب الخصومات واقرأ التاريخ صح: <b>شهر / يوم / سنة</b></span></div>
+              <div class="def" style="flex-direction:column;gap:4px"><b>لو ملقتش الخصم؟</b><span>➡️ <span class="en">Activation Request Details</span> وقارن تاريخ الخصم بتاريخ التعاقد</span></div>
+            </div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Downgrade ── -->
+      <article class="acc rv" id="billing-downgrade" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">⬇️</span>
+          <span class="tt"><b dir="ltr">Downgrade</b><small>تخفيض الباقة</small></span>
+          <span class="bdg">12 فاتورة</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <p style="font-size:.94rem;color:var(--ink2)">نفس خطوات الـ<span class="en">Upgrade</span> تقريبًا.</p>
+
+          <div class="blk">
+            <h4>📌 لو العميل عنده خصم</h4>
+            <p>وضّحله إن الخصم <b>هيتشال</b> مع الـ<span class="en">Downgrade</span>.</p>
+            <div class="callout ok"><span class="ci">⚠️</span><div><b>الاستثناء</b>لو مكتوب <span class="en">Life Time</span> ← الخصم <b>مش هيتشال</b>.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>📌 أهم نقطة</h4>
+            <p>شوف العميل كمّل <b>12 فاتورة / سنة</b> من تاريخ التعاقد ولا لأ.</p>
+            <p style="margin-top:6px">لو هيعمل <span class="en">Downgrade</span> قبل السنة:</p>
+            <div class="path"><span>How to Manage My Account</span><i>→</i><span>DSL Package Downgrade</span></div>
+            <p style="margin-top:8px">هات الـ<span class="en">Script</span> الخاص بالحالة.</p>
+          </div>
+
+          <div class="callout warn"><span class="ci">📢</span><div><b>وبعد تنفيذ الـDowngrade</b>لازم تقول الـ<span class="en">Action Script</span> برضه.</div></div>
+        </div></div></div>
+      </article>
+
+      <!-- ── Extra Quote ── -->
+      <article class="acc rv" id="billing-extra-quote" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">➕</span>
+          <span class="tt"><b dir="ltr">Extra Quote</b><small>إضافة باقة إضافية</small></span>
+          <span class="bdg">٢ Scripts</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="blk">
+            <h4>العميل: "عايز أضيف باقة إضافية" — قول Scriptين:</h4>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span><span class="path" style="margin:0"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>DSL Extra Quote</span></span></span></div>
+              <div class="cond"><span class="cn">٢</span><span><span class="path" style="margin:0"><span>Home DSL</span><i>→</i><span>Related Offer</span><i>→</i><span>My Orange Usability Offer</span></span><small>وده <span class="en">Script</span> الـ<span class="en">5GB</span> هدية</small></span></div>
+            </div>
+          </div>
+          <div class="blk">
+            <h4>📌 عروض الباقات الإضافية</h4>
+            <div class="path"><span>Home DSL</span><i>→</i><span>Related Offer</span><i>→</i><span>Upselling Offer</span></div>
+            <p style="margin-top:8px">العروض <b>تتقال للعميل</b>، لكن <b>مش بنضيف من خلالها</b>.</p>
+            <div class="callout pin"><span class="ci">💡</span><div><b>لو العميل رفض العرض وقال عايز الباقة العادية</b>➡️ ضيفها عادي، وبعد الإضافة قول <span class="en">Script</span> الـ<span class="en">DSL Extra Quote</span>.</div></div>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- ── Remove Extra Quote ── -->
+      <article class="acc rv" id="billing-remove-extra-quote" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">➖</span>
+          <span class="tt"><b dir="ltr">Remove Extra Quote</b><small>إزالة باقة إضافية</small></span>
+          <span class="bdg">شرطان</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="blk">
+            <h4>لازم شرطين:</h4>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span><b>الباقة متكونش اتستهلكت</b>
+                <span class="path" style="margin:6px 0"><span>PCRF</span><i>→</i><span>Extension Data</span></span>
+                <small>لازم: <span class="en">Remaining = 100%</span> و <span class="en">Usage = 0%</span></small></span></div>
+              <div class="cond"><span class="cn">٢</span><span><b>الفاتورة تكون لسه منزلتش</b><small>يعني العميل يكلمنا قبل ميعاد التجديد</small></span></div>
+            </div>
+          </div>
+          <div class="blk">
+            <h4>📌 المكان</h4>
+            <div class="path"><span>Home DSL</span><i>→</i><span>Network</span><i>→</i><span>Quote Consumption Issue</span></div>
+            <p style="margin-top:8px">اختار: <span class="chip en">Extra Quote Not Updated</span></p>
+            <p>وهتلاقي الـ<span class="en">Script</span> ورقم الشكوى.</p>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- ── Consumption Info ── -->
+      <article class="acc rv" id="billing-consumption-info" data-sec="billing">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">📊</span>
+          <span class="tt"><b dir="ltr">Consumption Info</b><small>معلومات جدول PCRF</small></span>
+          <span class="bdg">الجدول كله</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="callout bad"><span class="ci">❌</span><div><b>لو العميل بيسأل عن أي معلومة موجودة في PCRF — ممنوع تقول المعلومة اللي سأل عنها بس</b>لازم تقول <b>كل معلومات جدول الـ<span class="en">PCRF</span></b>.<br>
+          مثال: لو سأل عن ميعاد التجديد ← تقول الجدول كله. لو سأل عن الجيجابات المتبقية ← تقول الجدول كله.</div></div>
+          <div class="blk">
+            <h4>📌 المكان</h4>
+            <div class="path"><span>Home DSL</span><i>→</i><span>Network</span><i>→</i><span>Quote Consumption Issue</span></div>
+            <p style="margin-top:8px">الـ<span class="en">Script</span> الأول للحالة العادية.</p>
+            <p style="margin-top:6px">ولو العميل:</p>
+            <div class="chips" style="margin-top:6px">
+              <span class="chip">مستهلك <span class="en">100%</span></span>
+              <span class="chip">أو السرعة وصلت <span class="en">256Kbps</span></span>
+            </div>
+            <p style="margin-top:8px">➡️ استخدم الـ<span class="en">Script</span> اللي تحته.</p>
+          </div>
+        </div></div></div>
+      </article>
+    </div>
+
+    <!-- 🔥 خريطة الحفظ -->
+    <div class="map-card rv" style="margin-bottom:56px">
+      <h4>🔥 أهم خريطة للحفظ</h4>
+      <div class="map-grid">
+        <div class="map-c"><b>How to Manage My Account</b>➡️ Extra Quote<br>➡️ Upgrade<br>➡️ Downgrade</div>
+        <div class="map-c"><b>Related Offer</b>➡️ عروض الباقات<br>➡️ 5GB هدية<br>➡️ الباقات اللي بتنزل تلقائيًا من السيستم</div>
+        <div class="map-c"><b>Related VAS</b>➡️ Price Update<br>➡️ Payment Methods</div>
+        <div class="map-c"><b>How to Complain → Billing</b>➡️ Bill Amount<br>➡️ Payment Dispute</div>
+        <div class="map-c"><b>How to Complain → Network</b>➡️ Consumption Info<br>➡️ إزالة Extra Quote</div>
+      </div>
+      <div class="callout ok" style="margin-top:14px"><span class="ci">💪</span><div><b>📌 في الآخر — متحفظش الكلام كله كحفظ، احفظ:</b>الحالة ← المكان ← الـ<span class="en">Script</span> ← الـ<span class="en">Action</span> المطلوب.<br>وبكده هتعرف تروح للمكان الصح بسرعة ومش هتوه في <span class="en">PEDIA</span>. 💪🔥</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ 4) تركات ════════════════ -->
+<section class="view" id="view-tricks" style="--acc:var(--trk)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-emoji">🧠</span>
+      <div><h2>تركات</h2><p>أهم الملاحظات والنقاط اللي ممكن تسبب لخبطة أو تتنسي.</p></div>
+      <span class="count-chip">١٣ تريكة + أرقام</span>
+    </div>
+
+    <div class="callout pin rv" style="margin-bottom:18px"><span class="ci">🧩</span><div>الرسالة دي مش شرح لحاجة معينة — هي بس <b>تركات أو حاجات ممكن تتنسي أو تلغبط حد</b>.</div></div>
+
+    <div class="tricks">
+      <article class="trick rv" id="trick-1">
+        <div class="tg"><small>TRICK</small><span class="no">01</span></div>
+        <h4 dir="ltr">Router Type</h4>
+        <div class="tb">العميل هيرخم عليك ويقولك "مش عارف" نوع الراوتر — عندك كام سؤال يوصلوك لنوعه:
+          <ul>
+            <li><b>بيدعم السرعات العالية؟</b> لو آه يبقى <b>V</b> — لو لأ، يبقى احتمال يبقى <b>A</b></li>
+            <li><b>حضرتك جايبه قبل 2020 ولا بعد؟</b> لو قبل هيبقى <b>A</b> — ولو بعد هيبقى <b>V</b></li>
+            <li><b>وأسهل حاجة:</b> "أستأذنك يا فندم، من ضهر الراوتر تقرا لي الموديل بتاع الراوتر" — وتبدأ تشوف الاسم اللي هيقولهولك فيه V ولا لأ</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="trick rv" id="trick-2">
+        <div class="tg"><small>TRICK</small><span class="no">02</span></div>
+        <h4 dir="ltr">Slow Download vs No Browsing</h4>
+        <div class="tb">اتفقنا نفرّق بين الـ<b><span class="en">Slow Download</span></b> والـ<b><span class="en">No Browsing</span></b> عن طريق <b>الرسالة</b> ✉️ — بتوصل = Slow، مبتوصلش = No Browsing.</div>
+      </article>
+
+      <article class="trick rv" id="trick-3">
+        <div class="tg"><small>TRICK</small><span class="no">03</span></div>
+        <h4 dir="ltr">No Browsing vs Authentication</h4>
+        <div class="tb">هنفرّق بين الـ<b><span class="en">No Browsing</span></b> والـ<b><span class="en">Authentication</span></b> عن طريق: أشوفه <b>ساحب IP ولا لا</b> من <span class="en">IP Tool</span>.</div>
+      </article>
+
+      <article class="trick rv" id="trick-4">
+        <div class="tg"><small>TRICK</small><span class="no">04</span></div>
+        <h4 dir="ltr">Service ID</h4>
+        <div class="tb">مننساش — عشان أشوف الـ<b>IP</b>، أنا مش بكتب الرقم الأرضي وخلاص! لا لا لا لا لا يا شباب 😄<br>الـ<b>IP</b> باخد الرقم اللي موجود في السيبيل اللي اسمه <b><span class="en">Service ID</span></b> كله.</div>
+      </article>
+
+      <article class="trick rv" id="trick-5">
+        <div class="tg"><small>TRICK</small><span class="no">05</span></div>
+        <h4 dir="ltr">Clarifying Customer Complaint</h4>
+        <div class="tb">العميل يدخلك بسؤال مش واضح ويقولك: "الخدمة بتفصل وتشتغل"… قصده إيه بكلمة "الخدمة"؟ <b>الراوتر ولا الواي فاي في التليفون؟</b><br>فلازم أسأله — لازم لازم لازم، كترة أسئلتك مع العميل هي اللي هتوصلك للحل الصح.</div>
+      </article>
+
+      <article class="trick rv" id="trick-6">
+        <div class="tg"><small>TRICK</small><span class="no">06</span></div>
+        <h4 dir="ltr">Physical First</h4>
+        <div class="tb">طبعًا دي قلتها وبقولها وبكتبها أهو: <b>أي مشكلة نيتورك لازم أتأكد فيزيكل الأول</b> — حتى لو <span class="en">WiFi Instability</span>، لازم أتأكد إن <b><span class="en">Line Up</span></b> والـ<b><span class="en">Max</span> ✅</b> عشان أخش معاه <span class="en">WiFi Instability</span>.</div>
+      </article>
+
+      <article class="trick rv" id="trick-7">
+        <div class="tg"><small>TRICK</small><span class="no">07</span></div>
+        <h4 dir="ltr">Router Page Exceptions</h4>
+        <div class="tb">افتكر قبل ما تقدم أي مشكلة نيتورك، وقبل ما تقول "تمام يا فندم هقدملك طلب في خلال 24 ساعة المشكلة هتتحل" — <b>لازم تكون دخلت صفحة الراوتر</b> (سواء هتعمل ريست بالدبوس أو هتخش علطول، المهم إنك قلتله: افتح صفحة الراوتر يا فندم).
+          <br><b>⛔ إلا في 3 شكاوي نيتورك مش بندخل صفحة الراوتر:</b>
+          <ul>
+            <li>1/ <span class="en">Connection Unstable</span></li>
+            <li>2/ <span class="en">Authentication</span> (<span class="en">Login OK</span>)</li>
+            <li>3/ <span class="en">Bit Rate Mismatch</span></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="trick rv" id="trick-8">
+        <div class="tg"><small>TRICK</small><span class="no">08</span></div>
+        <h4 dir="ltr">Bit Rate Mismatch</h4>
+        <div class="tb">بالنسبة للـ<b><span class="en">Bit Rate Mismatch</span></b> مبتتفتحش غير لخط الـ<b><span class="en">Copper</span></b> والخطوط الـ<b><span class="en">MSAN</span></b> سرعة <b>70 / 100 / 200</b>.<br><b style="color:var(--bad)">محدش يفكر يفتح شكوى Bit Rate Mismatch في خط MSAN سرعة 30!</b></div>
+      </article>
+
+      <article class="trick rv" id="trick-9">
+        <div class="tg"><small>TRICK</small><span class="no">09</span></div>
+        <h4 dir="ltr">Pedia Location</h4>
+        <div class="tb">كل مشاكل النيتورك موجودة في بيديا جوا الـ<b><span class="en">Network</span></b> — <b>إلا الـ<span class="en">Slow Download</span></b> موجودة في الـ<b><span class="en">Physical</span></b>، في نفس الخانة بتاعة الـ<span class="en">Bad Line</span> اللي اسمها <b><span class="en">Dsl-Slow Download</span></b>.</div>
+      </article>
+
+      <article class="trick rv" id="trick-10">
+        <div class="tg"><small>TRICK</small><span class="no">10</span></div>
+        <h4 dir="ltr">SV Port</h4>
+        <div class="tb">أول ما تلاقي نوع البورت في الـ<span class="en">Assurance</span> هو <b><span class="en">SV</span></b> — فدا بتعتبره <b><span class="en">VDSL</span></b> عادي… بس الـ<span class="en">Max</span> اللي هيظهرلك <b style="color:var(--bad)">FAKE FAKE FAKE!</b><br>يعني إيه؟ يعني أول ما أشوف <span class="en">SV</span> هقول للعميل: <b>"أستأذنك، نخش صفحة الراوتر عشان أعرف كفاءة خط حضرتك"</b>.</div>
+      </article>
+
+      <article class="trick rv" id="trick-11">
+        <div class="tg"><small>TRICK</small><span class="no">11</span></div>
+        <h4 dir="ltr">Speed 30 + Max 100</h4>
+        <div class="tb">ودي شفت ناس ملغبطة فيها… يا شباب:
+          <ul>
+            <li>لو العميل مشترك سرعة <b>30</b> والخط الـ<span class="en">Max</span> بتاعه <b>100</b> — سرعة أورانج المفروض هتبقى <b>80% × 100 = 80</b>… هل هياخد 80 فعلًا؟ <b style="color:var(--bad)">لا لا لا!</b> لأنه مشترك على 30، فأقصى حاجة هياخدها <b>30</b></li>
+            <li>طب هل أفتحله <span class="en">Bit Rate Mismatch</span> عشان هو يستحمل ياخد 80 وأنا مديله 30؟ <b style="color:var(--bad)">لا لا لا لا يا عم!</b> هو مشترررك معايا على 30 وبيدفع تمن 30 — واتفقنا مش هفتح شكوى <span class="en">Bit Rate Mismatch</span> في خط سرعة 30 أصلًا</li>
+            <li>يعني السرعة 30 مظبوطة؟ <b>= آيوه يا عم</b> — خش بقي على <b><span class="en">Doesn't Have Bit Rate Mismatch</span></b></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="trick rv" id="trick-12">
+        <div class="tg"><small>TRICK</small><span class="no">12</span></div>
+        <h4 dir="ltr">WiFi Instability SSID</h4>
+        <div class="tb">مننساش بردو — في الـ<b><span class="en">WiFi Instability</span></b> بنغيّر اسم الشبكة لاسسسسم جديد <b>ميكونش اتعمل قبل كدا</b>.</div>
+      </article>
+
+      <article class="trick rv" id="trick-13">
+        <div class="tg"><small>TRICK</small><span class="no">13</span></div>
+        <h4 dir="ltr">Online Gaming Ping</h4>
+        <div class="tb">في الـ<b><span class="en">Online Gaming</span></b> طبيعي أول ما العميل يدخل يقولك "البنج وحش" — فلازم أسأله: <b>"البنج كام عند حضرتك؟"</b> عشان أشوف هل هو وحش فعلًا ولا لأ حسب الجدول اللي عندك في الـ<span class="en">Online Gaming</span> في بيديا.</div>
+      </article>
+    </div>
+
+    <!-- 🔢 الأرقام المهمة -->
+    <div class="nums-head rv"><h3>🔢 أرقام مهمة</h3><span class="ln"></span></div>
+    <p class="nums-note">مش لازم تحفظها — هي موجودة كدا كدا في بيديا قدام عينك، بس أهو لو حبيت تحفظها براحتك 😉</p>
+
+    <div class="kvs">
+      <div class="kv rv" id="num-1"><div class="v"><span data-n="36">0</span></div><div class="l">MAX لو البورت + الراوتر <span class="en">VDSL</span> ميقلش عن</div></div>
+      <div class="kv rv" id="num-2"><div class="v"><span data-n="15">0</span></div><div class="l">لو البورت أو الراوتر <span class="en">ADSL</span> (أو الاتنين) مينفعش أقل من</div></div>
+      <div class="kv rv" id="num-3"><div class="v"><span data-n="6">0</span></div><div class="l">خط <span class="en">Copper</span> — أقل حاجة للـMAX</div></div>
+      <div class="kv rv" id="num-4"><div class="v"><span data-n="55">0</span></div><div class="l"><span class="en">MSAN</span> سرعة 70 — ولو أقل <span class="en">Bad Line</span> علطول</div></div>
+      <div class="kv rv" id="num-5"><div class="v"><span data-n="85">0</span></div><div class="l"><span class="en">MSAN</span> سرعة 100/200 — ولو أقل <span class="en">Bad Line</span> علطول</div></div>
+      <div class="kv rv" id="num-14"><div class="v"><span data-n="60">0</span></div><div class="l">الـ<span class="en">Noise / SNR</span> مينفعش يقل عن — ولو أقل <span class="en">Bad Line</span></div></div>
+      <div class="kv rv" id="num-6"><div class="v"><span data-n="80">0</span>% / <span data-n="85">0</span>%</div><div class="l">سرعة أورانج = MAX × (حد أدنى / أقصى)</div></div>
+      <div class="kv rv" id="num-7"><div class="v"><span data-n="65">0</span>%</div><div class="l">السبيد تيست = سرعة أورانج ×</div></div>
+      <div class="kv rv" id="num-8"><div class="v"><span data-n="45">0</span>%</div><div class="l">لو الخط <span class="en">Copper</span> — السبيد تيست = سرعة أورانج ×</div></div>
+      <div class="kv rv" id="num-9"><div class="v"><span data-n="40">0</span></div><div class="l"><span class="en">Online Gaming</span> بسسس — MAX ميقلش عن (حتى لو 38 = <span class="en">Bad Line</span>)</div></div>
+      <div class="kv rv" id="num-10"><div class="v"><span data-n="100">0</span></div><div class="l">الـ<span class="en">Noise / SNR</span> في الـ<span class="en">Online Gaming</span> بسسس مينفعش يقل عن</div></div>
+      <div class="kv rv" id="num-11"><div class="v">&gt; <span data-n="100">0</span></div><div class="l">عشان يبقى عنده مشكلة <span class="en">Ping</span> فعلًا — العميل يقول البنج أعلى من</div></div>
+      <div class="kv rv" id="num-12"><div class="v"><span data-n="1420">0</span> / <span data-n="1380">0</span> / <span data-n="1300">0</span></div><div class="l"><span class="en">MTU</span> أرقامها</div></div>
+      <div class="kv rv" id="num-13"><div class="v"><span data-n="1">0</span> / <span data-n="6">0</span> / <span data-n="11">0</span></div><div class="l">الـ<span class="en">WiFi Channels</span> أرقامها</div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="fb"><span dir="ltr">Orange DSL Training</span> 🧡</div>
+    <div class="ft">مرجع تدريبي مبسط لمشاكل <span class="en">Orange Home DSL</span> والـ<span class="en">Scripts</span> والـ<span class="en">Troubleshooting</span> — Trainer: Basel Magdy | باسل مجدي</div>
+    <div class="fp">✨ Prepared by Youssef Eid</div>
+  </div>
+</footer>
+
+<noscript><div style="padding:16px;text-align:center;background:#b3362b;color:#fff">فعّل JavaScript لاستخدام التنقل والبحث داخل الموقع.</div></noscript>
 
 <script>
-/* ============================================================
-   DATA — كل موضوع هنا. عشان تضيف موضوع جديد، زود object هنا بس.
-   ============================================================ */
-const CATEGORIES = {
-  physical: {id:'physical', title:'Physical Issues', emoji:'📚', desc:'مشاكل الخط والـ Copper والـ Port'},
-  network:  {id:'network',  title:'Network Issues',  emoji:'🌐', desc:'مشاكل السرعة، التصفح، الألعاب والـ Authentication'}
-};
+(function(){
+"use strict";
+const $  = (s,c)=> (c||document).querySelector(s);
+const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
+const RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SECTIONS = {physical:"🛠️ Physical", network:"🌐 Network", billing:"💰 Billing", tricks:"🧠 تركات"};
 
-const TOPICS = [
-  /* ========================= PHYSICAL ========================= */
-  {
-    id:'line-down', cat:'physical', emoji:'🔌', title:'Line Down',
-    meaning:`يعني ببساطة إن <b>الخط واقع تماماً</b>، مفيش Sync خالص بين الراوتر والـ DSLAM/MSAN.
-    <br>العميل مفيش عنده إنترنت، والـ DSL light على الراوتر طافي أو بيومض.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل بيقول: <b>"مفيش إنترنت خالص"</b></li>
-      <li>الـ <b>DSL light</b> على الراوتر طافي</li>
-      <li>الـ <b>Internet light</b> طافي</li>
-      <li>لو عندك Access على السيستم: <b>DSL Status = Down</b></li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>DSL Status:</b> Down</li>
-      <li><b>Port Status:</b> Down</li>
-      <li><b>Maximum Rate:</b> 0 أو مش ظاهر</li>
-      <li><b>Bit Rate:</b> 0</li>
-      <li><b>SNR:</b> مش ظاهر</li>
-      <li><b>Port Up Time:</b> 0 أو N/A</li>
-      <li><b>Router Type:</b> تأكد إنه DSL مش FTTH</li>
-    </ul>`,
-    conditions:[
-      {type:'red',   head:'❌ Line Down مؤكد', body:'DSL Status = Down و Maximum Rate = 0'},
-      {type:'yellow',head:'⚠️ Check Port First', body:'تأكد إن الـ Port نفسه شغال مش معطل'},
-      {type:'green', head:'✅ بعد الحل', body:'DSL Status = Up و Maximum Rate يظهر قيمة'}
-    ],
-    understand:`ليه بيحصل Line Down؟
-    <br>لأن في <b>قطع في الـ Copper</b>، أو <b>فصل في الـ Line</b> من ناحية العميل، أو مشكلة في الـ <b>MSAN/DSLAM Port</b> نفسه.
-    <br>يعني المشكلة <b>Physical</b> مش في الـ Configuration.`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ تروح تعمل Reset للراوتر — ده مش هيحل Line Down.</li>
-      <li>❌ تحاول تغير Password — مفيش Authentication أصلاً لو الخط واقع.</li>
-      <li>❌ تضيع وقتك في الـ Speed Test — مفيش Connection من الأساس.</li>
-    </ul>`,
-    compare:{
-      a:{title:'Line Down', points:['DSL Light طافي','Maximum Rate = 0','مفيش Sync خالص','Physical Issue']},
-      b:{title:'Line Unstable', points:['DSL Light بيومض','Maximum Rate متغير','Sync بيقع ويقوم','Bad Line غالباً']}
-    },
-    flow:[
-      {t:'Client: No Internet', type:'start'},
-      {t:'Check DSL Light', type:'decision'},
-      {t:'OFF?', type:'label'},
-      {t:'DSL Status = Down?', type:'decision'},
-      {t:'YES → Line Down', type:'result-red'},
-    ],
-    summary:[
-      {t:'✔ DSL Light OFF', ok:true},
-      {t:'✔ DSL Status = Down', ok:true},
-      {t:'✔ Maximum Rate = 0', ok:true},
-      {t:'↓', arrow:true},
-      {t:'Line Down — Physical Issue', ok:false, result:true}
-    ],
-    tips:[
-      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Line Down، أول حاجة اسأل العميل: "الراوتر شغال ولا مطفي؟" و "في صيانة في المنطقة؟". كتير الأوقات المشكلة من بره.'},
-      {type:'note', head:'🎯 تريكة باسل', body:'متنساوش تعمل Escalation للـ Field Team لو المشكلة Physical من ناحية العميل.'}
-    ]
-  },
-  {
-    id:'bad-line', cat:'physical', emoji:'📉', title:'Bad Line',
-    meaning:`يعني ببساطة إن <b>جودة الخط مش مناسبة للسرعة الحالية</b>.
-    <br>الخط شغال، بس الـ <b>Maximum Rate</b> قليل، فالـ SNR بينزل والـ Bit Rate مش بيوصل للـ Orange Speed.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل بيقول: <b>"النت بطيء"</b> أو <b>"النت بيفصل"</b></li>
-      <li>الـ <b>Maximum Rate</b> أقل من الـ <b>Orange Speed</b></li>
-      <li>الـ <b>SNR / Noise Margin</b> قليل (أقل من 10)</li>
-      <li>الـ <b>Bit Rate</b> أقل من الـ Profile</li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>Maximum Rate:</b> أقل من Orange Speed</li>
-      <li><b>Bit Rate:</b> أقل من Maximum Rate</li>
-      <li><b>SNR (Noise Margin):</b> أقل من 10 (Bad)</li>
-      <li><b>Orange Speed:</b> مثلاً 30 Mbps</li>
-      <li><b>Router Type:</b> VDSL أو ADSL</li>
-      <li><b>Port Type:</b> Copper</li>
-    </ul>`,
-    conditions:[
-      {type:'green', head:'✅ Line كويس', body:'Maximum Rate ≥ Orange Speed و SNR ≥ 10'},
-      {type:'yellow',head:'⚠️ Line متوسط', body:'Maximum Rate قريب من Orange Speed و SNR 6-10'},
-      {type:'red',   head:'❌ Bad Line', body:'Maximum Rate < Orange Speed و SNR < 6'}
-    ],
-    understand:`ليه الـ Bad Line مهم تفهمه؟
-    <br>لأن لو الـ <b>Maximum Rate</b> قليل، يبقى مهما عملت المشكلة الأساسية هي <b>Bad Line</b>.
-    <br>يعني أصل المشكلة <b>Physical</b> — الـ Copper نفسه مش قادر يمشي السرعة دي.
-    <br>بدل ما تحفظ… افهم الفكرة.`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ تعمل Reset للراوتر — مش هيحل Bad Line.</li>
-      <li>❌ تغير Profile Speed — لو Maximum Rate قليل، مش هيفيد.</li>
-      <li>❌ تروح على Online Gaming — المشكلة Physical مش Network.</li>
-    </ul>`,
-    compare:{
-      a:{title:'Bad Line', points:['Maximum Rate قليل','SNR منخفض','Copper Issue','Physical']},
-      b:{title:'Slow Download', points:['Maximum Rate كويس','Bit Rate كويس','ممكن Congestion','Network']},
-    },
-    flow:[
-      {t:'Client: Slow / Unstable', type:'start'},
-      {t:'Check Maximum Rate', type:'decision'},
-      {t:'< Orange Speed?', type:'label'},
-      {t:'SNR < 10?', type:'decision'},
-      {t:'YES → Bad Line', type:'result-red'},
-    ],
-    summary:[
-      {t:'✔ Maximum Rate < Orange Speed', ok:true},
-      {t:'✔ SNR < 10', ok:true},
-      {t:'✔ Copper Port', ok:true},
-      {t:'↓', arrow:true},
-      {t:'Bad Line — Physical', ok:false, result:true}
-    ],
-    tips:[
-      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Maximum Rate أقل من 40 Mbps، حتى لو العميل داخل يشتكي من Online Gaming، المشكلة Bad Line مش Gaming.'},
-      {type:'note', head:'🎯 تريكة باسل', body:'Bad Line ممكن تتحل جزئياً بـ Lock & Unlock أو تغيير Profile، بس الحل الجذري في الـ Field Team.'}
-    ]
-  },
-  {
-    id:'line-unstable', cat:'physical', emoji:'📶', title:'Line Unstable',
-    meaning:`يعني الخط <b>بيقع ويقوم</b>. الـ Sync بيروح ويجي.
-    <br>العميل حاسس إن الإنترنت بيفصل كل شوية، والـ DSL light بيومض.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل: <b>"النت بيفصل ويرجع"</b></li>
-      <li>الـ <b>Port Up Time</b> قليل (ساعات أو دقائق)</li>
-      <li>الـ <b>DSL light</b> بيومض</li>
-      <li>على السيستم: <b>Resync Count</b> عالي</li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>Port Up Time:</b> قليل (أقل من ساعة)</li>
-      <li><b>SNR:</b> متذبذب</li>
-      <li><b>Maximum Rate:</b> بيتغير</li>
-      <li><b>DSL Status:</b> أحياناً Down أحياناً Up</li>
-      <li><b>Error Count:</b> عالي</li>
-    </ul>`,
-    conditions:[
-      {type:'green', head:'✅ Stable', body:'Port Up Time > 24 ساعة و SNR ثابت'},
-      {type:'yellow',head:'⚠️ Unstable', body:'Port Up Time < 6 ساعات'},
-      {type:'red',   head:'❌ Very Unstable', body:'Port Up Time < 10 دقائق و Resync عالي'}
-    ],
-    understand:`ليه Unstable بيحصل؟
-    <br>غالباً بسبب <b>Bad Line</b> أو <b>Interference</b> على الـ Copper.
-    <br>الراوتر بيحاول يعمل Sync، بس جودة الخط مش ثابتة، فبيقع ويعمل Resync.`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ تظن المشكلة WiFi — لا، المشكلة في الـ DSL نفسه.</li>
-      <li>❌ تعمل Reset — ممكن يحل مؤقتاً بس المشكلة هترجع.</li>
-    </ul>`,
-    compare:{
-      a:{title:'Line Unstable', points:['Port Up Time قليل','DSL بيقع ويقوم','Physical/Copper','Resync عالي']},
-      b:{title:'Connection Unstable', points:['النت بيفصل','DSL شغال','Router/WiFi issue','Network']},
-    },
-    flow:[
-      {t:'Client: Internet يقطع', type:'start'},
-      {t:'Check Port Up Time', type:'decision'},
-      {t:'< 1 hour?', type:'label'},
-      {t:'DSL Light بيومض؟', type:'decision'},
-      {t:'YES → Line Unstable', type:'result-yellow'},
-    ],
-    summary:[
-      {t:'✔ Port Up Time قليل', ok:true},
-      {t:'✔ DSL Light بيومض', ok:true},
-      {t:'✔ Resync Count عالي', ok:true},
-      {t:'↓', arrow:true},
-      {t:'Line Unstable', ok:false, result:true}
-    ],
-    tips:[
-      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Port Up Time أقل من 10 دقائق، غالباً في مشكلة Physical كبيرة. اعمل Escalation.'},
-    ]
-  },
-
-  /* ========================= NETWORK ========================= */
-  {
-    id:'bit-rate-mismatch', cat:'network', emoji:'⚖️', title:'Bit Rate Mismatch',
-    meaning:`يعني الـ <b>Bit Rate</b> مش مطابق للـ <b>Orange Speed</b>.
-    <br>الخط شغال، بس السرعة الفعلية مختلفة عن اللي المفروض العميل ياخدها.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل: <b>"النت مش على السرعة اللي دفعتلها"</b></li>
-      <li>على السيستم: <b>Bit Rate ≠ Orange Speed</b></li>
-      <li>الـ <b>Speed Test</b> أقل من المتوقع</li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>Orange Speed:</b> مثلاً 30 Mbps</li>
-      <li><b>Bit Rate:</b> مثلاً 15 Mbps</li>
-      <li><b>Maximum Rate:</b> لازم يكون ≥ Orange Speed</li>
-      <li><b>Profile Speed</b></li>
-      <li><b>Speed Test</b></li>
-    </ul>`,
-    conditions:[
-      {type:'green', head:'✅ Matching', body:'Bit Rate ≈ Orange Speed (±10%)'},
-      {type:'yellow',head:'⚠️ Mismatch بسيط', body:'Bit Rate أقل بـ 20% من Orange Speed'},
-      {type:'red',   head:'❌ Mismatch كبير', body:'Bit Rate أقل بـ 50%+ من Orange Speed'}
-    ],
-    understand:`ليه بيحصل Mismatch؟
-    <br>لأن الـ <b>Profile</b> على السيستم ممكن يكون مختلف، أو في <b>Bad Line</b> بيخلي الـ Bit Rate ينزل.
-    <br>أحياناً في <b>Script</b> خاص على السيستم لحل المشكلة دي.`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ تظن المشكلة Bad Line مباشرة — لازم تشوف الـ Maximum Rate الأول.</li>
-      <li>❌ تعمل Reset — مش هيحل Mismatch لو المشكلة في الـ Profile.</li>
-    </ul>`,
-    compare:{
-      a:{title:'Bit Rate Mismatch', points:['Bit Rate ≠ Orange Speed','Profile Issue','Script ممكن يحل','System side']},
-      b:{title:'Slow Download', points:['Bit Rate كويس','Speed Test قليل','ممكن Congestion','Client side']},
-    },
-    flow:[
-      {t:'Client: Speed مش مظبوطة', type:'start'},
-      {t:'Check Orange Speed vs Bit Rate', type:'decision'},
-      {t:'Different?', type:'label'},
-      {t:'Maximum Rate OK?', type:'decision'},
-      {t:'YES → Bit Rate Mismatch', type:'result-yellow'},
-    ],
-    summary:[
-      {t:'✔ Bit Rate ≠ Orange Speed', ok:true},
-      {t:'✔ Maximum Rate OK', ok:true},
-      {t:'✔ DSL Up', ok:true},
-      {t:'↓', arrow:true},
-      {t:'Bit Rate Mismatch', ok:false, result:true}
-    ],
-    tips:[
-      {type:'note', head:'🎯 تريكة باسل', body:'لو العميل داخل يقلل السرعة، هتلاقي Script جوه Slow Download. استخدمه.'},
-    ]
-  },
-  {
-    id:'slow-download', cat:'network', emoji:'🐢', title:'Slow Download',
-    meaning:`الإنترنت <b>شغال</b>، بس <b>بطيء</b>.
-    <br>العميل بيقدر يتصفح، بس التحميل والسرعة مش كويسة.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل: <b>"النت بطيء"</b> أو <b>"التحميل بطيء"</b></li>
-      <li>الـ <b>Speed Test</b> أقل من Orange Speed</li>
-      <li>الـ <b>Bit Rate</b> كويس، بس السرعة الفعلية قليلة</li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>Bit Rate</b></li>
-      <li><b>Maximum Rate</b></li>
-      <li><b>Orange Speed</b></li>
-      <li><b>Speed Test</b> (من جهة العميل)</li>
-      <li><b>SNR</b></li>
-      <li><b>Port Up Time</b></li>
-    </ul>`,
-    conditions:[
-      {type:'green', head:'✅ Speed كويسة', body:'Speed Test ≥ 80% من Orange Speed'},
-      {type:'yellow',head:'⚠️ Slow', body:'Speed Test 50-80% من Orange Speed'},
-      {type:'red',   head:'❌ Very Slow', body:'Speed Test < 50% من Orange Speed'}
-    ],
-    understand:`ليه Slow Download بيحصل؟
-    <br>ممكن يكون:
-    <ul>
-      <li><b>Bad Line</b> — لو Maximum Rate قليل</li>
-      <li><b>Congestion</b> — الشبكة مزدحمة</li>
-      <li><b>Device issue</b> — الراوتر أو الجهاز نفسه</li>
-      <li><b>Server issue</b> — الموقع اللي بيحمل منه بطيء</li>
-    </ul>`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ تظن المشكلة No Browsing — لا، التصفح شغال بس بطيء.</li>
-      <li>❌ تعمل Reset مباشرة — لازم تفحص Maximum Rate الأول.</li>
-    </ul>`,
-    compare:{
-      a:{title:'Slow Download', points:['النت شغال','Speed Test قليل','Bit Rate ممكن يكون كويس','تصفح موجود']},
-      b:{title:'No Browsing', points:['النت مش شغال','مفيش تصفح خالص','IP موجود','Messages مش بتتبعت']},
-    },
-    flow:[
-      {t:'Client: Speed بطيء', type:'start'},
-      {t:'Speed Test', type:'decision'},
-      {t:'< Orange Speed?', type:'label'},
-      {t:'Maximum Rate OK?', type:'decision'},
-      {t:'NO → Bad Line', type:'result-red'},
-      {t:'YES → Congestion / Device', type:'result-yellow'},
-    ],
-    summary:[
-      {t:'✔ DSL Up', ok:true},
-      {t:'✔ IP موجود', ok:true},
-      {t:'✔ Speed Test < Orange Speed', ok:true},
-      {t:'↓', arrow:true},
-      {t:'Slow Download', ok:false, result:true}
-    ],
-    tips:[
-      {type:'basel', head:'💡 Basel\'s Tip', body:'لو العميل شكا من Slow Download، اول حاجة اسأله: "بتعمل Speed Test على أي موقع؟" و "على WiFi ولا Cable؟"'},
-      {type:'note', head:'🎯 تريكة باسل', body:'لو العميل عايز يقلل السرعة، في Script خاص جوه Slow Download.'}
-    ]
-  },
-  {
-    id:'online-gaming', cat:'network', emoji:'🎮', title:'Online Gaming',
-    meaning:`العميل بيلعب <b>Online Games</b> وبيشكي من <b>Ping عالي</b> أو <b>Lag</b>.
-    <br>الإنترنت شغال، بس الألعاب مش شغالة كويس.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل: <b>"الألعاب بتعلق"</b> أو <b>"Ping عالي"</b></li>
-      <li>الـ <b>Ping</b> عالي (أكثر من 100ms)</li>
-      <li>الـ <b>Packet Loss</b> ظاهر</li>
-      <li>الـ <b>Speed Test</b> كويس، بس الألعاب مش كويسة</li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>Ping</b></li>
-      <li><b>Packet Loss</b></li>
-      <li><b>Maximum Rate</b> (لازم ≥ 40)</li>
-      <li><b>SNR</b> (لازم ≥ 100 إن أمكن)</li>
-      <li><b>Router Type</b> (VDSL أفضل)</li>
-      <li><b>MSAN</b> (أفضل من DSLAM)</li>
-    </ul>`,
-    conditions:[
-      {type:'green', head:'✅ Gaming OK', body:'Maximum Rate ≥ 40 و SNR ≥ 100 و Ping < 50'},
-      {type:'yellow',head:'⚠️ Gaming متوسط', body:'Maximum Rate 30-40 أو Ping 50-100'},
-      {type:'red',   head:'❌ Gaming مش هيشتغل', body:'Maximum Rate < 30 أو SNR < 50'}
-    ],
-    understand:`ليه Online Gaming ساعات يبقى Bad Line؟
-    <br>لأن لو الـ <b>Maximum Rate</b> أقل من 40، يبقى الخط نفسه مش مؤهل للألعاب.
-    <br>يعني أصل المشكلة <b>Physical</b>.
-    <br>الألعاب محتاجة <b>Stable Connection</b> مش بس Speed عالي.`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ ناس كتير تشوف Ping عالي وتجري على Online Gaming. وده غلط.</li>
-      <li>❌ لازم الأول تتأكد إن: Maximum Rate ≥ 40، Noise ≥ 100، VDSL Router، MSAN.</li>
-      <li>❌ تظن المشكلة من Orange — ممكن الـ Game Server نفسه بعيد.</li>
-    </ul>`,
-    compare:{
-      a:{title:'Online Gaming', points:['Ping عالي','Packet Loss','Maximum Rate مهم','Stability مهم']},
-      b:{title:'Slow Download', points:['Speed Test قليل','Ping ممكن يكون كويس','Bandwidth مهم','Stability مش ضروري']},
-    },
-    flow:[
-      {t:'Client: Lag في الألعاب', type:'start'},
-      {t:'Check Ping', type:'decision'},
-      {t:'> 100ms?', type:'label'},
-      {t:'Maximum Rate ≥ 40?', type:'decision'},
-      {t:'NO → Bad Line', type:'result-red'},
-      {t:'YES → Check ISP/Game Server', type:'result-yellow'},
-    ],
-    summary:[
-      {t:'✔ Ping عالي', ok:true},
-      {t:'✔ Maximum Rate < 40', ok:true},
-      {t:'✔ SNR < 100', ok:true},
-      {t:'↓', arrow:true},
-      {t:'Online Gaming — Bad Line غالباً', ok:false, result:true}
-    ],
-    tips:[
-      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Maximum Rate أقل من 40، متضيعش وقتك. المشكلة Physical. قول للعميل: "الخط مش مناسب للألعاب."'},
-      {type:'note', head:'🎯 تريكة باسل', body:'VDSL Router + MSAN = أفضل Combo للألعاب. لو العميل عنده ADSL Router، هيشتكي دايماً.'}
-    ]
-  },
-  {
-    id:'no-browsing', cat:'network', emoji:'🚫', title:'No Browsing',
-    meaning:`الإنترنت <b>شغال</b> (DSL Up و IP موجود)، بس <b>مفيش تصفح</b>.
-    <br>العميل مش بيقدر يفتح أي موقع، والـ Messages مش بتتبعت.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل: <b>"مفيش إنترنت"</b> بس الـ DSL شغال</li>
-      <li>الـ <b>DSL light</b> شغال</li>
-      <li>الـ <b>Internet light</b> ممكن يكون شغال</li>
-      <li>الـ <b>Messages</b> (WhatsApp) مش بتتبعت</li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>DSL Status:</b> Up</li>
-      <li><b>IP:</b> موجود</li>
-      <li><b>Bit Rate:</b> كويس</li>
-      <li><b>Authentication:</b> OK</li>
-      <li><b>DNS:</b> ممكن يكون المشكلة</li>
-    </ul>`,
-    conditions:[
-      {type:'green', head:'✅ Browsing OK', body:'IP موجود و Messages بتتبعت'},
-      {type:'yellow',head:'⚠️ Slow Browsing', body:'IP موجود بس بطيء'},
-      {type:'red',   head:'❌ No Browsing', body:'IP موجود بس Messages مش بتتبعت'}
-    ],
-    understand:`ليه No Browsing بيحصل؟
-    <br>لأن في مشكلة في الـ <b>DNS</b> أو الـ <b>Authentication</b> أو الـ <b>Configuration</b> على الراوتر.
-    <br>الخط شغال، بس الـ Traffic مش بيمشي.`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ تظن المشكلة Line Down — لا، DSL Up.</li>
-      <li>❌ تروح تعمل Reset مباشرة — جرب Forget Network الأول.</li>
-    </ul>`,
-    compare:{
-      a:{title:'No Browsing', points:['DSL Up','IP موجود','Messages مش بتتبعت','DNS/Auth issue']},
-      b:{title:'Line Down', points:['DSL Down','مفيش IP','مفيش Connection','Physical issue']},
-    },
-    flow:[
-      {t:'Client: No Internet', type:'start'},
-      {t:'DSL Light ON?', type:'decision'},
-      {t:'YES', type:'label'},
-      {t:'IP موجود؟', type:'decision'},
-      {t:'YES', type:'label'},
-      {t:'Messages بتتبعت؟', type:'decision'},
-      {t:'NO → No Browsing', type:'result-red'},
-    ],
-    summary:[
-      {t:'✔ Physical OK', ok:true},
-      {t:'✔ Orange Speed OK', ok:true},
-      {t:'✔ IP OK', ok:true},
-      {t:'✔ Messages مش بتتبعت', ok:true},
-      {t:'↓', arrow:true},
-      {t:'No Browsing', ok:false, result:true}
-    ],
-    tips:[
-      {type:'basel', head:'💡 Basel\'s Tip', body:'لو دخلت No Browsing، متنساش آخر صفحة. فيها: Forget Network. ولو متحلتش: Reset. ودي ناس كتير بتنساها.'},
-      {type:'note', head:'🎯 تريكة باسل', body:'Forget Network → Reset → Escalation. ده الـ Order الصح.'}
-    ]
-  },
-  {
-    id:'authentication', cat:'network', emoji:'🔐', title:'Authentication',
-    meaning:`العميل مش بيقدر يعمل <b>PPPoE Connection</b>.
-    <br>الـ Username أو Password غلط، أو في مشكلة في الـ <b>Radius</b>.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل: <b>"بيطلعلي Error 691"</b> أو <b>"Wrong Username/Password"</b></li>
-      <li>الـ <b>DSL Up</b> بس مفيش Internet</li>
-      <li>على السيستم: <b>Authentication Failed</b></li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>Authentication Status:</b> Failed</li>
-      <li><b>Username</b></li>
-      <li><b>Service ID</b></li>
-      <li><b>Another ISP</b> (لو كان عند ISP تاني قبل كده)</li>
-      <li><b>Radius</b></li>
-    </ul>`,
-    conditions:[
-      {type:'green', head:'✅ Auth OK', body:'Authentication Success و IP ظاهر'},
-      {type:'yellow',head:'⚠️ Auth Problem', body:'Authentication Failed — Check Username'},
-      {type:'red',   head:'❌ Wrong Credentials', body:'Wrong Username/Password أو Another ISP'}
-    ],
-    understand:`ليه Authentication Fail بيحصل؟
-    <br>لأن الـ <b>Username</b> أو <b>Password</b> غلط، أو العميل كان على <b>Another ISP</b> والـ Service ID لسه متغير.`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ تظن المشكلة Bad Line — لا، DSL Up.</li>
-      <li>❌ تعمل Reset — مش هيحل Auth problem.</li>
-    </ul>`,
-    compare:{
-      a:{title:'Authentication', points:['DSL Up','Auth Failed','Username/Password','Radius']},
-      b:{title:'No Browsing', points:['DSL Up','Auth OK','IP موجود','DNS issue']},
-    },
-    flow:[
-      {t:'Client: Error 691', type:'start'},
-      {t:'DSL Up?', type:'decision'},
-      {t:'YES', type:'label'},
-      {t:'Auth Failed?', type:'decision'},
-      {t:'YES → Authentication', type:'result-red'},
-    ],
-    summary:[
-      {t:'✔ DSL Up', ok:true},
-      {t:'✔ Auth Failed', ok:true},
-      {t:'✔ Wrong Username/Password', ok:true},
-      {t:'↓', arrow:true},
-      {t:'Authentication Issue', ok:false, result:true}
-    ],
-    tips:[
-      {type:'basel', head:'💡 Basel\'s Tip', body:'لو العميل كان على Another ISP، لازم تتأكد إن الـ Service ID اتغير عندنا. غير كده الـ Auth هيفشل.'},
-    ]
-  },
-  {
-    id:'connection-unstable', cat:'network', emoji:'🔁', title:'Connection Unstable',
-    meaning:`الاتصال <b>بيقع ويرجع</b>. مش الـ DSL، لكن الـ <b>PPP Connection</b> نفسه.
-    <br>العميل حاسس إن الإنترنت بيفصل كل شوية.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل: <b>"النت بيفصل ويرجع"</b></li>
-      <li>الـ <b>DSL Up</b> طول الوقت</li>
-      <li>الـ <b>PPP Session</b> بيقع</li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>DSL Status:</b> Up</li>
-      <li><b>PPP Session:</b> Disconnecting</li>
-      <li><b>Router Type</b></li>
-      <li><b>Configuration</b></li>
-      <li><b>TR069</b> (لو فيه Remote Management)</li>
-    </ul>`,
-    conditions:[
-      {type:'green', head:'✅ Stable', body:'PPP Session ثابت و DSL Up'},
-      {type:'yellow',head:'⚠️ Unstable', body:'PPP بيقع كل شوية'},
-      {type:'red',   head:'❌ Very Unstable', body:'PPP بيقع كل دقايق'}
-    ],
-    understand:`ليه Connection Unstable بيحصل؟
-    <br>ممكن يكون:
-    <ul>
-      <li><b>Router overheating</b></li>
-      <li><b>Configuration issue</b></li>
-      <li><b>ISP side issue</b></li>
-      <li><b>TR069</b> مش شغال كويس</li>
-    </ul>`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ تظن المشكلة Line Unstable — لا، DSL Up طول الوقت.</li>
-      <li>❌ تروح على Physical — المشكلة في الـ Router أو Configuration.</li>
-    </ul>`,
-    compare:{
-      a:{title:'Connection Unstable', points:['DSL Up طول الوقت','PPP بيقع','Router/Config issue','Network']},
-      b:{title:'Line Unstable', points:['DSL بيقع','Physical issue','Copper','Resync']},
-    },
-    flow:[
-      {t:'Client: Connection بيقع', type:'start'},
-      {t:'DSL Up طول الوقت؟', type:'decision'},
-      {t:'YES', type:'label'},
-      {t:'PPP Session بيقع؟', type:'decision'},
-      {t:'YES → Connection Unstable', type:'result-yellow'},
-    ],
-    summary:[
-      {t:'✔ DSL Up طول الوقت', ok:true},
-      {t:'✔ PPP Session بيقع', ok:true},
-      {t:'✔ Router/Config issue', ok:true},
-      {t:'↓', arrow:true},
-      {t:'Connection Unstable', ok:false, result:true}
-    ],
-    tips:[
-      {type:'basel', head:'💡 Basel\'s Tip', body:'لو Connection Unstable، جرب Restart Router الأول. لو المشكلة رجعت، شوف الـ Configuration أو اعمل Escalation.'},
-    ]
-  },
-  {
-    id:'wifi-instability', cat:'network', emoji:'📡', title:'WiFi Instability',
-    meaning:`الـ <b>WiFi</b> بيفصل أو الأجهزة بتفصل.
-    <br>الإنترنت شغال على Cable، بس على WiFi مش كويس.`,
-    recognize:`بتعرفه إزاي؟
-    <ul>
-      <li>العميل: <b>"الWiFi بيفصل"</b> أو <b>"الأجهزة بتفصل"</b></li>
-      <li>الـ <b>DSL Up</b> و <b>PPP Up</b></li>
-      <li>على Cable: الإنترنت كويس</li>
-      <li>على WiFi: بيفصل</li>
-    </ul>`,
-    system:`إيه اللي أشوفه على السيستم؟
-    <ul>
-      <li><b>DSL Status:</b> Up</li>
-      <li><b>Bit Rate:</b> كويس</li>
-      <li><b>Router Type</b></li>
-      <li><b>WiFi Configuration</b></li>
-      <li><b>Forget Network</b> (على جهاز العميل)</li>
-    </ul>`,
-    conditions:[
-      {type:'green', head:'✅ WiFi Stable', body:'WiFi شغال كويس على كل الأجهزة'},
-      {type:'yellow',head:'⚠️ WiFi Unstable', body:'WiFi بيفصل على أجهزة معينة'},
-      {type:'red',   head:'❌ WiFi Down', body:'WiFi مش شغال خالص'}
-    ],
-    understand:`ليه WiFi Instability بيحصل؟
-    <br>ممكن يكون:
-    <ul>
-      <li><b>Interference</b> من WiFi الجيران</li>
-      <li><b>Distance</b> من الراوتر</li>
-      <li><b>Router overheating</b></li>
-      <li><b>Device issue</b> (الموبايل أو اللابتوب)</li>
-    </ul>`,
-    mistakes:`<b>الأخطاء الشائعة:</b>
-    <ul>
-      <li>❌ تظن المشكلة DSL — لا، DSL Up.</li>
-      <li>❌ تروح تعمل Reset للراوتر — جرب Forget Network الأول.</li>
-    </ul>`,
-    compare:{
-      a:{title:'WiFi Instability', points:['DSL Up','WiFi بيفصل','Cable كويس','Interference/Distance']},
-      b:{title:'Connection Unstable', points:['PPP بيقع','Cable كمان بيقع','Router/Config issue','Network']},
-    },
-    flow:[
-      {t:'Client: WiFi بيفصل', type:'start'},
-      {t:'Cable شغال؟', type:'decision'},
-      {t:'YES', type:'label'},
-      {t:'WiFi بس بيفصل؟', type:'decision'},
-      {t:'YES → WiFi Instability', type:'result-yellow'},
-    ],
-    summary:[
-      {t:'✔ DSL Up', ok:true},
-      {t:'✔ Cable شغال', ok:true},
-      {t:'✔ WiFi بيفصل', ok:true},
-      {t:'↓', arrow:true},
-      {t:'WiFi Instability', ok:false, result:true}
-    ],
-    tips:[
-      {type:'basel', head:'💡 Basel\'s Tip', body:'أول خطوة في WiFi Instability: Forget Network على الجهاز. لو متحلش: Restart Router. لو لسه: Reset.'},
-      {type:'note', head:'🎯 تريكة باسل', body:'لو العميل عنده راوترين في البيت، ممكن يكون في Conflict. اسأله عن الـ Setup الأول.'}
-    ]
-  },
-];
-
-/* ============================================================
-   STATE — Progress, Bookmarks
-   ============================================================ */
-const STORAGE_KEY = 'orange_dsl_handbook_v1';
-let state = loadState();
-
-function loadState(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return {status:{}, bookmarks:[]};
-    return JSON.parse(raw);
-  }catch(e){ return {status:{}, bookmarks:[]} }
+/* الثيم */
+const themeBtn = $("#themeBtn");
+function setTheme(t){
+  document.documentElement.dataset.theme = t;
+  themeBtn.textContent = t === "dark" ? "☀️" : "🌙";
+  try{ localStorage.setItem("ods-theme", t); }catch(e){}
 }
-function saveState(){
-  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+(function(){
+  let saved = null;
+  try{ saved = localStorage.getItem("ods-theme"); }catch(e){}
+  if(saved) setTheme(saved);
+  else setTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+})();
+themeBtn.addEventListener("click", ()=> setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
+
+/* الأكورديون */
+function setAcc(acc, open){
+  if(!acc) return;
+  acc.classList.toggle("open", open);
+  const b = $(".acc-h", acc);
+  if(b) b.setAttribute("aria-expanded", open ? "true" : "false");
 }
+$$(".acc-h").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const acc = btn.closest(".acc");
+    setAcc(acc, !acc.classList.contains("open"));
+  });
+});
+setAcc($("#physical-line-down"), true);
 
-/* ============================================================
-   RENDER
-   ============================================================ */
-const categoriesEl = document.getElementById('categories');
+/* التنقل */
+function showView(name){
+  const map = {home:"#view-home", physical:"#view-physical", network:"#view-network", billing:"#view-billing", tricks:"#view-tricks"};
+  if(!map[name]) name = "home";
+  $$(".view").forEach(v=> v.classList.toggle("on", v.id === map[name].slice(1)));
+  $$(".navbtn").forEach(b=> b.classList.toggle("on", b.dataset.go === name));
+  history.replaceState(null, "", name === "home" ? "#/" : "#/" + name);
+  window.scrollTo({top:0, behavior: RM ? "auto" : "smooth"});
+  requestAnimationFrame(observeReveals);
+}
+$$("[data-go]").forEach(el=>{
+  el.addEventListener("click", e=>{ e.preventDefault(); closeSearch(); showView(el.dataset.go); });
+});
 
-function render(filter='all', searchTerm=''){
-  categoriesEl.innerHTML = '';
-  const cats = ['physical','network'];
-  let totalShown = 0;
-
-  cats.forEach(catId=>{
-    const cat = CATEGORIES[catId];
-    let topics = TOPICS.filter(t=>t.cat===catId);
-
-    if(filter==='reviewed') topics = topics.filter(t=>state.status[t.id]==='reviewed');
-    else if(filter==='bookmarked') topics = topics.filter(t=>state.bookmarks.includes(t.id));
-    else if(filter!=='all') topics = topics.filter(t=>t.cat===filter);
-
-    if(searchTerm){
-      const s = searchTerm.toLowerCase();
-      topics = topics.filter(t=>
-        t.title.toLowerCase().includes(s) ||
-        t.meaning.toLowerCase().includes(s) ||
-        t.id.toLowerCase().includes(s)
-      );
+function routeFromHash(){
+  const h = location.hash.replace(/^#\/?/, "");
+  if(!h){ showView("home"); return; }
+  const [sec, accId] = h.split("/");
+  if(SECTIONS[sec]){
+    showView(sec);
+    if(accId){
+      const acc = document.getElementById(accId);
+      if(acc){
+        setAcc(acc, true);
+        setTimeout(()=> acc.scrollIntoView({behavior: RM ? "auto" : "smooth", block:"start"}), 120);
+      }
     }
+  } else showView("home");
+}
+window.addEventListener("hashchange", routeFromHash);
 
-    if(topics.length===0 && (filter==='all' || filter===catId)) return;
-    if(topics.length===0) return;
+/* Reveal */
+let io;
+function observeReveals(){
+  if(RM){ $$(".rv").forEach(el=> el.classList.add("in")); return; }
+  if(!io){
+    io = new IntersectionObserver(entries=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, {threshold:.08});
+  }
+  $$(".rv:not(.in)").forEach(el=> io.observe(el));
+}
+observeReveals();
 
-    totalShown += topics.length;
-
-    const catEl = document.createElement('div');
-    catEl.className = 'category open';
-    catEl.id = 'cat-'+catId;
-    catEl.innerHTML = `
-      <div class="category-header" onclick="this.parentElement.classList.toggle('open')">
-        <div class="icon-big">${cat.emoji}</div>
-        <div>
-          <h3>${cat.title}</h3>
-          <p style="color:var(--muted);font-size:12px;margin-top:2px">${cat.desc}</p>
-        </div>
-        <span class="count">${topics.length} موضوع</span>
-        <span class="chev">▼</span>
-      </div>
-      <div class="category-body">
-        <div class="topics-grid">
-          ${topics.map(t=>topicCardHTML(t)).join('')}
-        </div>
-      </div>
-    `;
-    categoriesEl.appendChild(catEl);
+/* عدّاد الأرقام */
+function countUp(el){
+  const target = parseInt(el.dataset.n, 10) || 0;
+  if(RM){ el.textContent = target; return; }
+  const dur = 900, t0 = performance.now();
+  (function step(t){
+    const p = Math.min(1, (t - t0) / dur);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * eased);
+    if(p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+const numIO = new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){ $$("[data-n]", en.target).forEach(countUp); numIO.unobserve(en.target); }
   });
+}, {threshold:.4});
+$$(".kv").forEach(k=> numIO.observe(k));
 
-  if(totalShown===0){
-    categoriesEl.innerHTML = `
-      <div style="text-align:center;padding:40px;color:var(--muted)">
-        <div style="font-size:40px;margin-bottom:10px">🔍</div>
-        <p>مفيش نتائج مطابقة</p>
-      </div>
-    `;
-  }
+/* البحث */
+const input = $("#searchInput");
+const panel = $("#srchPanel");
+let index = [];
 
-  updateStats();
-}
-
-function topicCardHTML(t){
-  const s = state.status[t.id];
-  const bm = state.bookmarks.includes(t.id);
-  let badges = '';
-  if(s==='reviewed') badges += '<span class="badge reviewed">✔ Reviewed</span>';
-  if(s==='need') badges += '<span class="badge need">🔄 Need Review</span>';
-  if(s==='fav') badges += '<span class="badge fav">⭐ Fav</span>';
-  if(bm) badges += '<span class="badge bookmark">🔖</span>';
-  return `
-    <div class="topic-card" onclick="openTopic('${t.id}')">
-      <div class="status">${badges}</div>
-      <div class="emoji">${t.emoji}</div>
-      <h4>${t.title}</h4>
-      <p>${CATEGORIES[t.cat].title}</p>
-    </div>
-  `;
-}
-
-function updateStats(){
-  document.getElementById('stat-total').textContent = TOPICS.length;
-  document.getElementById('stat-reviewed').textContent = Object.values(state.status).filter(s=>s==='reviewed').length;
-  document.getElementById('stat-bookmarks').textContent = state.bookmarks.length;
-}
-
-/* ============================================================
-   MODAL — Topic Detail
-   ============================================================ */
-let currentTopic = null;
-
-function openTopic(id){
-  const t = TOPICS.find(x=>x.id===id);
-  if(!t) return;
-  currentTopic = t;
-  document.getElementById('mEmoji').textContent = t.emoji;
-  document.getElementById('mTitle').textContent = t.title;
-  document.getElementById('mCat').textContent = CATEGORIES[t.cat].title;
-
-  const body = document.getElementById('mBody');
-  body.innerHTML = `
-    ${sectionBlock(1,'يعني إيه المشكلة؟', t.meaning)}
-    ${sectionBlock(2,'بتعرفها إزاي؟', t.recognize)}
-    ${sectionBlock(3,'إيه اللي أشوفه على السيستم؟', t.system)}
-
-    <div class="section-block">
-      <div class="section-title"><span class="num">4</span> الشروط</div>
-      <div class="conditions">
-        ${t.conditions.map(c=>`
-          <div class="cond-card ${c.type}">
-            <div class="cond-head">${c.head}</div>
-            <div class="cond-body">${c.body}</div>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-
-    ${sectionBlock(5,'افهمها ببساطة', t.understand)}
-    ${sectionBlock(6,'الأخطاء الشائعة', t.mistakes)}
-
-    <div class="section-block">
-      <div class="section-title"><span class="num">7</span> الفرق بينها وبين...</div>
-      <div class="compare">
-        <div class="compare-card">
-          <h5>${t.compare.a.title}</h5>
-          <ul>${t.compare.a.points.map(p=>`<li>${p}</li>`).join('')}</ul>
-        </div>
-        <div class="compare-vs">VS</div>
-        <div class="compare-card">
-          <h5>${t.compare.b.title}</h5>
-          <ul>${t.compare.b.points.map(p=>`<li>${p}</li>`).join('')}</ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-block">
-      <div class="section-title"><span class="num">🔀</span> Visual Flow</div>
-      <div class="flow">
-        ${t.flow.map(f=>{
-          if(f.type==='label') return `<div class="flow-label">${f.t}</div>`;
-          return `<div class="flow-node ${f.type||''}">${f.t}</div><div class="flow-arrow">↓</div>`;
-        }).join('')}
-      </div>
-    </div>
-
-    <div class="section-block">
-      <div class="section-title"><span class="num">8</span> مختصر سريع</div>
-      <div class="summary-card">
-        ${t.summary.map(s=>{
-          if(s.arrow) return `<div class="arrow">↓</div>`;
-          const style = s.result ? 'color:var(--orange-2);font-weight:800;font-size:16px' : '';
-          const icon = s.ok ? '✅' : '➡️';
-          return `<div class="row" style="${style}">${icon} ${s.t}</div>`;
-        }).join('')}
-      </div>
-    </div>
-
-    ${t.tips && t.tips.length ? `
-      <div class="section-block">
-        <div class="section-title"><span class="num">🎯</span> Trainer Notes</div>
-        ${t.tips.map(tip=>`
-          <div class="tip ${tip.type}">
-            <div class="tip-head">${tip.head}</div>
-            <div>${tip.body}</div>
-          </div>
-        `).join('')}
-      </div>
-    ` : ''}
-  `;
-
-  refreshActionButtons();
-  document.getElementById('modal').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function sectionBlock(num, title, content){
-  return `
-    <div class="section-block">
-      <div class="section-title"><span class="num">${num}</span> ${title}</div>
-      <div class="content-box">${content}</div>
-    </div>
-  `;
-}
-
-function closeModal(){
-  document.getElementById('modal').classList.remove('show');
-  document.body.style.overflow = '';
-  currentTopic = null;
-}
-
-function refreshActionButtons(){
-  if(!currentTopic) return;
-  const id = currentTopic.id;
-  const s = state.status[id];
-  const bm = state.bookmarks.includes(id);
-  document.getElementById('btnReview').classList.toggle('active-review', s==='reviewed');
-  document.getElementById('btnNeed').classList.toggle('active-need', s==='need');
-  document.getElementById('btnFav').classList.toggle('active-fav', s==='fav');
-  document.getElementById('btnBookmark').classList.toggle('active-bookmark', bm);
-}
-
-function toggleStatus(type){
-  if(!currentTopic) return;
-  const id = currentTopic.id;
-  if(type==='bookmark'){
-    const idx = state.bookmarks.indexOf(id);
-    if(idx>=0) state.bookmarks.splice(idx,1);
-    else state.bookmarks.push(id);
-  }else{
-    if(state.status[id]===type) delete state.status[id];
-    else state.status[id] = type;
-  }
-  saveState();
-  refreshActionButtons();
-  render(currentFilter, currentSearch);
-}
-
-/* ============================================================
-   TABS / FILTER
-   ============================================================ */
-let currentFilter = 'all';
-let currentSearch = '';
-
-document.querySelectorAll('.tab').forEach(tab=>{
-  tab.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    currentFilter = tab.dataset.filter;
-    render(currentFilter, currentSearch);
+function buildIndex(){
+  index = [];
+  $$(".acc").forEach(acc=>{
+    index.push({
+      type:"acc", el:acc, sec:acc.dataset.sec, id:acc.id,
+      title: $(".tt b", acc).textContent.trim(),
+      sub:   ($(".tt small", acc)||{textContent:""}).textContent.trim(),
+      text:  $(".acc-b", acc).innerText.replace(/\s+/g," ").trim()
+    });
   });
-});
+  $$(".trick").forEach(t=>{
+    index.push({type:"trick", el:t, sec:"tricks", id:t.id,
+      title: $("h4", t).textContent.trim(), sub:"تركات",
+      text: t.innerText.replace(/\s+/g," ").trim()});
+  });
+  $$(".kv").forEach(k=>{
+    index.push({type:"kv", el:k, sec:"tricks", id:k.id,
+      title: $(".l", k).textContent.trim(), sub:"أرقام مهمة — تركات",
+      text: k.innerText.replace(/\s+/g," ").trim()});
+  });
+  $$(".intro-c,.map-card,.rule-banner").forEach(c=>{
+    const sec = c.closest(".view") ? c.closest(".view").id.replace("view-","") : "physical";
+    if(SECTIONS[sec]){
+      index.push({type:"acc", el:c, sec:sec, id:"",
+        title: ($("h4", c)||{textContent:"ملخص"}).textContent.trim(),
+        sub: SECTIONS[sec],
+        text: c.innerText.replace(/\s+/g," ").trim()});
+    }
+  });
+}
+buildIndex();
 
-/* ============================================================
-   SEARCH
-   ============================================================ */
-const searchInput = document.getElementById('search');
-const searchResults = document.getElementById('searchResults');
-
-searchInput.addEventListener('input', e=>{
-  const val = e.target.value.trim();
-  currentSearch = val;
-  if(!val){
-    searchResults.classList.remove('show');
-    render(currentFilter, '');
-    return;
-  }
-  const s = val.toLowerCase();
-  const matches = TOPICS.filter(t=>
-    t.title.toLowerCase().includes(s) ||
-    t.meaning.toLowerCase().includes(s) ||
-    t.id.toLowerCase().includes(s)
-  );
-  if(matches.length){
-    searchResults.innerHTML = matches.map(t=>`
-      <div class="search-item" onclick="openTopic('${t.id}');searchResults.classList.remove('show');searchInput.value='';currentSearch='';render(currentFilter,'');">
-        <span class="emoji">${t.emoji}</span>
-        <span class="title">${highlight(t.title,val)}</span>
-        <span class="cat">${CATEGORIES[t.cat].title}</span>
-      </div>
-    `).join('');
-    searchResults.classList.add('show');
-  }else{
-    searchResults.innerHTML = `<div class="search-item"><span style="color:var(--muted)">مفيش نتائج</span></div>`;
-    searchResults.classList.add('show');
-  }
-  render(currentFilter, val);
-});
-
-function highlight(text, term){
-  if(!term) return text;
-  const re = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`,'gi');
-  return text.replace(re,'<mark>$1</mark>');
+function snippet(text, q){
+  const i = text.toLowerCase().indexOf(q);
+  if(i < 0) return text.slice(0, 90) + "…";
+  const s = Math.max(0, i - 38), e = Math.min(text.length, i + q.length + 55);
+  return (s>0?"…":"") + text.slice(s, e) + (e<text.length?"…":"");
+}
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function markQ(s, q){
+  if(!q) return esc(s);
+  const rx = new RegExp("(" + q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&") + ")", "gi");
+  return esc(s).replace(rx, "<mark>$1</mark>");
 }
 
-document.addEventListener('click', e=>{
-  if(!e.target.closest('.search-box')) searchResults.classList.remove('show');
-});
+function doSearch(){
+  const q = input.value.trim();
+  clearMarks();
+  if(q.length < 2){ closeSearch(); return; }
+  const lq = q.toLowerCase();
+  const hits = index.filter(it=> it.text.toLowerCase().includes(lq)).slice(0, 40);
 
-/* ============================================================
-   QUICK REVIEW
-   ============================================================ */
-function openQuickReview(){
-  const body = document.getElementById('qrBody');
-  body.innerHTML = TOPICS.map(t=>`
-    <div class="qr-topic">
-      <h4>${t.emoji} ${t.title}</h4>
-      <div class="qr-summary">
-        <b>يعني إيه:</b> ${stripHTML(t.meaning).slice(0,140)}...
-        <br><b>الشروط:</b> ${t.conditions.map(c=>c.head).join(' | ')}
-        <br><b>الخلاصة:</b> ${t.summary.filter(s=>!s.arrow).map(s=>s.t).join(' → ')}
-      </div>
-    </div>
-  `).join('');
-  document.getElementById('qrModal').classList.add('show');
-  document.body.style.overflow = 'hidden';
+  const cv = {physical:"phys",network:"net",billing:"bill",tricks:"trk"};
+  let html = '<div class="srch-meta">' + (hits.length
+      ? "🔎 " + hits.length + " نتيجة في الأقسام الأربعة لـ «" + esc(q) + "»"
+      : "لا توجد نتائج لـ «" + esc(q) + "» — جرّب مصطلحًا آخر") + "</div>";
+  hits.forEach((h, i)=>{
+    html += '<button class="srch-item" data-i="'+i+'" role="option">'
+      + '<span class="t">' + markQ(h.title, q) + '</span>'
+      + '<span class="schip" style="--c:var(--'+cv[h.sec]+')">' + SECTIONS[h.sec] + '</span>'
+      + '<span class="s">' + markQ(snippet(h.text, lq), q) + '</span></button>';
+  });
+  panel.innerHTML = html;
+  panel.classList.add("on");
+  $$(".srch-item", panel).forEach(btn=>{
+    btn.addEventListener("click", ()=>{ goToHit(hits[+btn.dataset.i], q); });
+  });
 }
-function closeQuickReview(){
-  document.getElementById('qrModal').classList.remove('show');
-  document.body.style.overflow = '';
+function goToHit(hit, q){
+  closeSearch();
+  showView(hit.sec);
+  history.replaceState(null, "", "#/" + hit.sec + (hit.type==="acc" && hit.id ? "/" + hit.id : ""));
+  setTimeout(()=>{
+    const target = hit.el;
+    if(hit.type === "acc" && target.classList.contains("acc")) setAcc(target, true);
+    setTimeout(()=>{
+      target.scrollIntoView({behavior: RM ? "auto" : "smooth", block:"center"});
+      target.classList.remove("flash"); void target.offsetWidth; target.classList.add("flash");
+      highlightIn((hit.type==="acc" && target.classList.contains("acc")) ? $(".acc-b", target) : target, q);
+      setTimeout(()=>{ clearMarks(); target.classList.remove("flash"); }, 5000);
+    }, 90);
+  }, 60);
 }
-function stripHTML(html){
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  return div.textContent || div.innerText || '';
+function highlightIn(container, q){
+  if(!q || !container) return;
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+    acceptNode(n){
+      if(!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      const p = n.parentElement;
+      if(!p || p.closest("script,style,mark")) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = []; let n;
+  while(n = walker.nextNode()) nodes.push(n);
+  const rx = new RegExp("(" + q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&") + ")", "gi");
+  nodes.forEach(node=>{
+    if(!rx.test(node.nodeValue)) return;
+    rx.lastIndex = 0;
+    const span = document.createElement("span");
+    span.innerHTML = esc(node.nodeValue).replace(rx, '<mark class="hl">$1</mark>');
+    node.parentNode.replaceChild(span, node);
+  });
 }
-
-function showBookmarks(){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelector('.tab[data-filter="bookmarked"]').classList.add('active');
-  currentFilter = 'bookmarked';
-  render(currentFilter, currentSearch);
-  window.scrollTo({top:document.getElementById('categories').offsetTop-80, behavior:'smooth'});
+function clearMarks(){
+  $$("mark.hl").forEach(m=>{
+    const p = m.parentNode;
+    p.replaceChild(document.createTextNode(m.textContent), m);
+    p.normalize();
+  });
 }
+function closeSearch(){ panel.classList.remove("on"); }
 
-/* ============================================================
-   FLOAT NAV / BACK TO TOP
-   ============================================================ */
-function scrollToCat(id){
-  const el = document.getElementById('cat-'+id);
-  if(el){
-    el.classList.add('open');
-    window.scrollTo({top:el.offsetTop-80, behavior:'smooth'});
-  }
-}
+let deb;
+input.addEventListener("input", ()=>{ clearTimeout(deb); deb = setTimeout(doSearch, 140); });
+input.addEventListener("focus", ()=>{ if(input.value.trim().length >= 2) doSearch(); });
+input.addEventListener("keydown", e=>{ if(e.key === "Escape"){ closeSearch(); input.blur(); } });
+document.addEventListener("click", e=>{ if(!e.target.closest(".srch")) closeSearch(); });
 
-const backTop = document.getElementById('backTop');
-window.addEventListener('scroll', ()=>{
-  backTop.classList.toggle('show', window.scrollY>400);
-});
-
-function resetAll(){
-  if(confirm('متأكد إنك عايز تمسح كل Progress و Bookmarks؟')){
-    state = {status:{}, bookmarks:[]};
-    saveState();
-    render(currentFilter, currentSearch);
-  }
-}
-
-/* ============================================================
-   INIT
-   ============================================================ */
-render();
-
-/* Close modal on ESC */
-document.addEventListener('keydown', e=>{
-  if(e.key==='Escape'){
-    closeModal();
-    closeQuickReview();
-  }
-});
-
-/* Close modal on overlay click */
-document.getElementById('modal').addEventListener('click', e=>{
-  if(e.target.id==='modal') closeModal();
-});
+routeFromHash();
+})();
 </script>
 </body>
 </html>
