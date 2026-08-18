@@ -15,7 +15,8 @@
 :root{
   --bg:#f7f1e7; --surface:#fffdf8; --surface2:#fbf6ec; --ink:#241b10; --ink2:#6b5d4b;
   --line:#e7dcc8; --line2:#d9c9ac; --brand:#f16a00; --brand-deep:#c85300; --brand-soft:#ffe7d0;
-  --chip:#f3e9d6; --phys:#df5e00; --net:#0d7f8c; --bill:#a87a10; --trk:#8a49a3;
+  --chip:#f3e9d6; --phys:#df5e00; --net:#0d7f8c; --bill:#a87a10; --trk:#8a49a3; --cand:#1d6f5c;
+  --req:#2f5fb0; --call:#b23d6b;
   --ok:#1e7d43; --warn:#b45309; --bad:#b3362b;
   --shadow:0 10px 30px rgba(90,60,20,.10); --shadow-sm:0 4px 14px rgba(90,60,20,.08);
   --r:14px; --f-display:'Cairo','Segoe UI',Tahoma,sans-serif; --f-body:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
@@ -23,7 +24,8 @@
 html[data-theme="dark"]{
   --bg:#141009; --surface:#201a10; --surface2:#272012; --ink:#f5ecdb; --ink2:#b3a48b;
   --line:#3b3220; --line2:#4d4128; --brand:#ff8b2b; --brand-deep:#ffa254; --brand-soft:#3a2410;
-  --chip:#2d2513; --phys:#ff8b2b; --net:#41c6d6; --bill:#e6b34c; --trk:#c98bf0;
+  --chip:#2d2513; --phys:#ff8b2b; --net:#41c6d6; --bill:#e6b34c; --trk:#c98bf0; --cand:#4fcaa8;
+  --req:#7ea3e8; --call:#ef8fb3;
   --ok:#4cc07d; --warn:#ffb15e; --bad:#ff7c6e;
   --shadow:0 12px 34px rgba(0,0,0,.45); --shadow-sm:0 4px 16px rgba(0,0,0,.35);
 }
@@ -318,6 +320,9 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
       <button class="navbtn" data-go="network"  style="--acc:var(--net)">🌐 Network</button>
       <button class="navbtn" data-go="billing"  style="--acc:var(--bill)">💰 Billing</button>
       <button class="navbtn" data-go="tricks"   style="--acc:var(--trk)">🧠 تركات</button>
+      <button class="navbtn" data-go="candidate" style="--acc:var(--cand)">🧾 Candidate</button>
+      <button class="navbtn" data-go="requests" style="--acc:var(--req)">📋 Requests</button>
+      <button class="navbtn" data-go="callscript" style="--acc:var(--call)">📞 Call Script</button>
     </nav>
   </div>
 </header>
@@ -338,11 +343,12 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
         <p class="desc">مرجع تدريبي مبسط لمشاكل <span class="en">Orange Home DSL</span> والـ<span class="en">Scripts</span> والـ<span class="en">Troubleshooting</span>.</p>
       </div>
       <aside class="index-card rv">
-        <h3>📚 فهرس المرجع <span>٤ أقسام فقط</span></h3>
+        <h3>📚 فهرس المرجع <span>٥ أقسام فقط</span></h3>
         <button class="idx-row" data-go="physical" style="--c:var(--phys)"><span class="e">🛠️</span><span><b>Physical</b><small>مشاكل الـPhysical والـDSL والـLine</small></span><span class="n">٣</span></button>
         <button class="idx-row" data-go="network" style="--c:var(--net)"><span class="e">🌐</span><span><b>Network</b><small>مشاكل الإنترنت والـWiFi والـIP</small></span><span class="n">٧</span></button>
         <button class="idx-row" data-go="billing" style="--c:var(--bill)"><span class="e">💰</span><span><b>Billing</b><small>الفواتير والدفع والباقات والخدمات المتعلقة بالحساب</small></span><span class="n">١١</span></button>
         <button class="idx-row" data-go="tricks" style="--c:var(--trk)"><span class="e">🧠</span><span><b>تركات</b><small>أهم الملاحظات والنقاط اللي ممكن تسبب لخبطة أو تتنسي</small></span><span class="n">١٣</span></button>
+        <button class="idx-row" data-go="candidate" style="--c:var(--cand)"><span class="e">🧾</span><span><b dir="ltr">Candidate</b><small>التعامل مع عميل الـCandidate ومراحله الـ5 والـWork Order</small></span><span class="n">٦</span></button>
       </aside>
     </div>
 
@@ -377,13 +383,19 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
         <p>أهم الملاحظات والنقاط اللي ممكن تسبب لخبطة أو تتنسي.</p>
         <span class="go">١٣ تريكة + الأرقام المهمة <span>←</span></span>
       </button>
+      <button class="tile rv" data-go="candidate" style="--c:var(--cand)">
+        <span class="num">05</span><span class="e">🧾</span>
+        <h3 dir="ltr">Candidate</h3>
+        <p>التعامل مع عميل الـCandidate بمراحله الـ5 والـWork Order.</p>
+        <span class="go">Work Order · Down Payment · Deliver · Comment · Status <span>←</span></span>
+      </button>
     </div>
   </div>
 
   <div class="ticker" aria-hidden="true">
     <div class="tk-track">
-      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Extension Offer <i>◆</i> Payment Dispute <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Extra Quote <i>◆</i> Consumption Info <i>◆</i> MSAN <i>◆</i> CIBEL <i>◆</i> Pedia Script <i>◆</i> تركات <i>◆</i></span>
-      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Extension Offer <i>◆</i> Payment Dispute <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Extra Quote <i>◆</i> Consumption Info <i>◆</i> MSAN <i>◆</i> CIBEL <i>◆</i> Pedia Script <i>◆</i> تركات <i>◆</i></span>
+      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Extension Offer <i>◆</i> Payment Dispute <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Extra Quote <i>◆</i> Consumption Info <i>◆</i> MSAN <i>◆</i> CIBEL <i>◆</i> Pedia Script <i>◆</i> تركات <i>◆</i> Candidate <i>◆</i> Work Order <i>◆</i> MSAN Activation <i>◆</i> Roll Back <i>◆</i></span>
+      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Extension Offer <i>◆</i> Payment Dispute <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Extra Quote <i>◆</i> Consumption Info <i>◆</i> MSAN <i>◆</i> CIBEL <i>◆</i> Pedia Script <i>◆</i> تركات <i>◆</i> Candidate <i>◆</i> Work Order <i>◆</i> MSAN Activation <i>◆</i> Roll Back <i>◆</i></span>
     </div>
   </div>
 </section>
@@ -497,7 +509,7 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
                 <tr><th>التركيب</th><th>أقل Max</th></tr>
                 <tr><td>✅ <span class="en">VDSL + VDSL Router</span></td><td><b>36 Mbps</b></td></tr>
                 <tr><td>✅ <span class="en">VDSL + ADSL Router</span> أو العكس</td><td><b>15 Mbps</b></td></tr>
-                <tr><td>✅ <span class="en">Copper ADSL + ADSL Router</span></td><td><b>15 Mbps</b></td></tr>
+                <tr><td>✅ <span class="en"> Router DSL + ADSL Router</span></td><td><b>15 Mbps</b></td></tr>
               </table>
             </div>
             <div class="callout warn"><span class="ci">⚠️</span><div><b>Quality</b>لازم متقلش عن <b>6</b></div></div>
@@ -633,7 +645,7 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
       <span class="count-chip">٧ موضوعات</span>
     </div>
 
-    <div class="rule-banner rv"><span class="ic">⚠️</span><span>قاعدة أساسية: أي <span class="en">Network Issue</span> لازم أتأكد من الـ<span class="en">Physical</span> الأول.</span></div>
+    <div class="rule-banner rv"><span class="ic">⚠️</span><span>قاعدة أساسية: أي <span class="en">Network Issue</span> لازم أتأكد من الـ<span class="en">Physical</span> الأول — حتى لو فاهم الـ<span class="en">Network</span> كويس جدًا، لازم تكون متأكد 100% إن الخط مفيهوش مشكلة <span class="en">Physical</span>، عشان متحددش الـ<span class="en">Case</span> غلط وتبقى <span class="en">Fail</span>.</span></div>
 
     <div class="accs">
 
@@ -932,6 +944,31 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
         </div></div></div>
       </article>
 
+    </div>
+
+    <!-- الخلاصة النهائية -->
+    <div class="intro-c rv" style="margin-bottom:56px">
+      <h4>🧠 الخلاصة النهائية — إزاي أفرّق بين الـCases</h4>
+      <div class="defs">
+        <div class="def" style="flex-direction:column;gap:4px"><b>🔴 No Browsing</b>
+          <span><span class="en">Physical ✅ + Speed ✅ + IP ✅</span> — لكن العميل مش قادر يستخدم الإنترنت نهائيًا، وحتى الرسالة مش بتوصل.</span>
+        </div>
+        <div class="def" style="flex-direction:column;gap:4px"><b>🟠 Authentication</b>
+          <span><span class="en">Physical ✅ + Speed ✅ + IP ❌</span> — يعني العميل مش ساحب <span class="en">IP</span>. وبعدها نحدد: <span class="en">Login OK / Login Failed / No Logs</span>.</span>
+        </div>
+        <div class="def" style="flex-direction:column;gap:4px"><b>🔵 Connection Unstable</b>
+          <span>العميل عنده مشكلة في <span class="en">Internet Light</span> بتفصل وترجع، بينما الـ<span class="en">DSL</span> ثابتة. والشرطين: <span class="en">Port Up Time &gt; 6 Hours ✅</span> و<span class="en">IP Difference &gt; 5 Minutes ✅</span>.</span>
+        </div>
+        <div class="def" style="flex-direction:column;gap:4px"><b>🟣 WiFi Instability</b>
+          <span>المشكلة بتحصل من ناحية الـ<span class="en">WiFi</span>: علامة تعجب / الأجهزة تفصل من <span class="en">WiFi</span> / الفيديو يقطع ويرجع — مع التأكد أولًا إن مفيش <span class="en">Line Down ❌</span> ولا <span class="en">Bad Line ❌</span>.</span>
+        </div>
+      </div>
+
+      <div class="callout bad" style="margin-top:16px"><span class="ci">🚨</span><div><b>وأهم قاعدة في الرسالة كلها</b>متبدأش <span class="en">Network</span> قبل ما تتأكد إن الـ<span class="en">Physical</span> سليم.</div></div>
+
+      <div class="path" style="margin-top:10px"><span>Physical</span><i>→</i><span>تحديد الـCase</span><i>→</i><span>Pedia</span><i>→</i><span>تنفيذ الخطوات</span><i>→</i><span>حل المشكلة أو فتح شكوى</span></div>
+
+      <div class="result-box">ومش مطلوب منك تحفظ خطوات الـ<span class="en">Pedia</span> حرفيًا — المطلوب إنك تعرف تحدد الـ<span class="en">Case</span> صح، وبعدها الـ<span class="en">Pedia</span> هتقولك تعمل إيه 🎯</div>
     </div>
   </div>
 </section>
@@ -1451,6 +1488,562 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
   </div>
 </section>
 
+<!-- ════════════════ 5) CANDIDATE ════════════════ -->
+<section class="view" id="view-candidate" style="--acc:var(--cand)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-emoji">🧾</span>
+      <div><h2 dir="ltr">Candidate</h2><p>التعامل مع عميل الـCandidate Customer Handling.</p></div>
+      <span class="count-chip">٦ موضوعات</span>
+    </div>
+
+    <div class="rule-banner gold rv"><span class="ic">⚠️</span><span><b>أصعب جزء</b> في الـ<span class="en">Candidate</span> هو الـ<span class="en">Work Order</span> بسبب كثرة الحالات والـ<span class="en">Scripts</span>، لكن بمجرد فهم ترتيب المراحل وطريقة التعامل مع الـ<span class="en">Complaints</span> الموضوع بيبقى أسهل.</span></div>
+
+    <div class="intro-grid">
+      <div class="intro-c rv" style="grid-column:1/-1">
+        <h4>🧩 مراحل الـCandidate الخمسة (بالترتيب الإجباري)</h4>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <tr><th>#</th><th>المرحلة</th><th>الوضع الطبيعي</th></tr>
+            <tr><td>١</td><td><span class="en">Status</span></td><td>✅ <span class="en">Open</span></td></tr>
+            <tr><td>٢</td><td><span class="en">WO (Work Order)</span></td><td>✅ لازم يكون موجود رقم</td></tr>
+            <tr><td>٣</td><td><span class="en">Down Payment Status</span></td><td>✅ <span class="en">Paid</span></td></tr>
+            <tr><td>٤</td><td><span class="en">Deliver Status</span></td><td>✅ <span class="en">Deliver</span></td></tr>
+            <tr><td>٥</td><td><span class="en">Comment</span></td><td>✅ <span class="en">200 Success</span></td></tr>
+          </table>
+        </div>
+        <div class="callout bad"><span class="ci">⚠️</span><div><b>قاعدة مهمة</b>مينفعش تعالج مشكلة في المرحلة الثالثة أو الرابعة قبل ما تتأكد إن المراحل السابقة محلولة. كل مرحلة لازم تكتمل قبل الانتقال للي بعدها.</div></div>
+      </div>
+    </div>
+
+    <div class="accs">
+
+      <!-- ── Work Order ── -->
+      <article class="acc rv" id="candidate-work-order" data-sec="candidate">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">1️⃣</span>
+          <span class="tt"><b dir="ltr">Work Order (WO)</b><small>رقم الطلب / التفعيل / التشغيل</small></span>
+          <span class="bdg">الأصعب</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>يعني إيه Work Order؟</h4>
+            <p>الـ<span class="en">Work Order</span> هو رقم الطلب / التفعيل / التشغيل. وجود الرقم معناه إن الطلب تم حجزه على الخط من ناحيتنا، لذلك لازم يكون موجود.</p>
+          </div>
+
+          <div class="blk">
+            <h4>لو Status = Open ✅ ولكن WO فاضي ❌</h4>
+            <p>متستعجلش وتبدأ تقدم شكوى. بص تحت خانة <span class="en">Work Order</span> مباشرة، هتلاقي خانة <b><span class="en">Work Order Issue</span></b> اللي بتوضح سبب عدم وجود الـ<span class="en">WO</span> — مثلاً <span class="en">Another ISP</span>.</p>
+            <div class="quote">روح إلى Pedia واقرأ الـScript الخاص بالحالة، وبعدها كمل المكالمة بناءً عليه.</div>
+          </div>
+
+          <div class="blk">
+            <h4>📍 الوصول إلى Candidate في Pedia</h4>
+            <div class="path"><span>Home DSL</span><i>→</i><span>Plans</span><i>→</i><span>Candidate Customer Handling</span></div>
+            <p style="margin-top:10px">هتلاقي 3 خانات رئيسية:</p>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span>أول خانة — خاصة بـ<span class="en">Work Order</span> و<span class="en">Comment</span></span></div>
+              <div class="cond"><span class="cn">٢</span><span>ثاني خانة — خاصة بـ<span class="en">Down Payment Status</span></span></div>
+              <div class="cond"><span class="cn">٣</span><span>آخر خانة — خاصة بـ<span class="en">Deliver Status</span></span></div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>معنى Another ISP</h4>
+            <p>الخط مشترك مع شركة أخرى. وبالتالي بنطلب من العميل إنه يلغي الخدمة مع الشركة الأخرى ويحصل على رقم الإلغاء، ثم يتواصل معنا مرة أخرى.</p>
+            <div class="dialog">
+              <div class="msg agent"><span class="who">😊 الحالة الأولى</span>"تمام، هروح ألغي مع الشركة التانية وأجيب رقم الإلغاء وأكلمكم."</div>
+            </div>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span>افتح <span class="en">Activation Follow Up</span></span></div>
+              <div class="cond"><span class="cn">٢</span><span>اقفل الـ<span class="en">SR</span></span></div>
+              <div class="cond"><span class="cn">٣</span><span>وضح للعميل إنه بعد الإلغاء يقدر يتواصل معنا لتقديم الطلب — وبكده المكالمة انتهت</span></div>
+            </div>
+            <div class="dialog" style="margin-top:14px">
+              <div class="msg agent"><span class="who">🤔 الحالة الثانية</span>"إزاي؟ أنا لغيت بالفعل ومعايا رقم الإلغاء."</div>
+            </div>
+            <div class="callout warn"><span class="ci">⚠️</span><div><b>تناقض</b>العميل بيقول إنه ألغى بالفعل ومعاه الرقم — هنا ننتقل لجزء تقديم الشكوى.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>📝 ترتيب الشكاوى في Work Order</h4>
+            <p>قبل تقديم أي شكوى خاصة بالـ<span class="en">Work Order</span>، لازم تراجع الشكوى الرئيسية <b><span class="en">MSAN Activation</span></b> (24 <span class="en">Working Hours</span>) — بتكون موجودة تلقائيًا، لا نفتحها بأنفسنا أول مرة.</p>
+            <div class="exs">
+              <div class="ex good"><b>لسه داخل الـ24 WH ✅</b>نوضح للعميل إن طلب التفعيل الأساسي مازال قائم ومفتوح، ومدته 24 <span class="en">Working Hours</span> ومن المفترض يتحل خلالها. بعدها: افتح <span class="en">Activation Follow Up</span> واقفلها. <b>ولا تقدم شكوى Work Order أخرى.</b></div>
+              <div class="ex bad"><b>تعدى الـ24 WH ❌</b>هنا نبدأ في تقديم شكوى، حسب ترتيب التصعيد التالي.</div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>🪜 ترتيب التصعيد الكامل</h4>
+            <div class="path"><span>MSAN Activation · 24 WH</span><i>→</i><span>Work Order Complaint · 6 WH أو 4 WH</span><i>→</i><span>New Activation Delay · 4 WH</span><i>→</i><span>Send Mail · 2 WH</span><i>→</i><span>Send Second Mail · 2 WH</span><i>→</i><span>Send Third Mail · 2 WH</span></div>
+          </div>
+
+          <div class="blk">
+            <h4>اختيار شكوى الـ6 WH أو الـ4 WH</h4>
+            <p>بعد انتهاء الـ<span class="en">MSAN Activation – 24 WH</span>، بص على <b><span class="en">Work Order Issue</span></b>:</p>
+            <div class="exs">
+              <div class="ex good"><b>موجودة في جدول الـ6 WH</b>استخدم <span class="en">Script</span> الـ6 <span class="en">WH</span></div>
+              <div class="ex bad"><b>مش موجودة في جدول الـ6 WH</b>استخدم <span class="en">Script</span> الـ4 <span class="en">WH</span></div>
+            </div>
+            <div class="callout warn"><span class="ci">⚠️</span><div><b>نقطة مهمة</b>قبل ما تقول للعميل إنك هتفتح شكوى جديدة، لازم تتأكد إن الشكوى المطلوبة مش مفتوحة بالفعل. مثال: <span class="en">Another ISP</span> موجودة في جدول الـ6 <span class="en">WH</span>، لكن لو راجعت الـ<span class="en">Complaints</span> ولقيت إن شكوى الـ6 <span class="en">WH</span> مفتوحة بالفعل وعدت مدتها — مش هتفتحها تاني، تنتقل للـ4 <span class="en">WH</span> حسب التسلسل.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>حالات Work Order الاستثنائية</h4>
+            <p>في 4 مشاكل الـ<span class="en">Script</span> الخاص بيها بيكون مختلف، وبيقول بمعنى: <i>"نبذل قصارى جهدنا لتشغيل الخدمة..."</i></p>
+            <div class="chips">
+              <span class="chip en">Network Activation Problem</span>
+              <span class="chip en">Change Voice Port</span>
+              <span class="chip en">Available</span>
+              <span class="chip en">TE Delay</span>
+            </div>
+            <p style="margin-top:12px">في الحالات دي ترتيب الشكاوى مختلف:</p>
+            <div class="path"><span>MSAN Activation · 24 WH</span><i>→</i><span>New Activation Delay · 4 WH</span></div>
+            <div class="result-box">🔁 لو الـ<span class="en">New Activation Delay</span> عدت الـ4 <span class="en">WH</span> ← تُفتح مرة أخرى، ويستمر التعامل من خلال <span class="en">New Activation Delay – 4 WH</span> حسب الحالة (بدون الانتقال للـ<span class="en">Mail</span>).</div>
+          </div>
+
+          <div class="blk">
+            <h4>Waiting NTRA / Missing NTRA</h4>
+            <p>في الحالتين دول لازم تعمل <span class="en">Check</span> إضافي. تبدأ بشكل طبيعي: <span class="en">Work Order Issue</span> ← <span class="en">Script</span>. وبعد الـ<span class="en">Script</span> ممكن العميل يقول: <b>"أنا عملت الكلام ده بالفعل."</b></p>
+            <p style="margin-top:10px">هنا نرجع نراجع <b><span class="en">MSAN Activation</span></b>:</p>
+            <div class="exs">
+              <div class="ex good"><b>لسه داخل الـ24 WH</b>نوضح للعميل إن طلب التفعيل الأساسي مازال مفتوحًا لمدة 24 <span class="en">WH</span>، ثم <span class="en">Activation Follow Up</span> ← <span class="en">Close</span></div>
+              <div class="ex bad"><b>تعدى الـ24 WH</b>قبل تقديم الشكوى، لازم تبحث عن <span class="en">NTRA Activation Form</span></div>
+            </div>
+            <div class="exs" style="margin-top:10px">
+              <div class="ex good"><b>NTRA Activation Form موجودة ✅</b>تكمل بشكل طبيعي: شكوى 6 <span class="en">WH</span> حسب الحالة، أو شكوى 4 <span class="en">WH</span> حسب الـ<span class="en">Script</span></div>
+              <div class="ex bad"><b>NTRA Activation Form غير موجودة ❌</b>العميل يحتاج يروح <span class="en">الفرع</span> — ولا يمكن تقديم الشكوى في الحالة دي</div>
+            </div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Down Payment Status ── -->
+      <article class="acc rv" id="candidate-down-payment" data-sec="candidate">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">2️⃣</span>
+          <span class="tt"><b dir="ltr">Down Payment Status</b><small>مقدم التعاقد / الفاتورة الأولى</small></span>
+          <span class="bdg">24 WH</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>الطبيعي</h4>
+            <p>✅ <span class="en">Paid</span>. لو لقيتها <b>❌ Not Paid</b>، اسأل العميل: <i>"حضرتك دفعت مقدم التعاقد / الفاتورة الأولى ولا لا؟"</i> — سعر الـ<span class="en">Down Payment</span> موجود في نفس الخانة أسفل (<span class="en">Paid / Not Paid</span>).</p>
+          </div>
+
+          <div class="blk">
+            <h4>العميل قال: دفعت</h4>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span>افتح <span class="en">Collect Down Payment</span> — المدة 24 <span class="en">Working Hours</span></span></div>
+            </div>
+            <div class="callout warn"><span class="ci">⚠️</span><div><b>ملحوظة</b>الـ<span class="en">MSAN Activation</span> هنا غير مؤثر — سواء لسه داخل الـ24 <span class="en">WH</span> أو عدتها، الـ<span class="en">Collect Down Payment</span> لها مسارها الخاص.</div></div>
+            <div class="result-box">لو <span class="en">Collect Down Payment</span> مفتوحة وعدت 24 <span class="en">WH</span> ومازالت <span class="en">Not Paid</span> ← افتح <span class="en">New Activation Delay → 4 WH</span></div>
+          </div>
+
+          <div class="blk">
+            <h4>العميل قال: مدفعتش</h4>
+            <p>تشرح له الـ<span class="en">Script</span> الخاص بالدفع، ثم:</p>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span><span class="en">Activation Follow Up</span></span></div>
+              <div class="cond"><span class="cn">٢</span><span><span class="en">Close</span></span></div>
+            </div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Deliver Status ── -->
+      <article class="acc rv" id="candidate-deliver-status" data-sec="candidate">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">3️⃣</span>
+          <span class="tt"><b dir="ltr">Deliver Status</b><small>استلام الراوتر</small></span>
+          <span class="bdg">24 WH</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>الطبيعي</h4>
+            <p>✅ <span class="en">Deliver</span>. لو لقيتها <b>❌ Not Deliver</b>، اسأل العميل: <i>"حضرتك استلمت راوتر أو معاك راوتر قديم شغال بيه؟"</i></p>
+          </div>
+
+          <div class="blk">
+            <h4>الحالة الأولى: العميل معه Router</h4>
+            <p>سواء معاه <span class="en">Router</span> قديم أو استلم <span class="en">Router</span> جديد، لازم تحصل على <b><span class="en">Serial Number / SN</span></b>:</p>
+            <div class="quote">"استأذنك يا فندم تمليلي الـSerial Number الموجود في ظهر الراوتر، لإثبات إن حضرتك معاك الراوتر عشان أقدر أقدم لك الطلب."</div>
+            <div class="result-box">بعدها افتح <span class="en">Deliver Modification → 24 WH</span> (موجودة في آخر خانة في <span class="en">Pedia</span>) — ولا يهم هنا إذا كانت <span class="en">MSAN Activation</span> عدت الـ24 <span class="en">WH</span> أو لا.</div>
+            <div class="callout warn"><span class="ci">⚠️</span><div><b>لو Deliver Modification مفتوحة وعدت الـ24 WH</b>ولو العميل دخل عايز يفعل ووجدت <span class="en">Not Deliver</span> ثم راجعت الـ<span class="en">Complaints</span> ووجدت <span class="en">Deliver Modification</span> مفتوحة ومتجاوزة الـ24 <span class="en">WH</span> ← افتح <span class="en">New Activation Delay → 4 WH</span></div></div>
+          </div>
+
+          <div class="blk">
+            <h4>الحالة الثانية: العميل لا يمتلك Router</h4>
+            <p>لو قال: <i>"لا، أنا عايز أقدم على Router."</i> — اسأله: <i>"حضرتك كاش ولا تقسيط؟"</i></p>
+            <div class="exs">
+              <div class="ex bad"><b>💵 Cash</b>وضح له أن الراوتر عليه <b>50% Discount</b> — ولو عايزه <span class="en">Cash</span> يروح <span class="en">الفرع</span>. ثم <span class="en">Activation Follow Up</span> ← <span class="en">Close</span></div>
+              <div class="ex good"><b>💳 Installment</b>وضح السعر ونظام التقسيط، ثم افتح <span class="en">Deliver Modification → 24 WH</span></div>
+            </div>
+            <div class="callout warn"><span class="ci">⚠️</span><div><b>شرط أساسي</b>قبل فتح <span class="en">Deliver Modification</span> للتقسيط، لازم يكون ظهر للخط رقم <span class="en">Work Order</span>.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>⚠️ الفرق بين Candidate و Active</h4>
+            <div class="exs">
+              <div class="ex good"><b><span class="en">Candidate</span> + <span class="en">Installment Router</span></b>→ <span class="en">Deliver Modification</span></div>
+              <div class="ex bad"><b><span class="en">Active</span> + <span class="en">Installment Router</span></b>→ من <span class="en">Related VAS → VDSL Router → Add</span></div>
+            </div>
+            <div class="callout bad"><span class="ci">⚠️</span><div><b>Cash Router</b>في الحالتين (<span class="en">Candidate</span> أو <span class="en">Active</span>): <span class="en">Cash</span> = يروح <span class="en">الفرع</span>، ولا يتم فتح طلب من عندنا.</div></div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Comment ── -->
+      <article class="acc rv" id="candidate-comment" data-sec="candidate">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">4️⃣</span>
+          <span class="tt"><b dir="ltr">Comment</b><small>الطبيعي: 200 Success</small></span>
+          <span class="bdg">آخر مرحلة</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>الطبيعي</h4>
+            <p>✅ <span class="en">200 Success</span>. لو مش موجودة: شوف الموجود بدلها، اقرأ الـ<span class="en">Script</span> الخاص بالحالة، وتعامل معها بنفس فكرة الـ<span class="en">Work Order</span>.</p>
+          </div>
+
+          <div class="blk">
+            <h4>بعد الـScript، لو العميل قال: "أنا حدثت / دفعت / روحت وعملت المطلوب"</h4>
+            <p>نراجع <b><span class="en">MSAN Activation</span></b>:</p>
+            <div class="exs">
+              <div class="ex good"><b>لسه داخل الـ24 WH</b>نوضح للعميل أن طلب التفعيل الأساسي مازال مفتوحًا لمدة 24 <span class="en">WH</span>، ثم <span class="en">Activation Follow Up</span> ← <span class="en">Close</span></div>
+              <div class="ex bad"><b>تعدى الـ24 WH</b><span class="en">New Activation Delay → 4 WH</span></div>
+            </div>
+            <div class="result-box">لو لم تُحل المشكلة أو كانت الشكوى مفتوحة ← <span class="en">Send First Mail → 2 WH</span></div>
+          </div>
+
+          <div class="blk">
+            <h4>حالات Comment الاستثنائية</h4>
+            <p>في بعض مشاكل الـ<span class="en">Comment</span>، الـ<span class="en">Script</span> يقول بمعنى: <i>"نبذل قصارى جهدنا لتشغيل الخدمة..."</i> — هنا الترتيب مختلف:</p>
+            <div class="path"><span>MSAN Activation · 24 WH ✅</span><i>→</i><span>New Activation Delay · 4 WH ✅</span><i>→</i><span>Send First Mail ❌</span></div>
+            <div class="callout warn"><span class="ci">⚠️</span><div><b>يعني لا ننتقل للـMail</b>ويستمر التعامل من خلال <span class="en">New Activation Delay → 4 WH</span> فقط.</div></div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Status ── -->
+      <article class="acc rv" id="candidate-status" data-sec="candidate">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">5️⃣</span>
+          <span class="tt"><b dir="ltr">Status</b><small>الطبيعي: Open — أو On Hold</small></span>
+          <span class="bdg">Roll Back</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>On Hold يعني إيه؟</h4>
+            <p>الطبيعي ✅ <span class="en">Open</span>. لكن ممكن تلاقي <b><span class="en">On Hold</span></b>، وده معناه إن العميل قام بإلغاء الطلب.</p>
+            <div class="quote">اسأله: "حضرتك عايز ترجع الخدمة معانا؟"</div>
+          </div>
+
+          <div class="blk">
+            <h4>لو قال: "آه، عايز أفعل الخدمة / أتعاقد معاكم"</h4>
+            <div class="result-box">افتح <span class="en">Roll Back → 24 WH</span></div>
+            <p style="margin-top:10px"><b>مكانها في Pedia:</b></p>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span><span class="en">How to Manage My Account → Cancellation → Complaints → Roll Back</span></span></div>
+              <div class="cond"><span class="cn">٢</span><span>أو: <span class="en">Candidate</span> — الخانة قبل الأخيرة</span></div>
+            </div>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── تغيير الباقة ── -->
+      <article class="acc rv" id="candidate-modify-package" data-sec="candidate">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">6️⃣</span>
+          <span class="tt">تغيير الباقة للـ<span class="en" dir="ltr">Candidate</span><small><span class="en">Upgrade / Downgrade</span></small></span>
+          <span class="bdg">24 WH</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="callout bad"><span class="ci">⚠️</span><div><b>ممنوع الخلط</b>لا نتعامل معاها كـ<span class="en">Upgrade / Downgrade</span> عادية لأن الخط <span class="en">Candidate</span>.</div></div>
+
+          <div class="blk">
+            <h4>الطريقة</h4>
+            <div class="quote">"حضرتك حاليًا على باقة 200 جيجا، تحب تنتقل لأي باقة؟" — العميل يحدد الباقة المطلوبة</div>
+            <div class="result-box">يتم فتح <span class="en">Modify Over Candidate → 24 WH</span></div>
+          </div>
+
+          <div class="blk">
+            <h4>مكانها في Pedia</h4>
+            <div class="path"><span>Candidate</span><i>→</i><span>Deliver Modification</span></div>
+            <p style="margin-top:8px">وهي موجودة في آخر خانة.</p>
+          </div>
+
+        </div></div></div>
+      </article>
+    </div>
+
+    <!-- الخلاصة المهمة جدًا -->
+    <div class="intro-c rv" style="margin-bottom:56px">
+      <h4>🧠 الخلاصة المهمة جدًا</h4>
+      <p>احفظ الـ<span class="en">Candidate</span> كـ5 مراحل بالترتيب، وأهم قاعدة: <b>متقفزش لمرحلة قبل ما تخلص المرحلة اللي قبلها.</b></p>
+
+      <div class="cond-list" style="margin-top:14px">
+        <div class="cond"><span class="cn">١</span><span><span class="en">Status</span> ← الطبيعي <span class="en">Open</span> ✅</span></div>
+        <div class="cond"><span class="cn">٢</span><span><span class="en">WO</span> ← الطبيعي رقم موجود ✅</span></div>
+        <div class="cond"><span class="cn">٣</span><span><span class="en">Down Payment</span> ← الطبيعي <span class="en">Paid</span> ✅</span></div>
+        <div class="cond"><span class="cn">٤</span><span><span class="en">Deliver</span> ← الطبيعي <span class="en">Deliver</span> ✅</span></div>
+        <div class="cond"><span class="cn">٥</span><span><span class="en">Comment</span> ← الطبيعي <span class="en">200 Success</span> ✅</span></div>
+      </div>
+
+      <p style="margin-top:18px"><b>وفي الـWork Order تحديدًا — ترتيب التصعيد الكامل:</b></p>
+      <div class="path"><span>MSAN Activation · 24 WH</span><i>→</i><span>6 WH Complaint حسب المشكلة</span><i>→</i><span>New Activation Delay · 4 WH</span><i>→</i><span>Mail · 2 WH</span><i>→</i><span>Second Mail · 2 WH</span><i>→</i><span>Third Mail · 2 WH</span></div>
+
+      <div class="callout warn" style="margin-top:14px"><span class="ci">⚠️</span><div><b>الحالات الاستثنائية</b>لما يكون الـScript من نوع "نبذل قصارى جهدنا..." فمسارها: <span class="en">MSAN Activation 24 WH → New Activation Delay 4 WH</span> فقط — ولا ننتقل للـMail في هذا المسار.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ 6) REQUESTS & ACCOUNT MANAGEMENT ════════════════ -->
+<section class="view" id="view-requests" style="--acc:var(--req)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-emoji">📋</span>
+      <div><h2 dir="ltr">Requests &amp; Account Management</h2><p>الإيقاف المؤقت، نقل الخدمة، وإلغاء الخدمة — ونفس المكالمة ممكن ييجي منها أكتر من سيناريو.</p></div>
+      <span class="count-chip">٣ سيناريوهات</span>
+    </div>
+
+    <div class="rule-banner gold rv"><span class="ic">⭐</span><span>الرسالة دي مختلفة شوية عن مشاكل الـ<span class="en">Network</span>، لكن مهمة جدًا لأنها من الحاجات اللي ممكن تيجي في الـ<span class="en">Certification</span>، وممكن ييجي منها أكتر من سيناريو.</span></div>
+
+    <div class="accs">
+
+      <!-- ── Suspension ── -->
+      <article class="acc rv" id="requests-suspension" data-sec="requests">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">1️⃣</span>
+          <span class="tt"><b dir="ltr">Suspension</b><small>العميل عايز إيقاف مؤقت</small></span>
+          <span class="bdg">Open &amp; Close</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>السيناريو</h4>
+            <p>العميل ممكن يدخل عليك مباشرة ويقول إنه عايز يعمل إيقاف مؤقت للخدمة عشان الفاتورة الجاية متنزلش، أو ممكن يدخل يقول إنه عايز يلغي الخدمة.</p>
+            <div class="dialog">
+              <div class="msg cust"><span class="who">👤 العميل</span>عايز ألغي الخدمة.</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>ممكن أعرف حضرتك عايز تلغي ليه؟</div>
+              <div class="msg cust"><span class="who">👤 العميل</span>أصل أنا مسافر.</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>يا فندم لو حضرتك مسافر، عندنا خدمة إيقاف مؤقت ممكن نوقف لحضرتك الخدمة لحد ما ترجع بالسلامة.</div>
+            </div>
+            <div class="callout pin"><span class="ci">💡</span><div><b>لو العميل وافق</b>روح للـ<span class="en">Script</span> الخاص بالـ<span class="en">Suspension</span>.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>📍 مكانها في BIDYA</h4>
+            <div class="path"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>Suspension</span></div>
+            <p style="margin-top:8px">هتدخل وتقول الـ<span class="en">Script</span> الموجود، وبعدها تفتح شكوى <span class="en">Suspend</span> وتقفلها، وبكده تكون خلصت المكالمة. ✅</p>
+          </div>
+
+          <div class="blk">
+            <h4>📌 الـScript</h4>
+            <div class="quote">المشترك يقدر يعمل Suspension عن طريق أقرب فرع من فروعنا، بقيمة 30 جنيه غير شاملة الضريبة، بحد أقصى لمدة شهرين.</div>
+          </div>
+
+          <div class="callout warn"><span class="ci">⚠️</span><div><b>مهم للامتحان</b>لازم تعرف مكان الـ<span class="en">Script</span> في <span class="en">BIDYA</span> وتعرف إمتى تستخدمه.</div></div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Change Username ── -->
+      <article class="acc rv" id="requests-change-username" data-sec="requests">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">2️⃣</span>
+          <span class="tt"><b dir="ltr">Change Username</b><small>العميل عايز ينقل الخدمة</small></span>
+          <span class="bdg">شرطان</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>السيناريو</h4>
+            <div class="dialog">
+              <div class="msg cust"><span class="who">👤 العميل</span>أنا عايز أنقل الخدمة من مكان لمكان، ينفع؟</div>
+              <div class="msg note">— أو ممكن يدخل يقول: "أنا عايز ألغي" —</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>ليه يا فندم؟</div>
+              <div class="msg cust"><span class="who">👤 العميل</span>أصل أنا هعزل وهروح بيت تاني.</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>يا فندم عندنا خدمة نقدر ننقل بيها بيانات حضرتك من المكان القديم للمكان الجديد.</div>
+            </div>
+            <div class="callout bad"><span class="ci">⛔</span><div>متروحش للإلغاء على طول — اعرض عليه خدمة نقل البيانات أولًا.</div></div>
+          </div>
+
+          <div class="blk">
+            <h4>لازم يتحقق شرطين</h4>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span>يكون عنده <b>خط أرضي جديد</b> في المكان الجديد — لأننا هننقل البيانات من الرقم الأرضي القديم للرقم الأرضي الجديد.</span></div>
+              <div class="cond"><span class="cn">٢</span><span>الخط الأرضي الجديد يكون <b>شغال وفيه حرارة</b>.</span></div>
+            </div>
+          </div>
+
+          <div class="defs">
+            <div class="def" style="flex-direction:column;gap:4px"><b>🟢 لو الشرطين موجودين</b><span>هتروح تقول الـ<span class="en">Script</span> الخاص بنقل الخدمة، وبعدها تفتح طلب <span class="en">Change Username</span> وتسيبه <span class="en">Open</span>، وتقول للعميل الـ<span class="en">Script</span> الخاص بالطلب.</span></div>
+            <div class="def" style="flex-direction:column;gap:4px"><b>🔴 لو شرط ناقص</b><span>مثلاً معاه رقم أرضي جديد لكن مفيش حرارة — تقوله: "تمام يا فندم، لما يتوفر الشرط المطلوب عند حضرتك، ممكن تكلمنا ونقدر ننقل بيانات حضرتك." وهنا مش هتفتح الطلب وتسيبه Open، هتفتح الـRequest/Complaint حسب الإجراء الموجود وتقوم بإغلاقه.</span></div>
+          </div>
+
+          <div class="blk">
+            <h4>📍 مكانها في BIDYA</h4>
+            <div class="path"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>Change Username</span></div>
+            <p style="margin-top:8px">هتلاقي الـ<span class="en">Script</span> والـ<span class="en">Request/Complaint</span> الخاص بنقل الخدمة في نفس الصفحة.</p>
+          </div>
+
+        </div></div></div>
+      </article>
+
+      <!-- ── Cancellation ── -->
+      <article class="acc rv" id="requests-cancellation" data-sec="requests">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">3️⃣</span>
+          <span class="tt"><b dir="ltr">Cancellation</b><small>إلغاء الخدمة — أهم واحدة ومحتاجة Tactical Skills</small></span>
+          <span class="bdg">Threat to Disconnect 81006</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+
+          <div class="blk">
+            <h4>🟠 الحالة الأولى — العميل يدخل يقول "عايز ألغي"</h4>
+            <div class="callout bad"><span class="ci">❌</span><div>متروحش تقوله طريقة الإلغاء على طول — لازم الأول تحاول تفهم سبب الإلغاء.</div></div>
+            <div class="quote">ممكن أعرف المشكلة إيه يا فندم؟ أنا هنا عشان أساعد حضرتك، ولو حضرتك حابب تديني فرصة أحل لحضرتك المشكلة...</div>
+          </div>
+
+          <div class="defs">
+            <div class="def" style="flex-direction:column;gap:4px"><b>🟢 العميل وافق يقول المشكلة</b><span>مثلاً "النت بطيء" أو "النت بيقطع" — الموضوع بيتحول إلى Case عادي، وتتعامل مع المشكلة حسب الـCase اللي قالهالك.</span></div>
+            <div class="def" style="flex-direction:column;gap:4px"><b>🔴 العميل رافض المساعدة</b><span>مثلاً "مش هقول مشكلتي" / "مش عايز فني ييجي" / "أنا مش عايز منكم حاجة" / "عايز ألغي، قولي ألغي إزاي" — هنا هتقول للعميل Script الإلغاء.</span></div>
+          </div>
+
+          <div class="callout bad"><span class="ci">🔥</span><div><b>Threat to Disconnect — 81006</b>بمجرد ما تنطق طريقة الإلغاء للعميل بعد رفضه المساعدة، تفتح <span class="en">Threat to Disconnect 81006</span>.<br>
+          ⚠️ متقولش للعميل إنك فتحتها — بتتفتح على السيستم فقط. ولو طلب رقم الشكوى، متديهوش رقم الـThreat to Disconnect ده للعميل — بالنسبة للعميل الطلب ده مش بيتقاله إنه اتفتح.</div></div>
+
+          <div class="callout warn"><span class="ci">⚠️</span><div><b>تريكة مهمة جدًا</b><span class="en">Threat to Disconnect</span> مش بتتفتح لمجرد إن العميل قال "عايز ألغي" — لازم الأول تكون حاولت تساعده، والعميل رفض المساعدة، وبعدها لما تقول له Script وطريقة الإلغاء تفتحها.</div></div>
+
+          <div class="blk">
+            <h4>🟡 الحالة الثانية — العميل مسافر</h4>
+            <div class="dialog">
+              <div class="msg cust"><span class="who">👤 العميل</span>عايز ألغي.</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>ممكن أعرف ليه يا فندم؟</div>
+              <div class="msg cust"><span class="who">👤 العميل</span>أنا مسافر ومش هستخدم النت.</div>
+              <div class="msg agent"><span class="who">🎧 أنت</span>بدل ما تلغي يا فندم، ممكن نعمل لحضرتك إيقاف مؤقت للخدمة، والفواتير متنزلش لحد ما ترجع بالسلامة.</div>
+            </div>
+            <div class="defs">
+              <div class="def" style="flex-direction:column;gap:4px"><b>🟢 وافق</b><span>Script الـSuspension، وبعدها Suspend → Open &amp; Close. ✅</span></div>
+              <div class="def" style="flex-direction:column;gap:4px"><b>🔴 رفض الـSuspension</b><span>مثلاً "شهرين قليل، أنا عايز ألغي" — هتقول له Script الإلغاء، لكن ⚠️ مش هتفتح Threat to Disconnect، بدل كده: Suspend → Open &amp; Close ✅ (من أهم الـTricks اللي لازم تركز فيها)</span></div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>🟣 نفس الفكرة لو العميل هيعزل</h4>
+            <p>العميل: "عايز ألغي" ← تسأله ليه ← "هعزل وهروح بيت تاني" — هنا تعرض عليه نقل الخدمة، وتوضح له الشرطين (رقم أرضي جديد + فيه حرارة).</p>
+            <div class="defs">
+              <div class="def" style="flex-direction:column;gap:4px"><b>🟢 الشرطين متوفرين ووافق</b><span>Script نقل الخدمة، وبعدها Change Username → Open وتسيبه مفتوح. ✅</span></div>
+              <div class="def" style="flex-direction:column;gap:4px"><b>🔴 رفض النقل — أو شرط ناقص</b><span>حتى لو الشرطين متوفرين وهو مش عايز ينقل، أو شرط منهم مش متوفر، وقال "لا، أنا عايز ألغي" — تقول Script الإلغاء، لكن ❌ مش هتفتح Threat to Disconnect، بدلها: Username → Open &amp; Close ✅</span></div>
+            </div>
+          </div>
+
+          <div class="blk">
+            <h4>📍 Cancellation في BIDYA</h4>
+            <div class="path"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>Cancellation</span><i>→</i><span>Cancellation Step/Rules</span><i>→</i><span>Disagree</span></div>
+            <p style="margin-top:8px">هتدخل على <span class="en">Disagree</span> في الحالة اللي العميل رافض مساعدتك — هتلاقي الـ<span class="en">Script</span> وطلب <span class="en">Threat to Disconnect</span> تحتها.</p>
+          </div>
+
+        </div></div></div>
+      </article>
+    </div>
+
+    <!-- 🧠 الخلاصة -->
+    <div class="intro-grid" style="margin-top:8px">
+      <div class="intro-c rv" style="grid-column:1/-1">
+        <h4>🧠 الخلاصة — احفظ الـLogic مش الكلام</h4>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <tr><th>حالة العميل</th><th>تعمل إيه؟</th></tr>
+            <tr><td>مسافر وعايز يلغي</td><td>اعرض Suspension</td></tr>
+            <tr><td>وافق على Suspension</td><td>Script + Suspend Open &amp; Close</td></tr>
+            <tr><td>رفض Suspension وعايز يلغي</td><td>Script الإلغاء + Suspend Open &amp; Close</td></tr>
+            <tr><td>هيعزل وعنده رقم أرضي جديد + حرارة</td><td>اعرض Transfer / Change Username</td></tr>
+            <tr><td>وافق على النقل والشرطين موجودين</td><td>Script + Change Username → Open</td></tr>
+            <tr><td>رفض النقل أو شرط ناقص</td><td>Script الإلغاء + Username Open &amp; Close</td></tr>
+            <tr><td>عايز يلغي ومش عايز يقول السبب / يرفض المساعدة</td><td>Script الإلغاء + Threat to Disconnect 81006</td></tr>
+            <tr><td>قال مشكلة فعلية ووافق نساعده</td><td>تعامل مع الـCase بشكل طبيعي</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🚨 أهم التريكات -->
+    <div class="map-card rv" style="margin-top:22px;margin-bottom:56px">
+      <h4>🚨 أهم 3 تريكات في الجزء ده</h4>
+      <div class="map-grid">
+        <div class="map-c"><b>1️⃣ متفتحش Threat to Disconnect بسرعة</b>مش لمجرد إن العميل قال "عايز ألغي" — لازم توصل لمرحلة Script الإلغاء بعد رفض المساعدة.</div>
+        <div class="map-c"><b>2️⃣ العميل مسافر</b>= اعرض Suspension أولًا. ولو رفضها وقرر يلغي: Script Cancellation → Suspend Open &amp; Close.</div>
+        <div class="map-c"><b>3️⃣ العميل هيعزل</b>= اعرض نقل الخدمة. لو وافق والشرطين موجودين: Change Username → Open. ولو رفض أو الشروط ناقصة: Script Cancellation → Username Open &amp; Close.</div>
+      </div>
+      <div class="callout warn" style="margin-top:14px"><span class="ci">🔥</span><div>وده الجزء اللي محتاج تركيز في الـ<span class="en">Certification</span>، لأن السؤال ممكن يغير سبب الإلغاء فقط، وإنت لازم تعرف من السبب هتمشي على أي <span class="en">Flow</span>.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ 7) CALL SCRIPT ════════════════ -->
+<section class="view" id="view-callscript" style="--acc:var(--call)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-emoji">📞</span>
+      <div><h2 dir="ltr">Call Script</h2><p>بداية ونهاية المكالمة — الجمل الثابتة اللي بتفتح وبتقفل بيها أي مكالمة Orange.</p></div>
+      <span class="count-chip">٢ سكريبت</span>
+    </div>
+
+    <div class="accs">
+
+      <!-- ── بداية المكالمة ── -->
+      <article class="acc rv" id="callscript-opening" data-sec="callscript">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">📞</span>
+          <span class="tt"><b dir="ltr">بداية المكالمة</b><small>Opening Script</small></span>
+          <span class="bdg">Orange</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="dialog">
+            <div class="msg agent"><span class="who">🎧 أنت</span>Orange.</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>الاسم ثنائي.</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>صباح / مساء الخير.</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>أتشرف بمعرفة اسم حضرتك.</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>استفسار حضرتك بخصوص نفس الرقم ولا رقم تاني؟</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>طيب، ممكن أراجعه مع حضرتك؟</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>اتفضل يا فندم، أقدر أساعد حضرتك إزاي؟</div>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- ── نهاية المكالمة ── -->
+      <article class="acc rv" id="callscript-closing" data-sec="callscript">
+        <button class="acc-h" aria-expanded="false">
+          <span class="ae">☎️</span>
+          <span class="tt"><b dir="ltr">نهاية المكالمة</b><small>Closing Script</small></span>
+          <span class="bdg">Orange</span><span class="chv">▼</span>
+        </button>
+        <div class="acc-p"><div><div class="acc-b">
+          <div class="dialog">
+            <div class="msg agent"><span class="who">🎧 أنت</span>هل يوجد أي استفسار آخر أقدر أساعد حضرتك فيه؟</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>بعد انتهاء المكالمة، هتوصلك مكالمة لتقييم أداء موظف خدمة العملاء، بمقياس من 1 إلى 5، بحيث إن 1 غير راضي و5 راضي جدًا، وأتمنى أكون قدرت أساعد حضرتك.</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>شكرًا لاتصالك بأورانج، ويوم حضرتك سعيد.</div>
+          </div>
+        </div></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>
@@ -1469,7 +2062,7 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
 const $  = (s,c)=> (c||document).querySelector(s);
 const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
 const RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const SECTIONS = {physical:"🛠️ Physical", network:"🌐 Network", billing:"💰 Billing", tricks:"🧠 تركات"};
+const SECTIONS = {physical:"🛠️ Physical", network:"🌐 Network", billing:"💰 Billing", tricks:"🧠 تركات", candidate:"🧾 Candidate", requests:"📋 Requests", callscript:"📞 Call Script"};
 
 /* الثيم */
 const themeBtn = $("#themeBtn");
@@ -1503,7 +2096,7 @@ setAcc($("#physical-line-down"), true);
 
 /* التنقل */
 function showView(name){
-  const map = {home:"#view-home", physical:"#view-physical", network:"#view-network", billing:"#view-billing", tricks:"#view-tricks"};
+  const map = {home:"#view-home", physical:"#view-physical", network:"#view-network", billing:"#view-billing", tricks:"#view-tricks", candidate:"#view-candidate", requests:"#view-requests", callscript:"#view-callscript"};
   if(!map[name]) name = "home";
   $$(".view").forEach(v=> v.classList.toggle("on", v.id === map[name].slice(1)));
   $$(".navbtn").forEach(b=> b.classList.toggle("on", b.dataset.go === name));
@@ -1621,7 +2214,7 @@ function doSearch(){
   const lq = q.toLowerCase();
   const hits = index.filter(it=> it.text.toLowerCase().includes(lq)).slice(0, 40);
 
-  const cv = {physical:"phys",network:"net",billing:"bill",tricks:"trk"};
+  const cv = {physical:"phys",network:"net",billing:"bill",tricks:"trk",candidate:"cand",requests:"req",callscript:"call"};
   let html = '<div class="srch-meta">' + (hits.length
       ? "🔎 " + hits.length + " نتيجة في الأقسام الأربعة لـ «" + esc(q) + "»"
       : "لا توجد نتائج لـ «" + esc(q) + "» — جرّب مصطلحًا آخر") + "</div>";
