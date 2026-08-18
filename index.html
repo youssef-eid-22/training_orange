@@ -11,11 +11,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ══════════ ORANGE DSL TRAINING — SINGLE FILE ══════════ */
 :root{
   --bg:#f7f1e7; --surface:#fffdf8; --surface2:#fbf6ec; --ink:#241b10; --ink2:#6b5d4b;
   --line:#e7dcc8; --line2:#d9c9ac; --brand:#f16a00; --brand-deep:#c85300; --brand-soft:#ffe7d0;
   --chip:#f3e9d6; --phys:#df5e00; --net:#0d7f8c; --bill:#a87a10; --trk:#8a49a3;
+  --call:#2d7d4f; --cand:#c2410c; --cert:#7c3aed;
   --ok:#1e7d43; --warn:#b45309; --bad:#b3362b;
   --shadow:0 10px 30px rgba(90,60,20,.10); --shadow-sm:0 4px 14px rgba(90,60,20,.08);
   --r:14px; --f-display:'Cairo','Segoe UI',Tahoma,sans-serif; --f-body:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
@@ -24,6 +24,7 @@ html[data-theme="dark"]{
   --bg:#141009; --surface:#201a10; --surface2:#272012; --ink:#f5ecdb; --ink2:#b3a48b;
   --line:#3b3220; --line2:#4d4128; --brand:#ff8b2b; --brand-deep:#ffa254; --brand-soft:#3a2410;
   --chip:#2d2513; --phys:#ff8b2b; --net:#41c6d6; --bill:#e6b34c; --trk:#c98bf0;
+  --call:#4ade80; --cand:#fb923c; --cert:#a78bfa;
   --ok:#4cc07d; --warn:#ffb15e; --bad:#ff7c6e;
   --shadow:0 12px 34px rgba(0,0,0,.45); --shadow-sm:0 4px 16px rgba(0,0,0,.35);
 }
@@ -39,7 +40,6 @@ a{color:inherit}
 .en{direction:ltr;unicode-bidi:embed;font-weight:600}
 .wrap{width:min(1100px,92%);margin-inline:auto}
 
-/* ---------- Header ---------- */
 header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .topbar{display:flex;align-items:center;gap:10px;padding:10px 0;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;border:0;background:none;color:var(--ink);font-family:var(--f-display);font-weight:900;font-size:1.05rem;padding:8px 10px;border-radius:12px;transition:background .25s}
@@ -64,18 +64,16 @@ header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 .theme-btn:hover{transform:rotate(18deg);border-color:var(--brand)}
 .navrow{display:flex;gap:8px;padding:0 0 12px;overflow-x:auto;scrollbar-width:none}
 .navrow::-webkit-scrollbar{display:none}
-.navbtn{flex:none;display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:99px;border:1.5px solid var(--line2);background:var(--surface);color:var(--ink);font-weight:700;font-size:.92rem;transition:all .25s;min-height:46px}
+.navbtn{flex:none;display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:99px;border:1.5px solid var(--line2);background:var(--surface);color:var(--ink);font-weight:700;font-size:.92rem;transition:all .25s;min-height:46px;white-space:nowrap}
 .navbtn:hover{border-color:var(--acc,var(--brand));transform:translateY(-1px)}
 .navbtn.on{background:var(--acc,var(--brand));border-color:var(--acc,var(--brand));color:#fff;box-shadow:0 6px 16px color-mix(in srgb,var(--acc,var(--brand)) 40%, transparent)}
 .home-ic{flex:none;width:46px;height:46px;display:grid;place-items:center;border-radius:99px;border:1.5px solid var(--line2);background:var(--surface);font-size:1.05rem;transition:all .25s}
 .home-ic:hover{border-color:var(--brand);transform:translateY(-1px)}
 
-/* ---------- Views ---------- */
 .view{display:none}
 .view.on{display:block;animation:viewIn .45s ease}
 @keyframes viewIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-/* ---------- Home ---------- */
 .cover{padding:46px 0 22px}
 .cover-grid{display:grid;gap:28px;align-items:center}
 @media(min-width:900px){.cover-grid{grid-template-columns:1.15fr .85fr}}
@@ -112,6 +110,8 @@ header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 .notice b{color:var(--brand-deep)}
 .tiles{display:grid;gap:16px;grid-template-columns:1fr;padding-bottom:44px}
 @media(min-width:640px){.tiles{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.tiles{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1200px){.tiles{grid-template-columns:repeat(4,1fr)}}
 .tile{position:relative;text-align:start;background:var(--surface);border:1px solid var(--line2);border-radius:18px;padding:24px 22px 20px;overflow:hidden;color:var(--ink);transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s;box-shadow:var(--shadow-sm)}
 .tile::before{content:"";position:absolute;inset-inline:0;top:0;height:5px;background:var(--c)}
 .tile .num{position:absolute;inset-inline-end:12px;top:2px;font-family:var(--f-display);font-weight:900;font-size:4.4rem;line-height:1;color:var(--c);opacity:.12;pointer-events:none}
@@ -122,7 +122,6 @@ header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 .tile:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--c) 50%, var(--line2))}
 .tile:hover .go{gap:14px}
 
-/* ---------- Section heads ---------- */
 .sec-head{padding:34px 0 8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .sec-emoji{width:62px;height:62px;border-radius:16px;display:grid;place-items:center;font-size:1.8rem;flex:none;background:color-mix(in srgb,var(--acc) 13%, transparent);border:1.5px solid color-mix(in srgb,var(--acc) 35%, transparent);box-shadow:0 8px 20px color-mix(in srgb,var(--acc) 18%, transparent)}
 .sec-head h2{font-family:var(--f-display);font-weight:900;font-size:clamp(1.7rem,4.5vw,2.4rem);color:var(--acc);line-height:1.2}
@@ -131,15 +130,12 @@ header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 .rule-banner{margin:14px 0 22px;padding:16px 20px;border-radius:var(--r);background:color-mix(in srgb,var(--bad) 9%, var(--surface));border:1.5px solid color-mix(in srgb,var(--bad) 45%, transparent);font-weight:700;font-size:1.02rem;display:flex;gap:12px;align-items:center}
 .rule-banner.gold{background:color-mix(in srgb,var(--warn) 10%, var(--surface));border-color:color-mix(in srgb,var(--warn) 50%, transparent)}
 .rule-banner .ic{font-size:1.4rem;flex:none}
-
-/* بطاقات تمهيدية */
 .intro-grid{display:grid;gap:14px;grid-template-columns:1fr;margin:16px 0 22px}
 @media(min-width:700px){.intro-grid{grid-template-columns:1fr 1fr}}
 .intro-c{background:var(--surface);border:1.5px solid var(--line2);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow-sm)}
 .intro-c h4{font-family:var(--f-display);font-size:.95rem;margin-bottom:10px;display:flex;gap:8px;align-items:center}
 .intro-c h4::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--acc);transform:rotate(45deg);flex:none}
 
-/* ---------- Accordion ---------- */
 .accs{display:grid;gap:14px;padding-bottom:30px}
 .acc{border:1.5px solid var(--line2);border-radius:var(--r);background:var(--surface);overflow:hidden;transition:border-color .3s,box-shadow .3s}
 .acc.open{border-color:color-mix(in srgb,var(--acc) 55%, var(--line2));box-shadow:var(--shadow-sm)}
@@ -161,12 +157,11 @@ header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 .acc.flash{animation:flash 1.2s ease 2}
 @keyframes flash{0%,100%{box-shadow:var(--shadow-sm)}50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--brand) 45%, transparent)}}
 
-/* ---------- مكوّنات المحتوى ---------- */
 .blk{margin-top:20px}
 .blk > h4{font-family:var(--f-display);font-size:.98rem;font-weight:800;display:flex;align-items:center;gap:9px;margin-bottom:10px}
 .blk > h4::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--acc);flex:none;transform:rotate(45deg)}
-.blk > p,.blk > .lead{font-size:.94rem;color:var(--ink2)}
-.blk > p b,.blk > .lead b{color:var(--ink)}
+.blk > p{font-size:.94rem;color:var(--ink2)}
+.blk > p b{color:var(--ink)}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{background:var(--chip);border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.82rem;font-weight:600;transition:transform .2s,border-color .2s}
 .chip:hover{transform:translateY(-2px);border-color:var(--acc)}
@@ -195,29 +190,21 @@ header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 .case .cb{padding:14px 16px;font-size:.88rem}
 .case .cb p{color:var(--ink2);margin-bottom:6px}
 .case .cb b{color:var(--ink)}
-
-/* تعاريف (أسباب / بنود) */
 .defs{display:grid;gap:8px;margin-top:8px}
 .def{display:flex;gap:10px;align-items:flex-start;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem;transition:border-color .2s,transform .2s}
 .def:hover{border-color:color-mix(in srgb,var(--acc) 50%, var(--line));transform:translateX(-3px)}
 .def b{color:var(--acc);flex:none}
 .def span{color:var(--ink2)}
 .def span b{color:var(--ink)}
-
-/* مسار Pedia */
 .path{display:flex;flex-wrap:wrap;align-items:center;gap:6px;direction:ltr;justify-content:flex-start;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:.8rem;font-weight:700}
 .path span{background:var(--chip);border:1px solid var(--line);padding:3px 10px;border-radius:8px;white-space:nowrap}
 .path i{color:var(--acc);font-style:normal}
-
-/* المحادثة الهاتفية */
 .dialog{display:flex;flex-direction:column;gap:10px;margin-top:10px;padding:14px;background:color-mix(in srgb,var(--acc) 4%, transparent);border:1px dashed color-mix(in srgb,var(--acc) 35%, var(--line2));border-radius:14px}
 .msg{max-width:88%;padding:9px 14px;border-radius:14px;font-size:.9rem;line-height:1.85}
 .msg .who{display:block;font-size:.66rem;font-weight:800;opacity:.7;margin-bottom:1px}
 .msg.agent{align-self:flex-end;background:color-mix(in srgb,var(--acc) 13%, var(--surface));border:1px solid color-mix(in srgb,var(--acc) 35%, transparent)}
 .msg.cust{align-self:flex-start;background:var(--surface);border:1px solid var(--line2)}
 .msg.note{align-self:center;background:none;border:0;color:var(--ink2);font-size:.8rem;font-weight:700;padding:2px}
-
-/* معادلة / اقتباس / أمثلة */
 .formula{direction:ltr;text-align:center;font-weight:800;font-family:var(--f-display);background:var(--surface2);border:1.5px dashed var(--acc);border-radius:12px;padding:12px;margin-top:10px;font-size:1.02rem}
 .quote{background:var(--surface2);border-inline-start:4px solid var(--acc);padding:12px 16px;border-radius:10px;font-size:.93rem;margin-top:10px}
 .exs{display:grid;gap:10px;margin-top:10px}
@@ -226,15 +213,11 @@ header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 .ex.good{border-color:color-mix(in srgb,var(--ok) 55%, transparent);background:color-mix(in srgb,var(--ok) 8%, var(--surface))}
 .ex.bad{border-color:color-mix(in srgb,var(--bad) 55%, transparent);background:color-mix(in srgb,var(--bad) 8%, var(--surface))}
 .ex b{display:block;margin-bottom:2px}
-
-/* جداول */
 .tbl-wrap{overflow-x:auto;margin-top:10px;border:1px solid var(--line);border-radius:12px}
 .tbl{width:100%;border-collapse:collapse;font-size:.87rem;min-width:420px}
 .tbl th{background:color-mix(in srgb,var(--acc) 12%, transparent);font-family:var(--f-display);font-weight:800}
 .tbl th,.tbl td{border:1px solid var(--line);padding:10px 12px;text-align:center}
 .tbl td b{color:var(--acc)}
-
-/* بطاقات تركات */
 .tricks{display:grid;gap:14px;grid-template-columns:1fr;padding-bottom:10px}
 @media(min-width:680px){.tricks{grid-template-columns:1fr 1fr}}
 @media(min-width:1000px){.tricks{grid-template-columns:1fr 1fr 1fr}}
@@ -248,8 +231,6 @@ header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 .trick .tb{font-size:.88rem;color:var(--ink2)}
 .trick .tb b{color:var(--ink)}
 .trick .tb ul{margin-inline-start:18px;margin-top:4px}
-
-/* أرقام مهمة */
 .nums-head{display:flex;align-items:center;gap:12px;margin:34px 0 6px;flex-wrap:wrap}
 .nums-head h3{font-family:var(--f-display);font-weight:900;font-size:1.35rem;color:var(--trk)}
 .nums-head .ln{flex:1;height:1px;background:var(--line2)}
@@ -262,21 +243,16 @@ header.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--b
 .kv .v{font-family:var(--f-display);font-weight:900;font-size:1.7rem;color:var(--brand);direction:ltr;line-height:1.3}
 html[data-theme="dark"] .kv .v{color:var(--trk)}
 .kv .l{font-size:.76rem;font-weight:600;color:var(--ink2);margin-top:4px}
-
-/* خريطة الحفظ */
 .map-card{background:var(--surface);border:1.5px solid color-mix(in srgb,var(--bill) 50%, var(--line2));border-radius:16px;padding:20px;margin-top:6px;box-shadow:var(--shadow-sm)}
 .map-card > h4{font-family:var(--f-display);font-weight:900;font-size:1.1rem;color:var(--bill);margin-bottom:12px}
 .map-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
 .map-c{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:.84rem;color:var(--ink2)}
 .map-c b{display:block;color:var(--bill);font-size:.87rem;margin-bottom:4px;direction:ltr;text-align:right}
-
-/* ---------- Footer ---------- */
 footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20px}
 .foot{display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;padding:30px 0}
 .foot .fb{font-family:var(--f-display);font-weight:900;font-size:1.05rem}
 .foot .ft{font-size:.85rem;color:var(--ink2)}
 .foot .fp{margin-top:8px;font-weight:800;color:var(--brand-deep);border:1.5px solid color-mix(in srgb,var(--brand) 40%, transparent);padding:6px 22px;border-radius:99px;background:var(--brand-soft);font-size:.88rem}
-
 .rv{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
 .rv.in{opacity:1;transform:none}
 ::-webkit-scrollbar{width:10px;height:10px}
@@ -301,35 +277,38 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
 <header class="top">
   <div class="wrap">
     <div class="topbar">
-      <button class="brand" data-go="home" aria-label="الصفحة الرئيسية">
+      <button class="brand" data-go="home" aria-label="الرئيسية">
         <span class="cube">🧡</span>
         <span><span dir="ltr">Orange DSL Training</span><small>Trainer: Basel Magdy | باسل مجدي</small></span>
       </button>
       <div class="srch">
         <span class="ic">🔎</span>
-        <input id="searchInput" type="search" placeholder="ابحث في كل المحتوى… (Physical / Network / Billing / تركات)" autocomplete="off" aria-label="بحث في المحتوى">
-        <div class="srch-panel" id="srchPanel" role="listbox"></div>
+        <input id="searchInput" type="search" placeholder="ابحث في كل المحتوى…" autocomplete="off" aria-label="بحث">
+        <div class="srch-panel" id="srchPanel"></div>
       </div>
-      <button class="theme-btn" id="themeBtn" aria-label="تبديل الوضع الليلي">🌙</button>
+      <button class="theme-btn" id="themeBtn" aria-label="تبديل الثيم">🌙</button>
     </div>
-    <nav class="navrow" aria-label="الأقسام الرئيسية">
+    <nav class="navrow" aria-label="الأقسام">
       <button class="home-ic" data-go="home" title="الرئيسية">🏠</button>
       <button class="navbtn" data-go="physical" style="--acc:var(--phys)">🛠️ Physical</button>
       <button class="navbtn" data-go="network"  style="--acc:var(--net)">🌐 Network</button>
       <button class="navbtn" data-go="billing"  style="--acc:var(--bill)">💰 Billing</button>
       <button class="navbtn" data-go="tricks"   style="--acc:var(--trk)">🧠 تركات</button>
+      <button class="navbtn" data-go="callflow" style="--acc:var(--call)">📞 Call Flow</button>
+      <button class="navbtn" data-go="candidate" style="--acc:var(--cand)">🆕 Candidate</button>
+      <button class="navbtn" data-go="certification" style="--acc:var(--cert)">🎓 Certification</button>
     </nav>
   </div>
 </header>
 
 <main>
 
-<!-- ════════════════ الرئيسية ════════════════ -->
+<!-- ═══════ الرئيسية ═══════ -->
 <section class="view" id="view-home">
   <div class="wrap cover">
     <div class="cover-grid">
       <div>
-        <span class="kicker">📞 <span dir="ltr">Orange Home DSL</span> — Call Center Training &amp; Revision</span>
+        <span class="kicker">📞 <span dir="ltr">Orange Home DSL</span> — Call Center Training</span>
         <h1><span class="word"><span dir="ltr">Orange</span></span> <span class="word"><span dir="ltr">DSL&nbsp;Training</span></span></h1>
         <div class="trainer">
           <span class="av">👨‍🏫</span>
@@ -338,974 +317,389 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
         <p class="desc">مرجع تدريبي مبسط لمشاكل <span class="en">Orange Home DSL</span> والـ<span class="en">Scripts</span> والـ<span class="en">Troubleshooting</span>.</p>
       </div>
       <aside class="index-card rv">
-        <h3>📚 فهرس المرجع <span>٤ أقسام فقط</span></h3>
+        <h3>📚 فهرس المرجع <span>٧ أقسام</span></h3>
         <button class="idx-row" data-go="physical" style="--c:var(--phys)"><span class="e">🛠️</span><span><b>Physical</b><small>مشاكل الـPhysical والـDSL والـLine</small></span><span class="n">٣</span></button>
         <button class="idx-row" data-go="network" style="--c:var(--net)"><span class="e">🌐</span><span><b>Network</b><small>مشاكل الإنترنت والـWiFi والـIP</small></span><span class="n">٧</span></button>
-        <button class="idx-row" data-go="billing" style="--c:var(--bill)"><span class="e">💰</span><span><b>Billing</b><small>الفواتير والدفع والباقات والخدمات المتعلقة بالحساب</small></span><span class="n">١١</span></button>
-        <button class="idx-row" data-go="tricks" style="--c:var(--trk)"><span class="e">🧠</span><span><b>تركات</b><small>أهم الملاحظات والنقاط اللي ممكن تسبب لخبطة أو تتنسي</small></span><span class="n">١٣</span></button>
+        <button class="idx-row" data-go="billing" style="--c:var(--bill)"><span class="e">💰</span><span><b>Billing</b><small>الفواتير والدفع والباقات</small></span><span class="n">١١</span></button>
+        <button class="idx-row" data-go="tricks" style="--c:var(--trk)"><span class="e">🧠</span><span><b>تركات</b><small>ملاحظات ونقاط مهمة</small></span><span class="n">١٣</span></button>
+        <button class="idx-row" data-go="callflow" style="--c:var(--call)"><span class="e">📞</span><span><b>Call Flow</b><small>المقدمة والخاتمة</small></span><span class="n">٢</span></button>
+        <button class="idx-row" data-go="candidate" style="--c:var(--cand)"><span class="e">🆕</span><span><b>Candidate</b><small>الخط الكانديدات — ٥ مراحل</small></span><span class="n">٦</span></button>
+        <button class="idx-row" data-go="certification" style="--c:var(--cert)"><span class="e">🎓</span><span><b>Certification</b><small>إيقاف · نقل · إلغاء</small></span><span class="n">٣</span></button>
       </aside>
     </div>
-
     <div class="notice rv">
       <span class="ic">🔄</span>
-      <div><b>الموقع يتم تحديثه باستمرار</b><br>
-      سيتم إضافة أي أجزاء شرح أو ملاحظات جديدة مستقبلًا بشكل تدريجي، لذلك يُفضل الرجوع للموقع من وقت لآخر لمراجعة آخر التحديثات.</div>
+      <div><b>الموقع يتم تحديثه باستمرار</b><br>سيتم إضافة أي أجزاء شرح أو ملاحظات جديدة مستقبلًا بشكل تدريجي، لذلك يُفضل الرجوع للموقع من وقت لآخر لمراجعة آخر التحديثات.</div>
     </div>
-
     <div class="tiles">
-      <button class="tile rv" data-go="physical" style="--c:var(--phys)">
-        <span class="num">01</span><span class="e">🛠️</span>
-        <h3 dir="ltr">Physical</h3>
-        <p>مشاكل الـPhysical والـDSL والـLine.</p>
-        <span class="go">Line Down · Bad Line · Line Unstable <span>←</span></span>
-      </button>
-      <button class="tile rv" data-go="network" style="--c:var(--net)">
-        <span class="num">02</span><span class="e">🌐</span>
-        <h3 dir="ltr">Network</h3>
-        <p>مشاكل الإنترنت والـWiFi والـIP.</p>
-        <span class="go">No Browsing · Authentication · Connection Unstable · WiFi <span>←</span></span>
-      </button>
-      <button class="tile rv" data-go="billing" style="--c:var(--bill)">
-        <span class="num">03</span><span class="e">💰</span>
-        <h3 dir="ltr">Billing</h3>
-        <p>الفواتير والدفع والباقات والخدمات المتعلقة بالحساب.</p>
-        <span class="go">Bill Amount · Invoice · Upgrade · Payment Dispute… <span>←</span></span>
-      </button>
-      <button class="tile rv" data-go="tricks" style="--c:var(--trk)">
-        <span class="num">04</span><span class="e">🧠</span>
-        <h3>تركات</h3>
-        <p>أهم الملاحظات والنقاط اللي ممكن تسبب لخبطة أو تتنسي.</p>
-        <span class="go">١٣ تريكة + الأرقام المهمة <span>←</span></span>
-      </button>
+      <button class="tile rv" data-go="physical" style="--c:var(--phys)"><span class="num">01</span><span class="e">🛠️</span><h3 dir="ltr">Physical</h3><p>مشاكل الـPhysical والـDSL والـLine.</p><span class="go">Line Down · Bad Line · Line Unstable <span>←</span></span></button>
+      <button class="tile rv" data-go="network" style="--c:var(--net)"><span class="num">02</span><span class="e">🌐</span><h3 dir="ltr">Network</h3><p>مشاكل الإنترنت والـWiFi والـIP.</p><span class="go">No Browsing · Authentication · WiFi <span>←</span></span></button>
+      <button class="tile rv" data-go="billing" style="--c:var(--bill)"><span class="num">03</span><span class="e">💰</span><h3 dir="ltr">Billing</h3><p>الفواتير والدفع والباقات.</p><span class="go">Bill Amount · Invoice · Upgrade <span>←</span></span></button>
+      <button class="tile rv" data-go="tricks" style="--c:var(--trk)"><span class="num">04</span><span class="e">🧠</span><h3>تركات</h3><p>ملاحظات ونقاط مهمة.</p><span class="go">١٣ تريكة + الأرقام <span>←</span></span></button>
+      <button class="tile rv" data-go="callflow" style="--c:var(--call)"><span class="num">05</span><span class="e">📞</span><h3 dir="ltr">Call Flow</h3><p>المقدمة والخاتمة.</p><span class="go">بداية · نهاية المكالمة <span>←</span></span></button>
+      <button class="tile rv" data-go="candidate" style="--c:var(--cand)"><span class="num">06</span><span class="e">🆕</span><h3 dir="ltr">Candidate</h3><p>الخط الكانديدات — ٥ مراحل.</p><span class="go">Status · WO · DownPayment… <span>←</span></span></button>
+      <button class="tile rv" data-go="certification" style="--c:var(--cert)"><span class="num">07</span><span class="e">🎓</span><h3 dir="ltr">Certification</h3><p>إيقاف مؤقت · نقل · إلغاء.</p><span class="go">Suspension · Transfer · Cancellation <span>←</span></span></button>
     </div>
   </div>
-
   <div class="ticker" aria-hidden="true">
     <div class="tk-track">
-      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Extension Offer <i>◆</i> Payment Dispute <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Extra Quote <i>◆</i> Consumption Info <i>◆</i> MSAN <i>◆</i> CIBEL <i>◆</i> Pedia Script <i>◆</i> تركات <i>◆</i></span>
-      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Extension Offer <i>◆</i> Payment Dispute <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Extra Quote <i>◆</i> Consumption Info <i>◆</i> MSAN <i>◆</i> CIBEL <i>◆</i> Pedia Script <i>◆</i> تركات <i>◆</i></span>
+      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Candidate <i>◆</i> Call Flow <i>◆</i> Certification <i>◆</i> تركات <i>◆</i></span>
+      <span>Line Down <i>◆</i> Bad Line <i>◆</i> Line Unstable <i>◆</i> No Browsing <i>◆</i> Authentication <i>◆</i> Connection Unstable <i>◆</i> WiFi Instability <i>◆</i> Slow Download <i>◆</i> Online Gaming <i>◆</i> Bit Rate Mismatch <i>◆</i> Bill Amount <i>◆</i> Price Update <i>◆</i> Invoice <i>◆</i> Upgrade <i>◆</i> Downgrade <i>◆</i> Candidate <i>◆</i> Call Flow <i>◆</i> Certification <i>◆</i> تركات <i>◆</i></span>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ 1) PHYSICAL ════════════════ -->
+<!-- ═══════ 1) PHYSICAL ═══════ -->
 <section class="view" id="view-physical" style="--acc:var(--phys)">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-emoji">🛠️</span>
-      <div><h2 dir="ltr">Physical</h2><p>مشاكل الـPhysical والـDSL والـLine.</p></div>
-      <span class="count-chip">٣ موضوعات</span>
-    </div>
-
+    <div class="sec-head"><span class="sec-emoji">🛠️</span><div><h2 dir="ltr">Physical</h2><p>مشاكل الـPhysical والـDSL والـLine.</p></div><span class="count-chip">٣ موضوعات</span></div>
     <div class="rule-banner gold rv"><span class="ic">⚠️</span><span><b>القاعدة الذهبية:</b> دايماً نتأكد إن الـ<span class="en">Physical</span> سليم 100% قبل ما ندخل على أي مشكلة <span class="en">Network</span>.</span></div>
-
     <div class="intro-grid">
-      <div class="intro-c rv">
-        <h4>🧩 أنواع المشاكل</h4>
-        <div class="defs">
-          <div class="def"><b>🛠️ Physical</b><span>مشاكل الأسلاك والخط</span></div>
-          <div class="def"><b>🌐 Network</b><span>مشاكل الشبكة</span></div>
-        </div>
-      </div>
-      <div class="intro-c rv">
-        <h4>🔌 أنواع الخطوط</h4>
-        <div class="defs">
-          <div class="def"><b>🟢 FTTH</b><span>فايبر</span></div>
-          <div class="def"><b>🟡 MSAN</b><span>كابينة فايبر</span></div>
-          <div class="def"><b>🟠 Copper</b><span>نحاس</span></div>
-        </div>
-      </div>
-      <div class="intro-c rv">
-        <h4>🛠️ أدوات الفحص</h4>
-        <div class="defs">
-          <div class="def"><b>🟢 Fiber &amp; 🟡 MSAN</b><span>نستخدم <span class="en">Assurance</span></span></div>
-          <div class="def"><b>🟠 Copper</b><span>نستخدم <span class="en">Octopus</span></span></div>
-        </div>
-      </div>
+      <div class="intro-c rv"><h4>🧩 أنواع المشاكل</h4><div class="defs"><div class="def"><b>🛠️ Physical</b><span>مشاكل الأسلاك والخط</span></div><div class="def"><b>🌐 Network</b><span>مشاكل الشبكة</span></div></div></div>
+      <div class="intro-c rv"><h4>🔌 أنواع الخطوط</h4><div class="defs"><div class="def"><b>🟢 FTTH</b><span>فايبر</span></div><div class="def"><b>🟡 MSAN</b><span>كابينة فايبر</span></div><div class="def"><b>🟠 Copper</b><span>نحاس</span></div></div></div>
+      <div class="intro-c rv"><h4>🛠️ أدوات الفحص</h4><div class="defs"><div class="def"><b>🟢 Fiber &amp; 🟡 MSAN</b><span>نستخدم <span class="en">Assurance</span></span></div><div class="def"><b>🟠 Copper</b><span>نستخدم <span class="en">Octopus</span></span></div></div></div>
     </div>
-
     <div class="accs">
-
-      <!-- ── Line Down ── -->
-      <article class="acc rv" id="physical-line-down" data-sec="physical">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">📵</span>
-          <span class="tt"><b dir="ltr">Line Down</b><small>النت فاصل</small></span>
-          <span class="bdg">٥ أسباب</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-
-          <div class="blk">
-            <h4>الأسباب المحتملة</h4>
-            <div class="defs">
-              <div class="def"><b>💰 TE Bill</b><span>فاتورة الأرضي غير مدفوعة</span></div>
-              <div class="def"><b>⚡ MSAN Cabinet Offline</b><span>الكابينة واقعة</span></div>
-              <div class="def"><b>🔴 Line Down Matched</b><span>الـ<span class="en">DSL</span> فاصل عند العميل وعند السيستم</span></div>
-              <div class="def"><b>🔄 Wrong Port Not Matched</b><span>حالة الـ<span class="en">DSL</span> مختلفة بين العميل والسيستم</span></div>
-              <div class="def"><b>🔓 MSAN Unlock</b><span>اعمل <span class="en">Lock &amp; Unlock</span> للبورت وبعدين كمل تشخيص</span></div>
-            </div>
+      <article class="acc rv" id="physical-line-down" data-sec="physical"><button class="acc-h" aria-expanded="false"><span class="ae">📵</span><span class="tt"><b dir="ltr">Line Down</b><small>النت فاصل</small></span><span class="bdg">٥ أسباب</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>الأسباب المحتملة</h4><div class="defs">
+          <div class="def"><b>💰 TE Bill</b><span>فاتورة الأرضي غير مدفوعة</span></div>
+          <div class="def"><b>⚡ MSAN Cabinet Offline</b><span>الكابينة واقعة</span></div>
+          <div class="def"><b>🔴 Line Down Matched</b><span>الـ<span class="en">DSL</span> فاصل عند العميل وعند السيستم</span></div>
+          <div class="def"><b>🔄 Wrong Port Not Matched</b><span>حالة الـ<span class="en">DSL</span> مختلفة بين العميل والسيستم</span></div>
+          <div class="def"><b>🔓 MSAN Unlock</b><span>اعمل <span class="en">Lock &amp; Unlock</span> للبورت وبعدين كمل تشخيص</span></div>
+        </div></div>
+        <div class="blk"><h4>☎️ سيناريو المكالمة</h4><div class="dialog"><div class="msg agent"><span class="who">🎧 أنت — أول سؤال</span>إيه اللمبات اللي منورة في الراوتر؟</div></div>
+          <p style="margin-top:14px"><b>لو DSL والإنترنت فاصلين:</b></p>
+          <div class="path"><span>CIBEL</span><i>→</i><span>ADSL Account</span><i>→</i><span>Service#</span><i>→</i><span>رقم الأرضي</span></div>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span>حدد نوع الخط: <span class="en">MSAN</span> ولا <span class="en">Copper</span></span></div>
+            <div class="cond"><span class="cn">٢</span><span>افحص بالترتيب: 💰 فاتورة ← ⚡ Cabinet ← 🔴 Line Down ← 🔄 Wrong Port</span></div>
+            <div class="cond"><span class="cn">٣</span><span>امشي على <span class="en">Pedia Script</span> خطوة بخطوة</span></div>
           </div>
-
-          <div class="blk">
-            <h4>☎️ سيناريو المكالمة</h4>
-            <div class="dialog">
-              <div class="msg agent"><span class="who">🎧 أنت — أول سؤال</span>إيه اللمبات اللي منورة في الراوتر؟</div>
-            </div>
-
-            <p style="margin-top:14px"><b>لو DSL والإنترنت فاصلين:</b></p>
-            <div class="path"><span>CIBEL</span><i>→</i><span>ADSL Account</span><i>→</i><span>Service#</span><i>→</i><span>رقم الأرضي</span></div>
-            <div class="cond-list">
-              <div class="cond"><span class="cn">١</span><span>حدد نوع الخط: <span class="en">MSAN</span> ولا <span class="en">Copper</span></span></div>
-              <div class="cond"><span class="cn">٢</span><span>افحص بالترتيب: 💰 فاتورة ← ⚡ Cabinet ← 🔴 Line Down ← 🔄 Wrong Port</span></div>
-              <div class="cond"><span class="cn">٣</span><span>امشي على <span class="en">Pedia Script</span> خطوة بخطوة</span></div>
-            </div>
-
-            <p style="margin-top:14px"><b>لو لمبة DSL منورة:</b></p>
-            <div class="dialog">
-              <div class="msg agent"><span class="who">🎧 أنت</span>ثابتة ولا بتعمل Flash؟</div>
-            </div>
-            <div class="exs">
-              <div class="ex good"><b>ثابتة ✔</b>غالباً المشكلة مش <span class="en">Physical</span></div>
-              <div class="ex bad"><b>Flash ⚡</b>بتساعدك تحدد <span class="en">Matched</span> ولا <span class="en">Not Matched</span></div>
-            </div>
+          <p style="margin-top:14px"><b>لو لمبة DSL منورة:</b></p>
+          <div class="dialog"><div class="msg agent"><span class="who">🎧 أنت</span>ثابتة ولا بتعمل Flash؟</div></div>
+          <div class="exs">
+            <div class="ex good"><b>ثابتة ✔</b>غالباً المشكلة مش <span class="en">Physical</span></div>
+            <div class="ex bad"><b>Flash ⚡</b>بتساعدك تحدد <span class="en">Matched</span> ولا <span class="en">Not Matched</span></div>
           </div>
+        </div>
+      </div></div></div></article>
 
-        </div></div></div>
-      </article>
-
-      <!-- ── Bad Line ── -->
-      <article class="acc rv" id="physical-bad-line" data-sec="physical">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">📉</span>
-          <span class="tt"><b dir="ltr">Bad Line</b><small>جودة الخط ضعيفة</small></span>
-          <span class="bdg">٦ خطوات</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-
-          <div class="blk">
-            <h4>بتعتمد على</h4>
-            <div class="chips">
-              <span class="chip">📡 نوع الـ<span class="en">Port</span></span>
-              <span class="chip">📶 نوع الراوتر</span>
-            </div>
+      <article class="acc rv" id="physical-bad-line" data-sec="physical"><button class="acc-h" aria-expanded="false"><span class="ae">📉</span><span class="tt"><b dir="ltr">Bad Line</b><small>جودة الخط ضعيفة</small></span><span class="bdg">٦ خطوات</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>بتعتمد على</h4><div class="chips"><span class="chip">📡 نوع الـ<span class="en">Port</span></span><span class="chip">📶 نوع الراوتر</span></div></div>
+        <div class="blk"><h4>أقل Max طبيعي</h4><div class="tbl-wrap"><table class="tbl">
+          <tr><th>التركيب</th><th>أقل Max</th></tr>
+          <tr><td>✅ <span class="en">VDSL + VDSL Router</span></td><td><b>36 Mbps</b></td></tr>
+          <tr><td>✅ <span class="en">VDSL + ADSL Router</span> أو العكس</td><td><b>15 Mbps</b></td></tr>
+          <tr><td>✅ <span class="en">Copper ADSL + ADSL Router</span></td><td><b>15 Mbps</b></td></tr>
+        </table></div><div class="callout warn"><span class="ci">⚠️</span><div><b>Quality</b>لازم متقلش عن <b>6</b></div></div></div>
+        <div class="callout ok"><span class="ci">🥇</span><div><b>الأولوية</b>لو عند العميل <span class="en">Line Down</span> + <span class="en">Bad Line</span> ← نحل <span class="en">Line Down</span> الأول.</div></div>
+        <div class="blk"><h4>أسماء الـMax في Port Parameters</h4><div class="chips"><span class="chip en">Maximum Attainable Rate</span><span class="chip en">Downstream Max Attainable Rate</span></div><div class="callout warn"><span class="ci">⚠️</span><div><b>ملحوظة</b><span class="en">Attained Bitrate</span> اسمه خادع، ده مش الـ<span class="en">Max</span> الحقيقي.</div></div></div>
+        <div class="blk"><h4>☎️ سيناريو Bad Line</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><b>أولاً:</b> اتأكد إن عنده جيجات من <span class="en">PCRF</span> في <span class="en">CIBEL</span></span></div>
+            <div class="cond"><span class="cn">٢</span><span><b>ثانياً:</b> ادخل <span class="path" style="margin:6px 0 0"><span>Assurance</span><i>→</i><span>CPE Status</span><i>→</i><span>Get Port Parameters</span></span> لو الـ<span class="en">Max</span> سيئ: اختار <span class="en">Not Accepted</span></span></div>
+            <div class="cond"><span class="cn">٣</span><span><b>حساب السرعة الصحيحة:</b><span class="formula">السرعة المناسبة = Max × 80% إلى 85%</span><small>مثال: Max = 20 ← السرعة من 16 لـ 17</small></span></div>
+            <div class="cond"><span class="cn">٤</span><span>راجع السرعة الحالية من: <span class="en">Get Configured Speed</span></span></div>
+            <div class="cond"><span class="cn">٥</span><span>لو السرعة صحيحة: اختار <span class="en">Right Speed Profile</span> وكمل <span class="en">Pedia</span></span></div>
+            <div class="cond"><span class="cn">٦</span><span>لو السرعة غلط: عدّلها يدوي للسرعة الصح<small>← استنى الراوتر يعمل <span class="en">Restart</span> ← افحص الـ<span class="en">Max</span> تاني</small></span></div>
           </div>
-
-          <div class="blk">
-            <h4>أقل Max طبيعي</h4>
-            <div class="tbl-wrap">
-              <table class="tbl">
-                <tr><th>التركيب</th><th>أقل Max</th></tr>
-                <tr><td>✅ <span class="en">VDSL + VDSL Router</span></td><td><b>36 Mbps</b></td></tr>
-                <tr><td>✅ <span class="en">VDSL + ADSL Router</span> أو العكس</td><td><b>15 Mbps</b></td></tr>
-                <tr><td>✅ <span class="en">Copper ADSL + ADSL Router</span></td><td><b>15 Mbps</b></td></tr>
-              </table>
-            </div>
-            <div class="callout warn"><span class="ci">⚠️</span><div><b>Quality</b>لازم متقلش عن <b>6</b></div></div>
+          <div class="exs">
+            <div class="ex good"><b>اتحسن ✅</b><span class="en">Solved after adjustment</span></div>
+            <div class="ex bad"><b>متحسنش ❌</b><span class="en">Not Solved after adjustment</span> وكمل باقي خطوات <span class="en">Pedia</span></div>
           </div>
+        </div>
+      </div></div></div></article>
 
-          <div class="callout ok"><span class="ci">🥇</span><div><b>الأولوية</b>لو عند العميل <span class="en">Line Down</span> + <span class="en">Bad Line</span> ← نحل <span class="en">Line Down</span> الأول.</div></div>
-
-          <div class="blk">
-            <h4>أسماء الـMax في Port Parameters</h4>
-            <div class="chips">
-              <span class="chip en">Maximum Attainable Rate</span>
-              <span class="chip en">Downstream Max Attainable Rate</span>
-            </div>
-            <div class="callout warn"><span class="ci">⚠️</span><div><b>ملحوظة</b><span class="en">Attained Bitrate</span> اسمه خادع، ده مش الـ<span class="en">Max</span> الحقيقي.</div></div>
+      <article class="acc rv" id="physical-line-unstable" data-sec="physical"><button class="acc-h" aria-expanded="false"><span class="ae">〰️</span><span class="tt"><b dir="ltr">Line Unstable</b><small>فصل ووصل الـDSL</small></span><span class="bdg">٤ شروط</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>يعني إيه Line Unstable؟</h4><p>مشكلة <span class="en">Physical</span> بيكون فيها <b>لمبة الـ<span class="en">DSL</span> بتفصل وتشتغل بشكل متكرر</b>.</p><div class="quote">العميل بيقول: "النت بيفصل ويرجع" أو "الراوتر بيفصل ويشتغل لوحده"</div></div>
+        <div class="blk"><h4>📞 شروط التأكد قبل ما تمشي Line Unstable</h4><p>لازم الـ4 شروط دول يتحققوا مع بعض:</p>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><b>استبعاد Line Down</b><small>• لو الـ<span class="en">DSL</span> Down عندك وعند العميل ← دي <span class="en">Line Down</span><br>• لو عند العميل Down وعندك Up أو العكس ← دي <span class="en">Not Matched / Wrong Port</span><br>✅ لازم كل حالات الـ<span class="en">Line Down</span> تكون مستبعدة تماماً</small></span></div>
+            <div class="cond"><span class="cn">٢</span><span><b>استبعاد Bad Line</b><small>• 📌 <span class="en">Max Rate</span> طبيعي حسب نوع الراوتر والبورت<br>• 📌 <span class="en">SNR / Noise Margin</span> يكون <b>6 dB</b> أو أعلى<br>❌ لو فيه <span class="en">Bad Line</span> ← افتح <span class="en">Pedia Bad Line</span> مش <span class="en">Line Unstable</span></small></span></div>
+            <div class="cond"><span class="cn">٣</span><span><b>التأكد إن السرعة صحيحة</b><span class="formula">السرعة المتوقعة = Max Rate × 80% إلى 85%</span><small>✅ السرعة صح ← كمل عادي<br>❌ السرعة غلط ← 1) عدّل السرعة للرقم الصح 2) بلغ العميل إن السرعة اتظبطت 3) <b>وقف هنا</b> ومتكملش <span class="en">Line Unstable</span> عشان عملت <span class="en">Human Intervention</span></small></span></div>
+            <div class="cond"><span class="cn">٤</span><span><b>مراجعة Port Up Time</b> — آخر <span class="en">Restart</span> للراوتر يكون خلال آخر <b>6 ساعات</b> من وقت المكالمة<small>🕒 هو الوقت اللي في <span class="en">Assurance → CPE Status</span> وبيبين آخر مرة الراوتر فصل واشتغل</small></span></div>
           </div>
-
-          <div class="blk">
-            <h4>☎️ سيناريو Bad Line</h4>
-            <div class="cond-list">
-              <div class="cond"><span class="cn">١</span><span><b>أولاً:</b> اتأكد إن عنده جيجات من <span class="en">PCRF</span> في <span class="en">CIBEL</span></span></div>
-              <div class="cond"><span class="cn">٢</span><span><b>ثانياً:</b> ادخل
-                <span class="path" style="margin:6px 0 0"><span>Assurance</span><i>→</i><span>CPE Status</span><i>→</i><span>Get Port Parameters</span></span>
-                لو الـ<span class="en">Max</span> سيئ: اختار <span class="en">Not Accepted</span></span></div>
-              <div class="cond"><span class="cn">٣</span><span><b>حساب السرعة الصحيحة:</b>
-                <span class="formula">السرعة المناسبة = Max × 80% إلى 85%</span>
-                <small style="display:block;color:var(--ink2)">مثال: Max = 20 ← السرعة من 16 لـ 17</small></span></div>
-              <div class="cond"><span class="cn">٤</span><span>راجع السرعة الحالية من: <span class="en">Get Configured Speed</span></span></div>
-              <div class="cond"><span class="cn">٥</span><span>لو السرعة صحيحة: اختار <span class="en">Right Speed Profile</span> وكمل <span class="en">Pedia</span></span></div>
-              <div class="cond"><span class="cn">٦</span><span>لو السرعة غلط: عدّلها يدوي للسرعة الصح
-                <small>← استنى الراوتر يعمل <span class="en">Restart</span> ← افحص الـ<span class="en">Max</span> تاني</small></span></div>
-            </div>
-            <div class="exs">
-              <div class="ex good"><b>اتحسن ✅</b><span class="en">Solved after adjustment</span></div>
-              <div class="ex bad"><b>متحسنش ❌</b><span class="en">Not Solved after adjustment</span> وكمل باقي خطوات <span class="en">Pedia</span></div>
-            </div>
+        </div>
+        <div class="blk"><h4>أمثلة على Port Up Time</h4>
+          <div class="exs">
+            <div class="ex good"><b>مثال 1 ✔</b>☎️ وقت المكالمة: 6:00 مساءً<br>✅ Port Up Time: 12:30 ظهراً / 2:00 عصراً / 5:30 مساءً<br>➡️ كله داخل آخر 6 ساعات ➡️ <b>تعتبر Line Unstable</b></div>
+            <div class="ex bad"><b>مثال 2 ❌</b>☎️ وقت المكالمة: 9:00 مساءً<br>❌ Port Up Time: 12:00 ظهراً<br>➡️ الفرق أكبر من 6 ساعات ➡️ <b>لا تعتبر Line Unstable</b></div>
           </div>
-
-        </div></div></div>
-      </article>
-
-      <!-- ── Line Unstable ── -->
-      <article class="acc rv" id="physical-line-unstable" data-sec="physical">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">〰️</span>
-          <span class="tt"><b dir="ltr">Line Unstable</b><small>فصل ووصل الـDSL</small></span>
-          <span class="bdg">٤ شروط</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-
-          <div class="blk">
-            <h4>يعني إيه Line Unstable؟</h4>
-            <p>مشكلة <span class="en">Physical</span> بيكون فيها <b>لمبة الـ<span class="en">DSL</span> بتفصل وتشتغل بشكل متكرر</b>.</p>
-            <div class="quote">العميل بيقول: "النت بيفصل ويرجع" أو "الراوتر بيفصل ويشتغل لوحده"</div>
-          </div>
-
-          <div class="blk">
-            <h4>📞 شروط التأكد قبل ما تمشي Line Unstable</h4>
-            <p>لازم الـ4 شروط دول يتحققوا مع بعض:</p>
-
-            <div class="cond-list">
-              <div class="cond"><span class="cn">١</span><span><b>استبعاد Line Down</b> — مينفعش يكون فيه أي سبب من أسباب الـ<span class="en">Line Down</span>
-                <small>• لو الـ<span class="en">DSL</span> Down عندك وعند العميل ← دي <span class="en">Line Down</span><br>
-                • لو عند العميل Down وعندك Up أو العكس ← دي <span class="en">Not Matched / Wrong Port</span><br>
-                ✅ لازم كل حالات الـ<span class="en">Line Down</span> تكون مستبعدة تماماً</small></span></div>
-
-              <div class="cond"><span class="cn">٢</span><span><b>استبعاد Bad Line</b> — لازم كل القيم تكون سليمة:
-                <small>• 📌 <span class="en">Max Rate</span> طبيعي حسب نوع الراوتر والبورت<br>
-                • 📌 <span class="en">SNR / Noise Margin</span> يكون <b>6 dB</b> أو أعلى<br>
-                ❌ لو فيه <span class="en">Bad Line</span> ← افتح <span class="en">Pedia Bad Line</span> مش <span class="en">Line Unstable</span></small></span></div>
-
-              <div class="cond"><span class="cn">٣</span><span><b>التأكد إن السرعة صحيحة</b>
-                <span class="formula">السرعة المتوقعة = Max Rate × 80% إلى 85%</span>
-                <small>✅ السرعة صح ← كمل عادي<br>
-                ❌ السرعة غلط ← 1) عدّل السرعة للرقم الصح 2) بلغ العميل إن السرعة اتظبطت 3) <b>وقف هنا</b> ومتكملش <span class="en">Line Unstable</span> عشان عملت <span class="en">Human Intervention</span></small></span></div>
-
-              <div class="cond"><span class="cn">٤</span><span><b>مراجعة Port Up Time</b> — آخر <span class="en">Restart</span> للراوتر يكون خلال آخر <b>6 ساعات</b> من وقت المكالمة
-                <small>🕒 <b>يعني إيه Port Up Time؟</b> هو الوقت اللي في <span class="en">Assurance → CPE Status</span> وبيبين آخر مرة الراوتر فصل واشتغل</small></span></div>
-            </div>
-          </div>
-
-          <div class="blk">
-            <h4>أمثلة على Port Up Time</h4>
-            <div class="exs">
-              <div class="ex good"><b>مثال 1 ✔</b>☎️ وقت المكالمة: 6:00 مساءً<br>✅ Port Up Time: 12:30 ظهراً / 2:00 عصراً / 5:30 مساءً<br>➡️ كله داخل آخر 6 ساعات ➡️ <b>تعتبر Line Unstable</b></div>
-              <div class="ex bad"><b>مثال 2 ❌</b>☎️ وقت المكالمة: 9:00 مساءً<br>❌ Port Up Time: 12:00 ظهراً<br>➡️ الفرق أكبر من 6 ساعات ➡️ <b>لا تعتبر Line Unstable</b></div>
-            </div>
-          </div>
-
-          <div class="blk">
-            <h4>💬 الرد المناسب للعميل لو الشرط الرابع مش متحقق</h4>
-            <div class="quote">"بعتذر لحضرتك يا فندم، حالياً مش ظاهر عندي إن الخدمة بتفصل وتشتغل، لأن آخر مرة الراوتر فصل واشتغل كانت من أكثر من 6 ساعات"</div>
-          </div>
-
-          <div class="blk">
-            <h4>🎯 الخلاصة السريعة — Checklist</h4>
-            <p>عشان تقول دي <span class="en">Line Unstable</span> لازم:</p>
-            <div class="cond-list">
-              <div class="cond"><span class="cn">✓</span><span>ليست <span class="en">Line Down</span></span></div>
-              <div class="cond"><span class="cn">✓</span><span>ليست <span class="en">Bad Line</span></span></div>
-              <div class="cond"><span class="cn">✓</span><span>السرعة صحيحة <b>80–85%</b> من الـ<span class="en">Max</span></span></div>
-              <div class="cond"><span class="cn">✓</span><span><span class="en">Port Up Time</span> خلال آخر <b>6 ساعات</b></span></div>
-            </div>
-            <div class="result-box">🎉 لو الأربع شروط متحققين ← امشي على خطوات <span dir="ltr">Pedia Line Unstable</span></div>
-          </div>
-
-          <div class="callout bad"><span class="ci">⚠️</span><div><b>ممنوع الخلط</b>لا تخلط <span class="en">Line Unstable</span> مع <span class="en">Connection Unstable</span> الموجودة في <span class="en">Network</span>.</div></div>
-
-        </div></div></div>
-      </article>
+        </div>
+        <div class="blk"><h4>💬 الرد المناسب للعميل لو الشرط الرابع مش متحقق</h4><div class="quote">"بعتذر لحضرتك يا فندم، حالياً مش ظاهر عندي إن الخدمة بتفصل وتشتغل، لأن آخر مرة الراوتر فصل واشتغل كانت من أكثر من 6 ساعات"</div></div>
+        <div class="blk"><h4>🎯 الخلاصة السريعة — Checklist</h4><div class="cond-list">
+          <div class="cond"><span class="cn">✓</span><span>ليست <span class="en">Line Down</span></span></div>
+          <div class="cond"><span class="cn">✓</span><span>ليست <span class="en">Bad Line</span></span></div>
+          <div class="cond"><span class="cn">✓</span><span>السرعة صحيحة <b>80–85%</b> من الـ<span class="en">Max</span></span></div>
+          <div class="cond"><span class="cn">✓</span><span><span class="en">Port Up Time</span> خلال آخر <b>6 ساعات</b></span></div>
+        </div><div class="result-box">🎉 لو الأربع شروط متحققين ← امشي على خطوات <span dir="ltr">Pedia Line Unstable</span></div></div>
+        <div class="callout bad"><span class="ci">⚠️</span><div><b>ممنوع الخلط</b>لا تخلط <span class="en">Line Unstable</span> مع <span class="en">Connection Unstable</span> الموجودة في <span class="en">Network</span>.</div></div>
+      </div></div></div></article>
     </div>
-
-    <!-- أهم 5 قواعد -->
-    <div class="intro-c rv" style="margin-bottom:56px">
-      <h4>📝 أهم ٥ قواعد تحفظهم</h4>
+    <div class="intro-c rv" style="margin-bottom:56px"><h4>📝 أهم ٥ قواعد تحفظهم</h4>
       <div class="cond-list">
         <div class="cond"><span class="cn">١</span><span>✅ <span class="en">Physical</span> أولاً دايماً</span></div>
         <div class="cond"><span class="cn">٢</span><span>✅ اسأل عن لمبات الراوتر قبل أي حاجة</span></div>
         <div class="cond"><span class="cn">٣</span><span>✅ حدد نوع الخط أولاً: <span class="en">Fiber / MSAN / Copper</span></span></div>
         <div class="cond"><span class="cn">٤</span><span>✅ امشي على الـ<span class="en">Pedia</span> وماتتخطاش ولا خطوة</span></div>
-        <div class="cond"><span class="cn">٥</span><span>✅ النهاية دايماً واحدة من اتنين:
-          <small>🎉 المشكلة اتحلت أثناء المكالمة &nbsp;|&nbsp; 📋 يتم تسجيل شكوى <span class="en">Ticket</span></small></span></div>
+        <div class="cond"><span class="cn">٥</span><span>✅ النهاية دايماً واحدة من اتنين:<small>🎉 المشكلة اتحلت أثناء المكالمة &nbsp;|&nbsp; 📋 يتم تسجيل شكوى <span class="en">Ticket</span></small></span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ 2) NETWORK ════════════════ -->
+<!-- ═══════ 2) NETWORK ═══════ -->
 <section class="view" id="view-network" style="--acc:var(--net)">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-emoji">🌐</span>
-      <div><h2 dir="ltr">Network</h2><p>مشاكل الإنترنت والـWiFi والـIP.</p></div>
-      <span class="count-chip">٧ موضوعات</span>
-    </div>
-
+    <div class="sec-head"><span class="sec-emoji">🌐</span><div><h2 dir="ltr">Network</h2><p>مشاكل الإنترنت والـWiFi والـIP.</p></div><span class="count-chip">٧ موضوعات</span></div>
     <div class="rule-banner rv"><span class="ic">⚠️</span><span>قاعدة أساسية: أي <span class="en">Network Issue</span> لازم أتأكد من الـ<span class="en">Physical</span> الأول.</span></div>
-
     <div class="accs">
 
-      <!-- ── No Browsing ── -->
-      <article class="acc rv" id="network-no-browsing" data-sec="network">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">🚫</span>
-          <span class="tt"><b dir="ltr">No Browsing</b><small>كل حاجة تمام… بس النت مش شغال</small></span>
-          <span class="bdg">الرسالة هي الفيصل</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
+      <article class="acc rv" id="network-no-browsing" data-sec="network"><button class="acc-h" aria-expanded="false"><span class="ae">🚫</span><span class="tt"><b dir="ltr">No Browsing</b><small>كل حاجة تمام… بس النت مش شغال</small></span><span class="bdg">الرسالة هي الفيصل</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>يعني إيه No Browsing؟</h4><p>كل حاجة شغالة عند العميل في اللمبات في الراوتر، وانت حتى عندك على السيستم تلاقي كله تمام:</p><div class="chips" style="margin-top:8px"><span class="chip g">فيزيكل ✅</span><span class="chip g">سرعة أورانج ✅</span><span class="chip g">الخط ساحب IP ✅</span></div><div class="callout pin"><span class="ci">📌</span><div><b>معنى "ساحب IP"</b>لمبة الإنترنت فعلا منورة وشغالة وزي الفل.</div></div></div>
+        <div class="blk"><h4>الفرق بين No Browsing و Slow Download</h4><p>المعطيات دي هي هي نفس معطيات الـ<span class="en">Slow Download</span>… بنفرق بينهم بسؤال بسيط للعميل:</p><div class="quote">جرّب بس كدا تبعت رسالة، شوفها بتوصل ولا لا</div><div class="exs"><div class="ex good"><b>الرسالة بتوصل ✔</b>بتكلم علي <span class="en">Slow Download</span></div><div class="ex bad"><b>مبتوصلش ❌</b>بتكلم علي <span class="en">No Browsing</span> — حتى الرسالة مبتوصلش</div></div><div class="callout ok"><span class="ci">🧠</span><div><b>الخلاصة</b>الـ<span class="en">No Browsing</span> هو إن كل حاجة تمام عند العميل وفي السيستم، ومع ذلك النت مش شغال خالص، حتى الرسالة مبتوصلش.</div></div></div>
+        <div class="blk"><h4>☎️ المكالمة بتدخل إزاي؟</h4><div class="dialog">
+          <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت مش شغال، فاصل خالص</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>إيه اللمبات اللي منورة عند حضرتك؟</div>
+          <div class="msg cust"><span class="who">👤 العميل</span>كله منور في الراوتر بس النت مش شغال على التليفون، مش عارف ليه</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>طيب لحظات معايا يا فندم أراجع البيانات</div>
+          <div class="msg note">— بتبدأ تشوف الخط: كل حاجة تمام وزي الفل —</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>أستأذنك يا فندم، جرّب تبعت رسالة كدا تشوفها بتوصل — يعني الخدمة شغالة بس بطيئة عند حضرتك — ولا مبتوصلش خالص؟</div>
+          <div class="msg cust"><span class="who">👤 العميل</span>استني كدا هجرب أبعت… لا، حتى الرسالة مبتوصلش / ظاهر علامة تعجب مبتتشالش خالص</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>يلا بينا No Browsing يا فندم 🚀</div>
+        </div></div>
+        <div class="callout pin"><span class="ci">📚</span><div><b>بعد تحديد الـCase</b>خلاص انت عرفت تحدد الـ<span class="en">Case</span> — خش <span class="en">Pedia</span> وشوف بتقولك إيه واعملها. اقرأ… مش عايزك تحفظ خطوات، المهم عرفنا الـ<span class="en">No Browsing</span>.</div></div>
+        <div class="callout bad"><span class="ci">🚨</span><div><b>ارجوك متنساش متنساش متنسااااش:</b>آخر صفحة في الـ<span class="en">No Browsing</span> فيها <b>خطوتين مش خطوة واحدة</b>:<ul><li><b>١.</b> العميل يعمل نسيان للشبكة <span class="en">Forget Network</span> ويرجع يشغلها</li><li><b>٢.</b> ولو متحلتش — ارجوووك <b>متدخلش <span class="en">Not Solved</span></b>، عشان في سطر تاني بيقولك: نعمل <span class="en">Reset</span> وندخل صفحة الراوتر</li></ul></div></div>
+      </div></div></div></article>
 
-          <div class="blk">
-            <h4>يعني إيه No Browsing؟</h4>
-            <p>كل حاجة شغالة عند العميل في اللمبات في الراوتر، وانت حتي عندك علي السيستم تلاقي كله تمام:</p>
-            <div class="chips" style="margin-top:8px">
-              <span class="chip g">فيزيكل ✅</span>
-              <span class="chip g">سرعة أورانج ✅</span>
-              <span class="chip g">الخط ساحب IP ✅</span>
-            </div>
-            <div class="callout pin"><span class="ci">📌</span><div><b>معنى "ساحب IP"</b>لمبة الإنترنت فعلا منورة وشغالة وزي الفل.</div></div>
-          </div>
-
-          <div class="blk">
-            <h4>الفرق بين No Browsing و Slow Download</h4>
-            <p>المعطيات دي هي هي نفس معطيات الـ<span class="en">Slow Download</span> (فيزيكل ✅ وسرعة أورانج ✅ وساحب IP ✅)… بنفرق بينهم بسؤال بسيط للعميل:</p>
-            <div class="quote">جرّب بس كدا تبعت رسالة، شوفها بتوصل ولا لا</div>
-            <div class="exs">
-              <div class="ex good"><b>الرسالة بتوصل ✔</b>بتكلم علي <span class="en">Slow Download</span></div>
-              <div class="ex bad"><b>مبتوصلش ❌</b>بتكلم علي <span class="en">No Browsing</span> — حتي الرسالة مبتوصلش</div>
-            </div>
-            <div class="callout ok"><span class="ci">🧠</span><div><b>الخلاصة</b>الـ<span class="en">No Browsing</span> هو إن كل حاجة تمام عند العميل وفي السيستم، ومع ذلك النت مش شغال خالص، حتي الرسالة مبتوصلش.</div></div>
-          </div>
-
-          <div class="blk">
-            <h4>☎️ المكالمة بتدخل إزاي؟</h4>
-            <div class="dialog">
-              <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت مش شغال، فاصل خالص</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>إيه اللمبات اللي منورة عند حضرتك؟</div>
-              <div class="msg cust"><span class="who">👤 العميل</span>كله منور في الراوتر بس النت مش شغال علي التليفون، مش عارف ليه</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>طيب لحظات معايا يا فندم أراجع البيانات</div>
-              <div class="msg note">— بتبدأ تشوف الخط: كل حاجة تمام وزي الفل —</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>أستأذنك يا فندم، جرّب تبعت رسالة كدا تشوفها بتوصل — يعني الخدمة شغالة بس بطيئة عند حضرتك — ولا مبتوصلش خالص؟</div>
-              <div class="msg cust"><span class="who">👤 العميل</span>استني كدا هجرب أبعت… لا، حتي الرسالة مبتوصلش / ظاهر علامة تعجب مبتتشالش خالص</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>يلا بينا No Browsing يا فندم 🚀</div>
-            </div>
-          </div>
-
-          <div class="callout pin"><span class="ci">📚</span><div><b>بعد تحديد الـCase</b>خلاص انت عرفت تحدد الـ<span class="en">Case</span> — خش <span class="en">Pedia</span> وشوف بتقولك إيه واعملها. اقرأ… مش عايزك تحفظ خطوات، المهم عرفنا الـ<span class="en">No Browsing</span>.</div></div>
-
-          <div class="callout bad"><span class="ci">🚨</span><div>
-            <b>ارجوك متنساش متنساش متنسااااش:</b>
-            آخر صفحة في الـ<span class="en">No Browsing</span> فيها <b>خطوتين مش خطوة واحدة</b>:
-            <ul>
-              <li><b>١.</b> العميل يعمل نسيان للشبكة <span class="en">Forget Network</span> ويرجع يشغلها</li>
-              <li><b>٢.</b> ولو متحلتش — ارجوووك <b>متدخلش <span class="en">Not Solved</span></b>، عشان في سطر تاني بيقولك: نعمل <span class="en">Reset</span> وندخل صفحة الراوتر</li>
-            </ul>
-          </div></div>
-
-        </div></div></div>
-      </article>
-
-      <!-- ── Authentication ── -->
-      <article class="acc rv" id="network-authentication" data-sec="network">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">🔐</span>
-          <span class="tt"><b dir="ltr">Authentication</b><small>نفس No Browsing… بس مش ساحب IP</small></span>
-          <span class="bdg">٣ خانات</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-
-          <div class="blk">
-            <h4>يعني إيه Authentication؟</h4>
-            <p>هي نفس الـ<span class="en">No Browsing</span>، الفرق إنه <b>مش ساحب IP</b>. يعني بتيجي تعمل <span class="en">Check</span> للخط بتلاقي:</p>
-            <div class="chips" style="margin-top:8px">
-              <span class="chip g">فيزيكل ✅</span>
-              <span class="chip g">سرعة أورانج ✅</span>
-              <span class="chip r">الـ IP ❌</span>
-            </div>
-          </div>
-
-          <div class="blk">
-            <h4>☎️ المكالمة بتدخل إزاي؟</h4>
-            <div class="dialog">
-              <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت عندي فاصل</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>إيه اللمبات اللي منورة عند حضرتك؟</div>
-              <div class="msg cust"><span class="who">👤 العميل</span>كله شغال ما عدا لمبة الإنترنت منورة أحمر (أو فاصلة خالص)</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>الـ<span class="en">DSL</span> ثابتة ولا بتفلاش؟</div>
-              <div class="msg cust"><span class="who">👤 العميل</span>ثابتة، المشكلة كلها في لمبة الإنترنت بس</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>تمام يا فندم، لحظات أراجع بعض البيانات</div>
-              <div class="msg note">— الخط فيزيكل تمام وكله تمام… ما عدا IP ❌❌ —</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>خلاص حددنا الـCase إنها Authentication — يلا بينا Pedia 🚀</div>
-            </div>
-          </div>
-
-          <div class="blk">
-            <h4>أول ما تدخل Pedia</h4>
-            <p>تنزل تحت خالص، بتلاقي ٣ خانات:</p>
-            <div class="chips" style="margin-top:8px">
-              <span class="chip en">Login OK</span>
-              <span class="chip en">Login Failed</span>
-              <span class="chip en">No Logs</span>
-            </div>
-            <div class="callout pin"><span class="ci">🐙</span><div><b>بحددها على أساس إيه؟ — Octopus</b>
-            بخش علي الـ<span class="en">Octopus</span>:<br>
-            ✅ علامة صح علي اليمين ← <span class="en">Login OK</span><br>
-            ❌ علامة غلط ← <span class="en">Login Failed</span><br>
-            مفيش ولا صح ولا غلط ← <span class="en">No Logs</span></div></div>
-          </div>
-
-          <!-- الحالات الثلاث — منفصلة تمامًا -->
-          <div class="blk">
-            <h4>الحالات الثلاث — خطوات كل خانة على حدة</h4>
-            <div class="cases">
-
-              <div class="case" style="--cc:var(--ok)">
-                <div class="ch">✅ <span dir="ltr">Login OK</span> <small style="font-weight:600;opacity:.8">— خطوتين بس</small></div>
-                <div class="cb">
-                  <div class="cond-list">
-                    <div class="cond"><span class="cn">١</span><span><span class="en">Lock &amp; Unlock</span><small>اتحلت تمام — متحلتش؟ هعمل اللي بعدها</small></span></div>
-                    <div class="cond"><span class="cn">٢</span><span><span class="en">Restart Router</span><small>اتحلت المشكلة تمام الحمد لله</small></span></div>
-                  </div>
-                  <div class="result-box" style="font-size:.9rem">متحلتش؟ نفتح شكوى — وفي خلال <b>24 ساعة</b> مشكلة حضرتك هتتحل إن شاء الله</div>
-                </div>
+      <article class="acc rv" id="network-authentication" data-sec="network"><button class="acc-h" aria-expanded="false"><span class="ae">🔐</span><span class="tt"><b dir="ltr">Authentication</b><small>نفس No Browsing… بس مش ساحب IP</small></span><span class="bdg">٣ خانات</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>يعني إيه Authentication؟</h4><p>هي نفس الـ<span class="en">No Browsing</span>، الفرق إنه <b>مش ساحب IP</b>. يعني بتيجي تعمل <span class="en">Check</span> للخط بتلاقي:</p><div class="chips" style="margin-top:8px"><span class="chip g">فيزيكل ✅</span><span class="chip g">سرعة أورانج ✅</span><span class="chip r">الـ IP ❌</span></div></div>
+        <div class="blk"><h4>☎️ المكالمة بتدخل إزاي؟</h4><div class="dialog">
+          <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت عندي فاصل</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>إيه اللمبات اللي منورة عند حضرتك؟</div>
+          <div class="msg cust"><span class="who">👤 العميل</span>كله شغال ما عدا لمبة الإنترنت منورة أحمر (أو فاصلة خالص)</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>الـ<span class="en">DSL</span> ثابتة ولا بتفلاش؟</div>
+          <div class="msg cust"><span class="who">👤 العميل</span>ثابتة، المشكلة كلها في لمبة الإنترنت بس</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>تمام يا فندم، لحظات أراجع بعض البيانات</div>
+          <div class="msg note">— الخط فيزيكل تمام وكله تمام… ما عدا IP ❌❌ —</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>خلاص حددنا الـCase إنها Authentication — يلا بينا Pedia 🚀</div>
+        </div></div>
+        <div class="blk"><h4>أول ما تدخل Pedia</h4><p>تنزل تحت خالص، بتلاقي ٣ خانات:</p><div class="chips" style="margin-top:8px"><span class="chip en">Login OK</span><span class="chip en">Login Failed</span><span class="chip en">No Logs</span></div><div class="callout pin"><span class="ci">🐙</span><div><b>بحددها على أساس إيه؟ — Octopus</b>بخش على الـ<span class="en">Octopus</span>:<br>✅ علامة صح على اليمين ← <span class="en">Login OK</span><br>❌ علامة غلط ← <span class="en">Login Failed</span><br>مفيش ولا صح ولا غلط ← <span class="en">No Logs</span></div></div></div>
+        <div class="blk"><h4>الحالات الثلاث — خطوات كل خانة على حدة</h4>
+          <div class="cases">
+            <div class="case" style="--cc:var(--ok)"><div class="ch">✅ <span dir="ltr">Login OK</span> <small style="opacity:.8">— خطوتين بس</small></div><div class="cb">
+              <div class="cond-list">
+                <div class="cond"><span class="cn">١</span><span><span class="en">Lock &amp; Unlock</span><small>اتحلت تمام — متحلتش؟ هعمل اللي بعدها</small></span></div>
+                <div class="cond"><span class="cn">٢</span><span><span class="en">Restart Router</span><small>اتحلت المشكلة تمام الحمد لله</small></span></div>
               </div>
-
-              <div class="case" style="--cc:var(--bad)">
-                <div class="ch">❌ <span dir="ltr">Login Failed</span></div>
-                <div class="cb">
-                  <p>أول ما أدخل <span class="en">Login Failed</span> هخش علي إن الخطأ في الـ<span class="en">Username</span> — لأن زي ما اتفقنا العمودين اللي في النص ليهم علاقة بالكابينة، <b>انت ملكش دعوة بيهم خالص في الحالة دي</b>.</p>
-                  <p>دخلت علي <span class="en">Press here</span> (مشكلة الـ<span class="en">Username</span>)، بلاقي ٣ خانات:</p>
-
-                  <div class="defs">
-                    <div class="def" style="flex-direction:column;gap:4px"><b>1️⃣ Wrong Username</b>
-                      <span>معناها إن الرقم مكتوب ناقصه رقم أو في حرف ناقص أو رقمين متبدلين — عموماً العميل مش كاتب الـ<span class="en">Service ID</span> صح أو مش مظبوط.<br>
-                      ← علطول بخش معاه صفحة الراوتر أعدّله:<br>
-                      • اتعدل تمام خير<br>
-                      • لو مظبطش؟ بعمل <span class="en">Reset</span> و<span class="en">Configuration</span> وأخش صفحة الراوتر من جديد</span>
-                    </div>
-                    <div class="def" style="flex-direction:column;gap:4px"><b>2️⃣ TR069</b>
-                      <span>معناها إن الرقم أصلاً مختلف كله على بعضه.<br>
-                      ← علطول بخش صفحة الراوتر مع العميل بعمل حاجتين:<br>
-                      ١) بشيل علامة الـ✅ من خانة اسمها <span class="en">TR069</span><br>
-                      ٢) بعدين أكتب الرقم الأرضي الصح وخلاص<br>
-                      • اتحلت الحمد لله — متحلتش؟ هفتح شكوى</span>
-                    </div>
-                    <div class="def" style="flex-direction:column;gap:4px"><b>3️⃣ Another ISP</b>
-                      <span>بلاقي جنب الرقم الأرضي علطول اسم شركة إنترنت تانية (وي / فودافون / اتصالات) — معناها إن الراوتر من شركة تانية.<br>
-                      ← بسأل العميل: "حضرتك الراوتر اشتريته من أورانج؟"<br>
-                      • <b>If yes</b> ← هعمل <span class="en">Reset</span> وأخش صفحة الراوتر وأحاول أحل المشكلة وأعمل تعريف<br>
-                      • <b>If no</b> ← "أستأذنك نعمل سوفت وير لراوتر حضرتك لأورانج وارجع كلمنا مرة تانية عشان نساعدك" — <b>مش هفتح أي شكوى</b>، هفتحها وأقفلها وخلاص، مش هسيبها مفتوحة</span>
-                    </div>
-                  </div>
-
-                  <div class="callout warn" style="margin-top:10px"><span class="ci">⚠️</span><div><b>اتفقنا — Verification قبل أي حاجة</b>الـ<span class="en">Service ID</span> لازم قبل ما أقوله للعميل، أعمل <span class="en">Verification</span> / تحقيق هوية: أسأله <b>اسم صاحب التعاقد الثلاثي</b> و<b>الرقم المحمول المسجل في التعاقد</b>.</div></div>
-                </div>
+              <div class="result-box" style="font-size:.9rem">متحلتش؟ نفتح شكوى — وفي خلال <b>24 ساعة</b> مشكلة حضرتك هتتحل إن شاء الله</div>
+            </div></div>
+            <div class="case" style="--cc:var(--bad)"><div class="ch">❌ <span dir="ltr">Login Failed</span></div><div class="cb">
+              <p>أول ما أدخل <span class="en">Login Failed</span> هخش على إن الخطأ في الـ<span class="en">Username</span> — لأن زي ما اتفقنا العمودين اللي في النص ليهم علاقة بالكابينة، <b>انت ملكش دعوة بيهم خالص في الحالة دي</b>.</p>
+              <p>دخلت على <span class="en">Press here</span> (مشكلة الـ<span class="en">Username</span>)، بلاقي ٣ خانات:</p>
+              <div class="defs">
+                <div class="def" style="flex-direction:column;gap:4px"><b>1️⃣ Wrong Username</b><span>معناها إن الرقم مكتوب ناقصه رقم أو في حرف ناقص أو رقمين متبدلين — عموماً العميل مش كاتب الـ<span class="en">Service ID</span> صح أو مش مظبوط.<br>← علطول بخش معاه صفحة الراوتر أعدّله:<br>• اتعدل تمام خير<br>• لو مظبطش؟ بعمل <span class="en">Reset</span> و<span class="en">Configuration</span> وأخش صفحة الراوتر من جديد</span></div>
+                <div class="def" style="flex-direction:column;gap:4px"><b>2️⃣ TR069</b><span>معناها إن الرقم أصلاً مختلف كله على بعضه.<br>← علطول بخش صفحة الراوتر مع العميل بعمل حاجتين:<br>١) بشيل علامة الـ✅ من خانة اسمها <span class="en">TR069</span><br>٢) بعدين أكتب الرقم الأرضي الصح وخلاص<br>• اتحلت الحمد لله — متحلتش؟ هفتح شكوى</span></div>
+                <div class="def" style="flex-direction:column;gap:4px"><b>3️⃣ Another ISP</b><span>بلاقي جنب الرقم الأرضي علطول اسم شركة إنترنت تانية (وي / فودافون / اتصالات) — معناها إن الراوتر من شركة تانية.<br>← بسأل العميل: "حضرتك الراوتر اشتريته من أورانج؟"<br>• <b>If yes</b> ← هعمل <span class="en">Reset</span> وأخش صفحة الراوتر وأحاول أحل المشكلة وأعمل تعريف<br>• <b>If no</b> ← "أستأذنك نعمل سوفت وير لراوتر حضرتك لأورانج وارجع كلمنا مرة تانية عشان نساعدك" — <b>مش هفتح أي شكوى</b>، هفتحها وأقفلها وخلاص، مش هسيبها مفتوحة</span></div>
               </div>
-
-              <div class="case" style="--cc:var(--warn)">
-                <div class="ch">🗂️ <span dir="ltr">No Logs</span></div>
-                <div class="cb">
-                  <div class="cond-list">
-                    <div class="cond"><span class="cn">١</span><span><span class="en">Lock &amp; Unlock</span><small>لو اتحلت تمام — لو متحلتش اللي بعدها</small></span></div>
-                    <div class="cond"><span class="cn">٢</span><span><span class="en">Restart Router</span><small>لو اتحلت تمام — لو متحلتش اللي بعدها</small></span></div>
-                    <div class="cond"><span class="cn">٣</span><span><span class="en">Reset &amp; Configuration</span><small>هعمل Reset وأخش صفحة الراوتر — لو اتحلت تمام، لو متحلتش هفتح شكوى علطول</small></span></div>
-                  </div>
-                </div>
+              <div class="callout warn" style="margin-top:10px"><span class="ci">⚠️</span><div><b>اتفقنا — Verification قبل أي حاجة</b>الـ<span class="en">Service ID</span> لازم قبل ما أقوله للعميل، أعمل <span class="en">Verification</span> / تحقيق هوية: أسأله <b>اسم صاحب التعاقد الثلاثي</b> و<b>الرقم المحمول المسجل في التعاقد</b>.</div></div>
+            </div></div>
+            <div class="case" style="--cc:var(--warn)"><div class="ch">🗂️ <span dir="ltr">No Logs</span></div><div class="cb">
+              <div class="cond-list">
+                <div class="cond"><span class="cn">١</span><span><span class="en">Lock &amp; Unlock</span><small>لو اتحلت تمام — لو متحلتش اللي بعدها</small></span></div>
+                <div class="cond"><span class="cn">٢</span><span><span class="en">Restart Router</span><small>لو اتحلت تمام — لو متحلتش اللي بعدها</small></span></div>
+                <div class="cond"><span class="cn">٣</span><span><span class="en">Reset &amp; Configuration</span><small>هعمل Reset وأخش صفحة الراوتر — لو اتحلت تمام، لو متحلتش هفتح شكوى علطول</small></span></div>
               </div>
-
-            </div>
+            </div></div>
           </div>
+        </div>
+      </div></div></div></article>
 
-        </div></div></div>
-      </article>
-
-      <!-- ── Connection Unstable ── -->
-      <article class="acc rv" id="network-connection-unstable" data-sec="network">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">🔌</span>
-          <span class="tt"><b dir="ltr">Connection Unstable</b><small>شرطين بس… وشكوى علطول</small></span>
-          <span class="bdg">بدون خطوات</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-
-          <div class="blk">
-            <h4>يعني إيه Connection Unstable؟</h4>
-            <p>المشكلة عند العميل إن <b>لمبة الإنترنت بتفصل وتشتغل</b>، أو تقعد فترة فاصلة وترجع تشتغل — <b>إنما الـ<span class="en">DSL</span> مبتتأثرش، بتفضل ثابتة مبتفصلش خالص</b>.</p>
+      <article class="acc rv" id="network-connection-unstable" data-sec="network"><button class="acc-h" aria-expanded="false"><span class="ae">🔌</span><span class="tt"><b dir="ltr">Connection Unstable</b><small>شرطين بس… وشكوى علطول</small></span><span class="bdg">بدون خطوات</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>يعني إيه Connection Unstable؟</h4><p>المشكلة عند العميل إن <b>لمبة الإنترنت بتفصل وتشتغل</b>، أو تقعد فترة فاصلة وترجع تشتغل — <b>إنما الـ<span class="en">DSL</span> مبتتأثرش، بتفضل ثابتة مبتفصلش خالص</b>.</p></div>
+        <div class="callout warn"><span class="ci">⚠️</span><div><b>زي ما متفقين — بنتشييك فيزيكل الأول (مرة كمان 😄)</b>لو <span class="en">Bad Line</span> همشي <span class="en">Bad Line</span> — لو <span class="en">Line Down</span> همشي <span class="en">Line Down</span>.</div></div>
+        <div class="blk"><h4>الشرطين</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><b>الـ<span class="en">Port Up Time</span> يكون أكتر من 6 ساعات</b><small>لأنه لو في خلال 6 ساعات أو أقل، كدا احنا بنتكلم عن الـ<span class="en">Line Unstable</span> (ارجع لقسم Physical هتفهم).<br>فلازم الـ<span class="en">Port Up Time</span> يكون مثلاً من 10 ساعات أو يوم أو يومين — عشان ده الـ<span class="en">DSL</span>، واحنا اتفقنا إن المشكلة مش في الـ<span class="en">DSL</span>، فطبيعي تفضل شغالة مدة طويلة وثابتة.</small></span></div>
+            <div class="cond"><span class="cn">٢</span><span><b>الفرق بين الـ<span class="en">Port Up Time</span> والـ<span class="en">IP</span> يكون أكتر من 5 دقايق</b><small>ميكنش في نفس التوقيت. يعني مثلاً:<br>الـ<span class="en">Port Up Time</span> يوم 30/7/2026 الساعة 3PM… والـ<span class="en">IP</span> يوم 30/7/2026 الساعة 3:10PM — كدا في فرق أكتر من 5 دقايق.</small></span></div>
           </div>
+          <div class="result-box">أول ما يتوفر الشرطين دول ← بفتح شكوى علطول من غير خطوات، وفي خلال <b>24 ساعة</b> المشكلة هتتحل إن شاء الله 🎫</div>
+          <div class="callout bad"><span class="ci">⛔</span><div><b>تنبيه</b>لا توجد خطوات <span class="en">Pedia</span> إضافية لهذه الحالة.</div></div>
+        </div>
+        <div class="blk"><h4>☎️ المكالمة بتدخل إزاي؟</h4><div class="dialog">
+          <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت عندي بيفصل ويشتغل / لمبة الإنترنت بتنور أحمر فترة وترجع تشتغل لوحدها</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>تمام، هراجع بيانات خط حضرتك وأرجعلك يا فندم</div>
+          <div class="msg note">— الفيزيكل تمام… الـPort Up Time من بدري جداً (أكتر من 6 ساعات) 😯 تستغرب: إزاي بيفصل ويشتغل؟ —</div>
+          <div class="msg note">— تدخل على الـIP… تلاقي فرق أكتر من 5 دقايق —</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>هووووب… Connection Unstable يا معلم 🎯</div>
+        </div></div>
+      </div></div></div></article>
 
-          <div class="callout warn"><span class="ci">⚠️</span><div><b>زي ما متفقين — بنتشييك فيزيكل الأول (مرة كمان 😄)</b>لو <span class="en">Bad Line</span> همشي <span class="en">Bad Line</span> — لو <span class="en">Line Down</span> همشي <span class="en">Line Down</span>.</div></div>
+      <article class="acc rv" id="network-wifi-instability" data-sec="network"><button class="acc-h" aria-expanded="false"><span class="ae">📶</span><span class="tt"><b dir="ltr">WiFi Instability</b><small>الواي فاي بيظهر تعجب أو بيخرج من الأجهزة</small></span><span class="bdg">الراوتر سليم</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>يعني إيه WiFi Instability؟</h4><p>الواي فاي بيظهر <b>علامة تعجب سريعة كدا ويرجع يشتغل طبيعي</b>، أو الواي فاي <b>بيخرج من الأجهزة ويرجع</b>.</p></div>
+        <div class="blk"><h4>☎️ المكالمة بتدخل إزاي؟</h4><div class="dialog">
+          <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت عندي بيفصل ويشتغل من الأجهزة / فجأة بيظهر علامة تعجب ويرجع تاني / فجأة الفيديو بيقف يحمل ويرجع يشتغل</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>تمام يا فندم، لحظات معايا أراجع بعض البيانات</div>
+          <div class="msg note">— بتخش تلاقي كل حاجة تمام: ولا Line Down ولا Bad Line —</div>
+          <div class="msg agent"><span class="who">🎧 أنت</span>يلا بينا WiFi Instability 🚀</div>
+        </div></div>
+        <div class="callout warn"><span class="ci">⚠️</span><div><b>قبل ما تدخل WiFi Instability</b>لازم تتأكد إن <span class="en">Line Up</span> والـ<span class="en">Max</span> ✅ — يعني الفيزيكل سليم الأول (راجع تريكة 6).</div></div>
+        <div class="callout pin"><span class="ci">💡</span><div><b>الحل الأساسي في الحالة دي</b>تغيير اسم الشبكة (الـ<span class="en">SSID</span>) إلى <b>اسم جديد ميكونش اتعمل قبل كدا</b> — تفاصيل أكتر في تريكة 12.</div></div>
+      </div></div></div></article>
 
-          <div class="blk">
-            <h4>الشرطين</h4>
-            <div class="cond-list">
-              <div class="cond"><span class="cn">١</span><span><b>الـ<span class="en">Port Up Time</span> يكون أكتر من 6 ساعات</b>
-                <small>لأنه لو في خلال 6 ساعات أو أقل، كدا احنا بنتكلم عن الـ<span class="en">Line Unstable</span> (ارجع لقسم Physical هتفهم).<br>
-                فلازم الـ<span class="en">Port Up Time</span> يكون مثلاً من 10 ساعات أو يوم أو يومين — عشان ده الـ<span class="en">DSL</span>، واحنا اتفقنا إن المشكلة مش في الـ<span class="en">DSL</span>، فطبيعي تفضل شغالة مدة طويلة وثابتة.</small></span></div>
-              <div class="cond"><span class="cn">٢</span><span><b>الفرق بين الـ<span class="en">Port Up Time</span> والـ<span class="en">IP</span> يكون أكتر من 5 دقايق</b>
-                <small>ميكنش في نفس التوقيت. يعني مثلاً:<br>
-                الـ<span class="en">Port Up Time</span> يوم 30/7/2026 الساعة 3PM… والـ<span class="en">IP</span> يوم 30/7/2026 الساعة 3:10PM — كدا في فرق أكتر من 5 دقايق.</small></span></div>
-            </div>
-            <div class="result-box">أول ما يتوفر الشرطين دول ← بفتح شكوى علطول من غير خطوات، وفي خلال <b>24 ساعة</b> المشكلة هتتحل إن شاء الله 🎫</div>
-            <div class="callout bad"><span class="ci">⛔</span><div><b>تنبيه</b>لا توجد خطوات <span class="en">Pedia</span> إضافية لهذه الحالة.</div></div>
-          </div>
+      <article class="acc rv" id="network-slow-download" data-sec="network"><button class="acc-h" aria-expanded="false"><span class="ae">🐢</span><span class="tt"><b dir="ltr">Slow Download</b><small>بطء التحميل</small></span><span class="bdg">الرسالة بتفرّقها</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="callout ok"><span class="ci">✉️</span><div><b>إزاي أفرّقها عن No Browsing؟</b>الرسالة <b>بتوصل</b> ← يبقى أنا كدا بتكلم علي <span class="en">Slow Download</span> (نفس المعطيات: فيزيكل ✅ سرعة أورانج ✅ ساحب IP ✅).</div></div>
+        <div class="callout pin"><span class="ci">📌</span><div><b>مكان الـScript في Pedia</b>مكان الـ<span class="en">Script</span> في <span class="en">Pedia</span> هو: <span class="en">Physical → Dsl-Slow Download</span> — في نفس الخانة بتاعة الـ<span class="en">Bad Line</span> (راجع تريكة 9).</div></div>
+        <div class="slot"><span class="si">📝</span><div><b>باقي الشرح</b>يُضاف هنا شرح <span class="en">Slow Download</span> عند إرساله — كما هو بدون تعديل.</div></div>
+      </div></div></div></article>
 
-          <div class="blk">
-            <h4>☎️ المكالمة بتدخل إزاي؟</h4>
-            <div class="dialog">
-              <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت عندي بيفصل ويشتغل / لمبة الإنترنت بتنور أحمر فترة وترجع تشتغل لوحدها</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>تمام، هراجع بيانات خط حضرتك وأرجعلك يا فندم</div>
-              <div class="msg note">— الفيزيكل تمام… الـPort Up Time من بدري جداً (أكتر من 6 ساعات) 😯 تستغرب: إزاي بيفصل ويشتغل؟ —</div>
-              <div class="msg note">— تدخل على الـIP… تلاقي فرق أكتر من 5 دقايق —</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>هووووب… Connection Unstable يا معلم 🎯</div>
-            </div>
-          </div>
+      <article class="acc rv" id="network-online-gaming" data-sec="network"><button class="acc-h" aria-expanded="false"><span class="ae">🎮</span><span class="tt"><b dir="ltr">Online Gaming</b><small>البنج وحش؟ اسأل الأول كام</small></span><span class="bdg">اسأل عن الـPing</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="callout warn"><span class="ci">❓</span><div><b>أول حاجة — السؤال عن رقم الـPing</b>طبيعي أول ما العميل يدخل يقولك "البنج وحش" — فلازم تسأله: <b>"البنج كام عند حضرتك؟"</b> عشان تشوف هل هو وحش فعلاً ولا لا حسب الجدول اللي عندك في الـ<span class="en">Online Gaming</span> في <span class="en">Pedia</span> (تريكة 13).</div></div>
+        <div class="blk"><h4>الأرقام المتعلقة بالحالة</h4><div class="chips"><span class="chip en">Max ≥ 40</span><span class="chip en">SNR ≥ 100</span><span class="chip en">Ping &gt; 100</span></div></div>
+        <div class="slot"><span class="si">📝</span><div><b>باقي الشرح</b>يُضاف هنا شرح <span class="en">Online Gaming</span> عند إرساله.</div></div>
+      </div></div></div></article>
 
-        </div></div></div>
-      </article>
-
-      <!-- ── WiFi Instability ── -->
-      <article class="acc rv" id="network-wifi-instability" data-sec="network">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">📶</span>
-          <span class="tt"><b dir="ltr">WiFi Instability</b><small>الواي فاي بيظهر تعجب أو بيخرج من الأجهزة</small></span>
-          <span class="bdg">الراوتر سليم</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-
-          <div class="blk">
-            <h4>يعني إيه WiFi Instability؟</h4>
-            <p>الواي فاي بيظهر <b>علامة تعجب سريعة كدا ويرجع يشتغل طبيعي</b>، أو الواي فاي <b>بيخرج من الأجهزة ويرجع</b>.</p>
-          </div>
-
-          <div class="blk">
-            <h4>☎️ المكالمة بتدخل إزاي؟</h4>
-            <div class="dialog">
-              <div class="msg cust"><span class="who">👤 العميل</span>الو مساء الخير، النت عندي بيفصل ويشتغل من الأجهزة / فجأة بيظهر علامة تعجب ويرجع تاني / فجأة الفيديو بيقف يحمل ويرجع يشتغل</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>تمام يا فندم، لحظات معايا أراجع بعض البيانات</div>
-              <div class="msg note">— بتخش تلاقي كل حاجة تمام: ولا Line Down ولا Bad Line —</div>
-              <div class="msg agent"><span class="who">🎧 أنت</span>يلا بينا WiFi Instability 🚀</div>
-            </div>
-          </div>
-
-          <div class="callout warn"><span class="ci">⚠️</span><div><b>قبل ما تدخل WiFi Instability</b>لازم تتأكد إن <span class="en">Line Up</span> والـ<span class="en">Max</span> ✅ — يعني الفيزيكل سليم الأول (راجع تريكة 6).</div></div>
-          <div class="callout pin"><span class="ci">💡</span><div><b>الحل الأساسي في الحالة دي</b>تغيير اسم الشبكة (الـ<span class="en">SSID</span>) إلى <b>اسم جديد ميكونش اتعمل قبل كدا</b> — تفاصيل أكتر في تريكة 12.</div></div>
-
-        </div></div></div>
-      </article>
-
-      <!-- ── Slow Download ── -->
-      <article class="acc rv" id="network-slow-download" data-sec="network">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">🐢</span>
-          <span class="tt"><b dir="ltr">Slow Download</b><small>بطء التحميل</small></span>
-          <span class="bdg">الرسالة بتفرّقها</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="callout ok"><span class="ci">✉️</span><div><b>إزاي أفرّقها عن No Browsing؟</b>الرسالة <b>بتوصل</b> ← يبقى أنا كدا بتكلم علي <span class="en">Slow Download</span> (نفس المعطيات: فيزيكل ✅ سرعة أورانج ✅ ساحب IP ✅).</div></div>
-          <div class="callout pin"><span class="ci">📌</span><div><b>مكان الـScript في Pedia</b>مكان الـ<span class="en">Script</span> في <span class="en">Pedia</span> هو: <span class="en">Physical → Dsl-Slow Download</span> — في نفس الخانة بتاعة الـ<span class="en">Bad Line</span> (راجع تريكة 9).</div></div>
-          <div class="slot"><span class="si">📝</span><div><b>باقي الشرح</b>يُضاف هنا شرح <span class="en">Slow Download</span> عند إرساله — كما هو بدون تعديل.</div></div>
-        </div></div></div>
-      </article>
-
-      <!-- ── Online Gaming ── -->
-      <article class="acc rv" id="network-online-gaming" data-sec="network">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">🎮</span>
-          <span class="tt"><b dir="ltr">Online Gaming</b><small>البنج وحش؟ اسأل الأول كام</small></span>
-          <span class="bdg">اسأل عن الـPing</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="callout warn"><span class="ci">❓</span><div><b>أول حاجة — السؤال عن رقم الـPing</b>طبيعي أول ما العميل يدخل يقولك "البنج وحش" — فلازم تسأله: <b>"البنج كام عند حضرتك؟"</b> عشان تشوف هل هو وحش فعلاً ولا لا حسب الجدول اللي عندك في الـ<span class="en">Online Gaming</span> في <span class="en">Pedia</span> (تريكة 13).</div></div>
-          <div class="blk">
-            <h4>الأرقام المتعلقة بالحالة (المرجع: قسم تركات)</h4>
-            <div class="chips">
-              <span class="chip en">Max ≥ 40</span>
-              <span class="chip en">SNR ≥ 100</span>
-              <span class="chip en">Ping &gt; 100</span>
-            </div>
-          </div>
-          <div class="slot"><span class="si">📝</span><div><b>باقي الشرح</b>يُضاف هنا شرح <span class="en">Online Gaming</span> عند إرساله — كما هو بدون تعديل.</div></div>
-        </div></div></div>
-      </article>
-
-      <!-- ── Bit Rate Mismatch ── -->
-      <article class="acc rv" id="network-bitrate-mismatch" data-sec="network">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">⚖️</span>
-          <span class="tt"><b dir="ltr">Bit Rate Mismatch</b><small>مش لأي خط!</small></span>
-          <span class="bdg">قواعد الفتح</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="callout bad"><span class="ci">⛔</span><div><b>مبتتفتحش غير لـ:</b>خط الـ<span class="en">Copper</span> والخطوط الـ<span class="en">MSAN</span> سرعة <span class="en">70 / 100 / 200</span>.<br><b>محدش يفكر يفتح شكوى <span class="en">Bit Rate Mismatch</span> في خط <span class="en">MSAN</span> سرعة 30</b> (تريكة 8).</div></div>
-          <div class="callout warn"><span class="ci">🧩</span><div><b>حالة Speed 30 و Max 100</b>العميل مشترك سرعة 30 والخط الـ<span class="en">Max</span> بتاعه 100 — السرعة 30 مظبوطة؟ <b>أيوا</b> ← خش بقي علي <span class="en">Doesn't Have Bit Rate Mismatch</span> (التفاصيل في تريكة 11).</div></div>
-          <div class="slot"><span class="si">📝</span><div><b>باقي القواعد</b>تُضاف هنا باقي قواعد <span class="en">Bit Rate Mismatch</span> عند إرسالها — كما هي بدون إضافة قواعد جديدة.</div></div>
-        </div></div></div>
-      </article>
-
+      <article class="acc rv" id="network-bitrate-mismatch" data-sec="network"><button class="acc-h" aria-expanded="false"><span class="ae">⚖️</span><span class="tt"><b dir="ltr">Bit Rate Mismatch</b><small>مش لأي خط!</small></span><span class="bdg">قواعد الفتح</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="callout bad"><span class="ci">⛔</span><div><b>مبتتفتحش غير لـ:</b>خط الـ<span class="en">Copper</span> والخطوط الـ<span class="en">MSAN</span> سرعة <span class="en">70 / 100 / 200</span>.<br><b>محدش يفكر يفتح شكوى <span class="en">Bit Rate Mismatch</span> في خط <span class="en">MSAN</span> سرعة 30</b> (تريكة 8).</div></div>
+        <div class="callout warn"><span class="ci">🧩</span><div><b>حالة Speed 30 و Max 100</b>العميل مشترك سرعة 30 والخط الـ<span class="en">Max</span> بتاعه 100 — السرعة 30 مظبوطة؟ <b>أيوا</b> ← خش بقي على <span class="en">Doesn't Have Bit Rate Mismatch</span> (التفاصيل في تريكة 11).</div></div>
+        <div class="slot"><span class="si">📝</span><div><b>باقي القواعد</b>تُضاف هنا باقي قواعد <span class="en">Bit Rate Mismatch</span> عند إرسالها.</div></div>
+      </div></div></div></article>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ 3) BILLING ════════════════ -->
+<!-- ═══════ 3) BILLING ═══════ -->
 <section class="view" id="view-billing" style="--acc:var(--bill)">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-emoji">💰</span>
-      <div><h2 dir="ltr">Billing</h2><p>الفواتير والدفع والباقات والخدمات المتعلقة بالحساب.</p></div>
-      <span class="count-chip">١١ موضوعًا</span>
-    </div>
-
+    <div class="sec-head"><span class="sec-emoji">💰</span><div><h2 dir="ltr">Billing</h2><p>الفواتير والدفع والباقات.</p></div><span class="count-chip">١١ موضوعًا</span></div>
     <div class="accs">
-
-      <!-- ── Bill Amount ── -->
-      <article class="acc rv" id="billing-bill-amount" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">🧾</span>
-          <span class="tt"><b dir="ltr">Bill Amount</b><small>الفاتورة العادية</small></span>
-          <span class="bdg">٣ Scripts</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-
-          <div class="blk">
-            <h4>لو العميل بيسأل:</h4>
-            <div class="chips">
-              <span class="chip">عليّا فاتورة بكام؟</span>
-              <span class="chip">هدفع إمتى؟</span>
-              <span class="chip">الفاتورة نزلت إمتى؟</span>
-              <span class="chip">الخدمة واقفة بسبب الفاتورة؟</span>
-            </div>
-            <div class="path"><span>Home DSL</span><i>→</i><span>How to Complain</span><i>→</i><span>Billing</span><i>→</i><span>Bill Amount</span></div>
+      <article class="acc rv" id="billing-bill-amount" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">🧾</span><span class="tt"><b dir="ltr">Bill Amount</b><small>الفاتورة العادية</small></span><span class="bdg">٣ Scripts</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>لو العميل بيسأل:</h4><div class="chips"><span class="chip">عليّا فاتورة بكام؟</span><span class="chip">هدفع إمتى؟</span><span class="chip">الفاتورة نزلت إمتى؟</span><span class="chip">الخدمة واقفة بسبب الفاتورة؟</span></div><div class="path"><span>Home DSL</span><i>→</i><span>How to Complain</span><i>→</i><span>Billing</span><i>→</i><span>Bill Amount</span></div></div>
+        <div class="blk"><h4>عندنا 3 Scripts</h4>
+          <div class="defs">
+            <div class="def" style="flex-direction:column;gap:4px"><b>🔹 Active Customer</b><span>الخط <span class="en">Active</span> ولسه في فترة السماح.</span></div>
+            <div class="def" style="flex-direction:column;gap:4px"><b>🔹 Suspend &amp; Eligible</b><span>الخط <span class="en">Suspend</span> ويستحق يومين سماح. <b>لازم:</b><br>• يكون عدّى <b>7 أيام</b><br>• يكون داخل في الـ<b>5 أيام</b> اللي بعد الـ7 مباشرة<br>• يكون مخدش يومين السماح قبل كده<br>وتراجع: <span class="en">Service Request → Promise To Pay</span></span></div>
+            <div class="def" style="flex-direction:column;gap:4px"><b>🔹 Suspend &amp; Ineligible</b><span>الخط <span class="en">Suspend</span> ومش مستحق يومين سماح.</span></div>
           </div>
+          <div class="callout pin"><span class="ci">💡</span><div><b>تقدر تفرق بينهم من الـScript نفسه:</b>• لو مكتوب "أقدر أشغلك الخدمة لمدة يومين" ← <span class="en">Eligible</span><br>• لو مفيش اليومين ← <span class="en">Ineligible</span><br>أو من الاسم بالإنجليزي: <span class="en">Suspend &amp; Eligible / Suspend &amp; Ineligible</span></div></div>
+        </div>
+      </div></div></div></article>
 
-          <div class="blk">
-            <h4>عندنا 3 Scripts</h4>
-            <div class="defs">
-              <div class="def" style="flex-direction:column;gap:4px"><b>🔹 Active Customer</b><span>الخط <span class="en">Active</span> ولسه في فترة السماح.</span></div>
-              <div class="def" style="flex-direction:column;gap:4px"><b>🔹 Suspend &amp; Eligible</b>
-                <span>الخط <span class="en">Suspend</span> ويستحق يومين سماح. <b>لازم:</b><br>
-                • يكون عدّى <b>7 أيام</b><br>
-                • يكون داخل في الـ<b>5 أيام</b> اللي بعد الـ7 مباشرة<br>
-                • يكون مخدش يومين السماح قبل كده<br>
-                وتراجع: <span class="en">Service Request → Promise To Pay</span></span></div>
-              <div class="def" style="flex-direction:column;gap:4px"><b>🔹 Suspend &amp; Ineligible</b><span>الخط <span class="en">Suspend</span> ومش مستحق يومين سماح.</span></div>
-            </div>
-            <div class="callout pin"><span class="ci">💡</span><div><b>تقدر تفرق بينهم من الـScript نفسه:</b>
-            • لو مكتوب "أقدر أشغلك الخدمة لمدة يومين" ← <span class="en">Eligible</span><br>
-            • لو مفيش اليومين ← <span class="en">Ineligible</span><br>
-            أو من الاسم بالإنجليزي: <span class="en">Suspend &amp; Eligible / Suspend &amp; Ineligible</span></div></div>
+      <article class="acc rv" id="billing-price-update" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">🏷️</span><span class="tt"><b dir="ltr">Price Update</b><small>الأسعار زادت</small></span><span class="bdg">٣ Scripts</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>لو العميل عارف وضع الفاتورة لكن داخل يقول:</h4><div class="quote">"الأسعار غليت / الفاتورة غالية"</div><div class="path"><span>Home DSL</span><i>→</i><span>Related VAS</span><i>→</i><span>Price Updated</span></div></div>
+        <div class="blk"><h4>أهم 3 Scripts</h4><div class="cond-list">
+          <div class="cond"><span class="cn">١</span><span>سبب زيادة الأسعار</span></div>
+          <div class="cond"><span class="cn">٢</span><span>طريقة احتساب الزيادة</span></div>
+          <div class="cond"><span class="cn">٣</span><span>لو الباقة نفسها اتغيرت في الجيجابايتس</span></div>
+        </div></div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="billing-billing-details" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">📋</span><span class="tt"><b dir="ltr">Billing Details</b><small>رصيد العميل والفاتورة من Seibal</small></span><span class="bdg">سالب / موجب / صفر</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>📌 ميعاد التجديد</h4><p>من <span class="en">PCRF</span> هتلاقي ميعاد التجديد في الجدول.</p></div>
+        <div class="blk"><h4>📌 لمعرفة الفلوس</h4><div class="path"><span>Parent Account</span><i>→</i><span>Billing Details</span></div>
+          <div class="defs">
+            <div class="def"><b>رقم بالسالب ➖</b><span>العميل <b>له رصيد</b> / دفع زيادة</span></div>
+            <div class="def"><b>رقم بالموجب ➕</b><span>العميل <b>عليه فلوس</b></span></div>
+            <div class="def"><b>0️⃣ صفر</b><span>لا له ولا عليه</span></div>
           </div>
-
-        </div></div></div>
-      </article>
-
-      <!-- ── Price Update ── -->
-      <article class="acc rv" id="billing-price-update" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">🏷️</span>
-          <span class="tt"><b dir="ltr">Price Update</b><small>الأسعار زادت</small></span>
-          <span class="bdg">٣ Scripts</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="blk">
-            <h4>لو العميل عارف وضع الفاتورة لكن داخل يقول:</h4>
-            <div class="quote">"الأسعار غليت / الفاتورة غالية"</div>
-            <div class="path"><span>Home DSL</span><i>→</i><span>Related VAS</span><i>→</i><span>Price Updated</span></div>
+        </div>
+        <div class="blk"><h4>📌 تحميل الفاتورة</h4><div class="path"><span>Billing Details</span><i>→</i><span>Invoices</span><i>→</i><span>Search</span></div>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span>اختار تاريخ قديم جدًا في الخانة الأولى، و<span class="en">Now</span> في الخانة الثانية</span></div>
+            <div class="cond"><span class="cn">٢</span><span>بعدها: <span class="en">Select Bill → Download Invoice</span></span></div>
           </div>
-          <div class="blk">
-            <h4>أهم 3 Scripts</h4>
-            <div class="cond-list">
-              <div class="cond"><span class="cn">١</span><span>سبب زيادة الأسعار</span></div>
-              <div class="cond"><span class="cn">٢</span><span>طريقة احتساب الزيادة</span></div>
-              <div class="cond"><span class="cn">٣</span><span>لو الباقة نفسها اتغيرت في الجيجابايتس</span></div>
-            </div>
+          <div class="callout pin"><span class="ci">💳</span><div><b>ولو عايز تعرف دفع إمتى ومنين؟</b>قف على الفاتورة وانزل تحت — هتلاقي <b>تاريخ الدفع</b> و<b>طريقة/مكان الدفع</b>.</div></div>
+        </div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="billing-invoice" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">🧮</span><span class="tt"><b dir="ltr">Invoice</b><small>قراءة الفاتورة</small></span><span class="bdg">٧ بنود + معادلة</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>أهم البنود</h4>
+          <div class="defs">
+            <div class="def"><b>🔹 Home Internet</b><span>الباقة الأساسية</span></div>
+            <div class="def"><b>🔹 Gap Month</b><span>شهر فاتورة متسقط بسبب التأخير في الدفع</span></div>
+            <div class="def"><b>🔹 Add Item</b><span>فرق الباقة بسبب <span class="en">Upgrade</span></span></div>
+            <div class="def"><b>🔹 OCC Service</b><span>الباقات الإضافية</span></div>
+            <div class="def"><b>🔹 Discount</b><span>الخصم — وبيظهر بالسالب</span></div>
+            <div class="def"><b>🔹 14% Tax</b><span>ضريبة الدولة</span></div>
+            <div class="def"><b>🔹 Total</b><span>إجمالي الفاتورة</span></div>
           </div>
-        </div></div></div>
-      </article>
+        </div>
+        <div class="blk"><h4>حساب الـAdd Item</h4><div class="formula">(الباقة الكبيرة − الباقة الصغيرة) ÷ 30 × عدد الأيام المتبقية لميعاد التجديد</div></div>
+        <div class="callout pin"><span class="ci">📌</span><div><b>شرح الفاتورة ملوش Script ثابت</b>المهم تقول المعلومة الصح.</div></div>
+      </div></div></div></article>
 
-      <!-- ── Billing Details ── -->
-      <article class="acc rv" id="billing-billing-details" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">📋</span>
-          <span class="tt"><b dir="ltr">Billing Details</b><small>رصيد العميل والفاتورة من Seibal</small></span>
-          <span class="bdg">سالب / موجب / صفر</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
+      <article class="acc rv" id="billing-extension-offer" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">🎁</span><span class="tt"><b dir="ltr">Extension Offer</b><small>باقة إضافية نزلت تلقائيًا</small></span><span class="bdg">شكوى 5048</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>الحالة</h4><p>باقة إضافية نزلت تلقائيًا والعميل بيقول إنه مضيفهاش.</p><div class="path"><span>Home DSL</span><i>→</i><span>Related Offer</span><i>→</i><span>Extensions Offer</span></div></div>
+        <div class="blk"><h4>هات Script التعويض:</h4><div class="quote">"عشان يهمنا رضا حضرتك، هيتم تعويض حضرتك بمبلغ… خلال <b>48 ساعة عمل</b> مع الاحتفاظ بالجيجات المضافة."</div></div>
+        <div class="callout warn"><span class="ci">📋</span><div><b>الشكوى: 5048</b>افتحها <b>وسيِبها مفتوحة</b>.</div></div>
+        <div class="callout bad"><span class="ci">❌</span><div><b>ممنوع تقول:</b><ul><li>نزلت بالغلط</li><li>نزلت من السيستم</li><li>هدية</li></ul></div></div>
+        <div class="callout bad"><span class="ci">❌</span><div><b>التعويض عن آخر فاتورة فقط.</b></div></div>
+      </div></div></div></article>
 
-          <div class="blk">
-            <h4>📌 ميعاد التجديد</h4>
-            <p>من <span class="en">PCRF</span> هتلاقي ميعاد التجديد في الجدول.</p>
+      <article class="acc rv" id="billing-payment-dispute" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">💳</span><span class="tt"><b dir="ltr">Payment Dispute</b><small>الفاتورة لسه عليّا؟</small></span><span class="bdg">وكيل · Fawry · InstaPay</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>البداية</h4><div class="quote">العميل بيقول: "الفاتورة لسه عليّا؟"</div><p>➡️ الأول تعامل معاه كفاتورة عادية من <span class="en">Bill Amount</span>.</p><p>لو قال: <b>"إزاي؟ أنا دفعتها!"</b> — اسأله: <b>دفعت عن طريق إيه؟</b></p></div>
+        <div class="cases c3">
+          <div class="case" style="--cc:var(--ok)"><div class="ch">🟢 1 — وكيل <small dir="ltr">(Reseller)</small></div><div class="cb"><p><b>لو لسه مدفعش من 48 ساعة:</b><br>➡️ يستنى <b>48 ساعة عمل</b></p><p><b>لو عدّى 48 ساعة:</b><br>➡️ اطلب منه <span class="en">Receipt</span> صورة على الإيميل</p><p>ثم افتح:</p><p><b dir="ltr">Reseller Payment Not Exist PGW</b><br>⏱️ المدة: <b>24 ساعة عمل</b></p></div></div>
+          <div class="case" style="--cc:var(--warn)"><div class="ch">🟡 2 — <span dir="ltr">Fawry</span></div><div class="cb"><p><b>تأكد من:</b></p><div class="path" style="margin:4px 0 8px"><span>Related VAS</span><i>→</i><span>Payment Methods</span><i>→</i><span>Aggregator</span></div><p><b style="color:var(--bad)">❌ ممنوع تطلب Receipt</b></p><p><b>اطلب:</b><br>• الرقم المرجعي<br>• تاريخ الدفع<br>• المبلغ</p><p>وافتح: <b dir="ltr">Payment Dispute</b><br>⏱️ <b>48 ساعة عمل</b></p></div></div>
+          <div class="case" style="--cc:var(--bad)"><div class="ch">🔴 3 — <span dir="ltr">InstaPay</span></div><div class="cb"><p><b>لو مش مدعوم عندنا:</b></p><p>➡️ قوله يرجع للجهة اللي دفع من خلالها، لأن الدفع مش ظاهر على أنظمة <span class="en">Orange</span>.</p></div></div>
+        </div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="billing-upgrade" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">⬆️</span><span class="tt"><b dir="ltr">Upgrade</b><small>عايز أعلّي الباقة</small></span><span class="bdg">٥ خطوات</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>الخطوات</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><b>شوف العميل تحت وكيل ولا Orange</b><span class="path" style="margin:6px 0"><span>Seibal</span><i>→</i><span>More Details</span></span><small>• <span class="en">Orange Data / Mobinil</span> = <span class="en">Orange</span><br>• أي حاجة تانية = وكيل<br>⚠️ متسألش العميل دلوقتي — اعرف المعلومة في سرك عشان تحدد أسئلة الـ<span class="en">Verification</span> بعدين.</small></span></div>
+            <div class="cond"><span class="cn">٢</span><span><b>شوف الخصم</b><small>• لو عنده خصم ← وضّحله إن الـ<span class="en">Upgrade</span> هيكون بنفس الخصم<br>• لو مفيش ← <span class="en">Home DSL → Related Offer → Upselling Offer</span> وشوف العروض</small></span></div>
+            <div class="cond"><span class="cn">٣</span><span><b>وضّح الـAdd Item</b><small>لازم تقول للعميل إن مع الـ<span class="en">Upgrade</span> هينزل فرق جيجات/فلوس لحد ميعاد التجديد القادم.</small></span></div>
+            <div class="cond"><span class="cn">٤</span><span><b>Verification</b><small>• لو <span class="en">Orange</span>: اسم صاحب التعاقد ثلاثي + رقم المحمول<br>• لو وكيل: اسم صاحب التعاقد + الرقم المسجل + آخر فاتورة دفعها من خلال إيه وإمتى<br>• لو العميل بيتصل من نفس الرقم الأرضي اللي هيعمل عليه <span class="en">Upgrade</span> ← متسألوش <span class="en">Verification</span> ونده <span class="en">Assist</span></small></span></div>
+            <div class="cond"><span class="cn">٥</span><span><b>بعد الـAction</b><span class="path" style="margin:6px 0"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>DSL Package Upgrade</span></span><small>هات <span class="en">Upgrade Action Script</span></small></span></div>
           </div>
-
-          <div class="blk">
-            <h4>📌 لمعرفة الفلوس</h4>
-            <div class="path"><span>Parent Account</span><i>→</i><span>Billing Details</span></div>
-            <div class="defs">
-              <div class="def"><b>رقم بالسالب ➖</b><span>العميل <b>له رصيد</b> / دفع زيادة</span></div>
-              <div class="def"><b>رقم بالموجب ➕</b><span>العميل <b>عليه فلوس</b></span></div>
-              <div class="def"><b>0️⃣ صفر</b><span>لا له ولا عليه</span></div>
-            </div>
+          <div class="callout bad"><span class="ci">⚠️</span><div><b>نقطة الـAdd Item مهمة جدًا — وتركها = Fail</b></div></div>
+          <div class="callout warn"><span class="ci">⚠️</span><div><b>لو Upgrade لسرعة 70 / 100 / 200</b>لازم تعمل <span class="en">Physical Check</span> للـ<span class="en">Max Speed</span> وتشوف الخط يستحمل السرعة ولا لأ — وليها <span class="en">Scripts</span> خاصة.</div></div>
+        </div>
+        <div class="blk"><h4>📌 لمعرفة الخصم</h4>
+          <div class="defs">
+            <div class="def" style="flex-direction:column;gap:4px"><b>Discount Management</b><span>رتّب الخصومات واقرأ التاريخ صح: <b>شهر / يوم / سنة</b></span></div>
+            <div class="def" style="flex-direction:column;gap:4px"><b>لو ملقتش الخصم؟</b><span>➡️ <span class="en">Activation Request Details</span> وقارن تاريخ الخصم بتاريخ التعاقد</span></div>
           </div>
+        </div>
+      </div></div></div></article>
 
-          <div class="blk">
-            <h4>📌 تحميل الفاتورة</h4>
-            <div class="path"><span>Billing Details</span><i>→</i><span>Invoices</span><i>→</i><span>Search</span></div>
-            <div class="cond-list">
-              <div class="cond"><span class="cn">١</span><span>اختار تاريخ قديم جدًا في الخانة الأولى، و<span class="en">Now</span> في الخانة الثانية</span></div>
-              <div class="cond"><span class="cn">٢</span><span>بعدها: <span class="en">Select Bill → Download Invoice</span></span></div>
-            </div>
-            <div class="callout pin"><span class="ci">💳</span><div><b>ولو عايز تعرف دفع إمتى ومنين؟</b>قف على الفاتورة وانزل تحت — هتلاقي <b>تاريخ الدفع</b> و<b>طريقة/مكان الدفع</b>.</div></div>
+      <article class="acc rv" id="billing-downgrade" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">⬇️</span><span class="tt"><b dir="ltr">Downgrade</b><small>تخفيض الباقة</small></span><span class="bdg">12 فاتورة</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <p style="font-size:.94rem;color:var(--ink2)">نفس خطوات الـ<span class="en">Upgrade</span> تقريبًا.</p>
+        <div class="blk"><h4>📌 لو العميل عنده خصم</h4><p>وضّحله إن الخصم <b>هيتشال</b> مع الـ<span class="en">Downgrade</span>.</p><div class="callout ok"><span class="ci">⚠️</span><div><b>الاستثناء</b>لو مكتوب <span class="en">Life Time</span> ← الخصم <b>مش هيتشال</b>.</div></div></div>
+        <div class="blk"><h4>📌 أهم نقطة</h4><p>شوف العميل كمّل <b>12 فاتورة / سنة</b> من تاريخ التعاقد ولا لأ.</p><p style="margin-top:6px">لو هيعمل <span class="en">Downgrade</span> قبل السنة:</p><div class="path"><span>How to Manage My Account</span><i>→</i><span>DSL Package Downgrade</span></div><p style="margin-top:8px">هات الـ<span class="en">Script</span> الخاص بالحالة.</p></div>
+        <div class="callout warn"><span class="ci">📢</span><div><b>وبعد تنفيذ الـDowngrade</b>لازم تقول الـ<span class="en">Action Script</span> برضه.</div></div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="billing-extra-quote" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">➕</span><span class="tt"><b dir="ltr">Extra Quote</b><small>إضافة باقة إضافية</small></span><span class="bdg">٢ Scripts</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>العميل: "عايز أضيف باقة إضافية" — قول Scriptين:</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><span class="path" style="margin:0"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>DSL Extra Quote</span></span></span></div>
+            <div class="cond"><span class="cn">٢</span><span><span class="path" style="margin:0"><span>Home DSL</span><i>→</i><span>Related Offer</span><i>→</i><span>My Orange Usability Offer</span></span><small>وده <span class="en">Script</span> الـ<span class="en">5GB</span> هدية</small></span></div>
           </div>
+        </div>
+        <div class="blk"><h4>📌 عروض الباقات الإضافية</h4><div class="path"><span>Home DSL</span><i>→</i><span>Related Offer</span><i>→</i><span>Upselling Offer</span></div><p style="margin-top:8px">العروض <b>تتقال للعميل</b>، لكن <b>مش بنضيف من خلالها</b>.</p><div class="callout pin"><span class="ci">💡</span><div><b>لو العميل رفض العرض وقال عايز الباقة العادية</b>➡️ ضيفها عادي، وبعد الإضافة قول <span class="en">Script</span> الـ<span class="en">DSL Extra Quote</span>.</div></div></div>
+      </div></div></div></article>
 
-        </div></div></div>
-      </article>
-
-      <!-- ── Invoice ── -->
-      <article class="acc rv" id="billing-invoice" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">🧮</span>
-          <span class="tt"><b dir="ltr">Invoice</b><small>قراءة الفاتورة</small></span>
-          <span class="bdg">٧ بنود + معادلة</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="blk">
-            <h4>أهم البنود</h4>
-            <div class="defs">
-              <div class="def"><b>🔹 Home Internet</b><span>الباقة الأساسية</span></div>
-              <div class="def"><b>🔹 Gap Month</b><span>شهر فاتورة متسقط بسبب التأخير في الدفع</span></div>
-              <div class="def"><b>🔹 Add Item</b><span>فرق الباقة بسبب <span class="en">Upgrade</span></span></div>
-              <div class="def"><b>🔹 OCC Service</b><span>الباقات الإضافية</span></div>
-              <div class="def"><b>🔹 Discount</b><span>الخصم — وبيظهر بالسالب</span></div>
-              <div class="def"><b>🔹 14% Tax</b><span>ضريبة الدولة</span></div>
-              <div class="def"><b>🔹 Total</b><span>إجمالي الفاتورة</span></div>
-            </div>
+      <article class="acc rv" id="billing-remove-extra-quote" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">➖</span><span class="tt"><b dir="ltr">Remove Extra Quote</b><small>إزالة باقة إضافية</small></span><span class="bdg">شرطان</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>لازم شرطين:</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><b>الباقة متكونش اتستهلكت</b><span class="path" style="margin:6px 0"><span>PCRF</span><i>→</i><span>Extension Data</span></span><small>لازم: <span class="en">Remaining = 100%</span> و <span class="en">Usage = 0%</span></small></span></div>
+            <div class="cond"><span class="cn">٢</span><span><b>الفاتورة تكون لسه منزلتش</b><small>يعني العميل يكلمنا قبل ميعاد التجديد</small></span></div>
           </div>
-          <div class="blk">
-            <h4>حساب الـAdd Item</h4>
-            <div class="formula">(الباقة الكبيرة − الباقة الصغيرة) ÷ 30 × عدد الأيام المتبقية لميعاد التجديد</div>
-          </div>
-          <div class="callout pin"><span class="ci">📌</span><div><b>شرح الفاتورة ملوش Script ثابت</b>المهم تقول المعلومة الصح.</div></div>
-        </div></div></div>
-      </article>
+        </div>
+        <div class="blk"><h4>📌 المكان</h4><div class="path"><span>Home DSL</span><i>→</i><span>Network</span><i>→</i><span>Quote Consumption Issue</span></div><p style="margin-top:8px">اختار: <span class="chip en">Extra Quote Not Updated</span></p><p>وهتلاقي الـ<span class="en">Script</span> ورقم الشكوى.</p></div>
+      </div></div></div></article>
 
-      <!-- ── Extension Offer ── -->
-      <article class="acc rv" id="billing-extension-offer" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">🎁</span>
-          <span class="tt"><b dir="ltr">Extension Offer</b><small>باقة إضافية نزلت تلقائيًا</small></span>
-          <span class="bdg">شكوى 5048</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="blk">
-            <h4>الحالة</h4>
-            <p>باقة إضافية نزلت تلقائيًا والعميل بيقول إنه مضيفهاش.</p>
-            <div class="path"><span>Home DSL</span><i>→</i><span>Related Offer</span><i>→</i><span>Extensions Offer</span></div>
-          </div>
-          <div class="blk">
-            <h4>هات Script التعويض:</h4>
-            <div class="quote">"عشان يهمنا رضا حضرتك، هيتم تعويض حضرتك بمبلغ… خلال <b>48 ساعة عمل</b> مع الاحتفاظ بالجيجات المضافة."</div>
-          </div>
-          <div class="callout warn"><span class="ci">📋</span><div><b>الشكوى: 5048</b>افتحها <b>وسيِبها مفتوحة</b>.</div></div>
-          <div class="callout bad"><span class="ci">❌</span><div><b>ممنوع تقول:</b>
-            <ul>
-              <li>نزلت بالغلط</li>
-              <li>نزلت من السيستم</li>
-              <li>هدية</li>
-            </ul>
-          </div></div>
-          <div class="callout bad"><span class="ci">❌</span><div><b>التعويض عن آخر فاتورة فقط.</b></div></div>
-        </div></div></div>
-      </article>
-
-      <!-- ── Payment Dispute ── -->
-      <article class="acc rv" id="billing-payment-dispute" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">💳</span>
-          <span class="tt"><b dir="ltr">Payment Dispute</b><small>الفاتورة لسه عليّا؟</small></span>
-          <span class="bdg">وكيل · Fawry · InstaPay</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="blk">
-            <h4>البداية</h4>
-            <div class="quote">العميل بيقول: "الفاتورة لسه عليّا؟"</div>
-            <p>➡️ الأول تعامل معاه كفاتورة عادية من <span class="en">Bill Amount</span>.</p>
-            <p>لو قال: <b>"إزاي؟ أنا دفعتها!"</b> — اسأله: <b>دفعت عن طريق إيه؟</b></p>
-          </div>
-          <div class="cases c3">
-            <div class="case" style="--cc:var(--ok)">
-              <div class="ch">🟢 1 — وكيل <small dir="ltr">(Reseller)</small></div>
-              <div class="cb">
-                <p><b>لو لسه مدفعش من 48 ساعة:</b><br>➡️ يستنى <b>48 ساعة عمل</b></p>
-                <p><b>لو عدّى 48 ساعة:</b><br>➡️ اطلب منه <span class="en">Receipt</span> صورة على الإيميل</p>
-                <p>ثم افتح:</p>
-                <p><b dir="ltr">Reseller Payment Not Exist PGW</b><br>⏱️ المدة: <b>24 ساعة عمل</b></p>
-              </div>
-            </div>
-            <div class="case" style="--cc:var(--warn)">
-              <div class="ch">🟡 2 — <span dir="ltr">Fawry</span></div>
-              <div class="cb">
-                <p><b>تأكد من:</b></p>
-                <div class="path" style="margin:4px 0 8px"><span>Related VAS</span><i>→</i><span>Payment Methods</span><i>→</i><span>Aggregator</span></div>
-                <p><b style="color:var(--bad)">❌ ممنوع تطلب Receipt</b></p>
-                <p><b>اطلب:</b><br>• الرقم المرجعي<br>• تاريخ الدفع<br>• المبلغ</p>
-                <p>وافتح: <b dir="ltr">Payment Dispute</b><br>⏱️ <b>48 ساعة عمل</b></p>
-              </div>
-            </div>
-            <div class="case" style="--cc:var(--bad)">
-              <div class="ch">🔴 3 — <span dir="ltr">InstaPay</span></div>
-              <div class="cb">
-                <p><b>لو مش مدعوم عندنا:</b></p>
-                <p>➡️ قوله يرجع للجهة اللي دفع من خلالها، لأن الدفع مش ظاهر على أنظمة <span class="en">Orange</span>.</p>
-              </div>
-            </div>
-          </div>
-        </div></div></div>
-      </article>
-
-      <!-- ── Upgrade ── -->
-      <article class="acc rv" id="billing-upgrade" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">⬆️</span>
-          <span class="tt"><b dir="ltr">Upgrade</b><small>عايز أعلّي الباقة</small></span>
-          <span class="bdg">٥ خطوات</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-
-          <div class="blk">
-            <h4>الخطوات</h4>
-            <div class="cond-list">
-              <div class="cond"><span class="cn">١</span><span><b>شوف العميل تحت وكيل ولا Orange</b>
-                <span class="path" style="margin:6px 0"><span>Seibal</span><i>→</i><span>More Details</span></span>
-                <small>• <span class="en">Orange Data / Mobinil</span> = <span class="en">Orange</span><br>
-                • أي حاجة تانية = وكيل<br>
-                ⚠️ متسألش العميل دلوقتي — اعرف المعلومة في سرك عشان تحدد أسئلة الـ<span class="en">Verification</span> بعدين.</small></span></div>
-
-              <div class="cond"><span class="cn">٢</span><span><b>شوف الخصم</b>
-                <small>• لو عنده خصم ← وضّحله إن الـ<span class="en">Upgrade</span> هيكون بنفس الخصم<br>
-                • لو مفيش ← <span class="en">Home DSL → Related Offer → Upselling Offer</span> وشوف العروض</small></span></div>
-
-              <div class="cond"><span class="cn">٣</span><span><b>وضّح الـAdd Item</b>
-                <small>لازم تقول للعميل إن مع الـ<span class="en">Upgrade</span> هينزل فرق جيجات/فلوس لحد ميعاد التجديد القادم.</small></span></div>
-
-              <div class="cond"><span class="cn">٤</span><span><b>Verification</b>
-                <small>• لو <span class="en">Orange</span>: اسم صاحب التعاقد ثلاثي + رقم المحمول<br>
-                • لو وكيل: اسم صاحب التعاقد + الرقم المسجل + آخر فاتورة دفعها من خلال إيه وإمتى<br>
-                • لو العميل بيتصل من نفس الرقم الأرضي اللي هيعمل عليه <span class="en">Upgrade</span> ← متسألوش <span class="en">Verification</span> ونده <span class="en">Assist</span></small></span></div>
-
-              <div class="cond"><span class="cn">٥</span><span><b>بعد الـAction</b>
-                <span class="path" style="margin:6px 0"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>DSL Package Upgrade</span></span>
-                <small>هات <span class="en">Upgrade Action Script</span></small></span></div>
-            </div>
-            <div class="callout bad"><span class="ci">⚠️</span><div><b>نقطة الـAdd Item مهمة جدًا — وتركها = Fail</b></div></div>
-            <div class="callout warn"><span class="ci">⚠️</span><div><b>لو Upgrade لسرعة 70 / 100 / 200</b>لازم تعمل <span class="en">Physical Check</span> للـ<span class="en">Max Speed</span> وتشوف الخط يستحمل السرعة ولا لأ — وليها <span class="en">Scripts</span> خاصة.</div></div>
-          </div>
-
-          <div class="blk">
-            <h4>📌 لمعرفة الخصم</h4>
-            <div class="defs">
-              <div class="def" style="flex-direction:column;gap:4px"><b>Discount Management</b><span>رتّب الخصومات واقرأ التاريخ صح: <b>شهر / يوم / سنة</b></span></div>
-              <div class="def" style="flex-direction:column;gap:4px"><b>لو ملقتش الخصم؟</b><span>➡️ <span class="en">Activation Request Details</span> وقارن تاريخ الخصم بتاريخ التعاقد</span></div>
-            </div>
-          </div>
-
-        </div></div></div>
-      </article>
-
-      <!-- ── Downgrade ── -->
-      <article class="acc rv" id="billing-downgrade" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">⬇️</span>
-          <span class="tt"><b dir="ltr">Downgrade</b><small>تخفيض الباقة</small></span>
-          <span class="bdg">12 فاتورة</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <p style="font-size:.94rem;color:var(--ink2)">نفس خطوات الـ<span class="en">Upgrade</span> تقريبًا.</p>
-
-          <div class="blk">
-            <h4>📌 لو العميل عنده خصم</h4>
-            <p>وضّحله إن الخصم <b>هيتشال</b> مع الـ<span class="en">Downgrade</span>.</p>
-            <div class="callout ok"><span class="ci">⚠️</span><div><b>الاستثناء</b>لو مكتوب <span class="en">Life Time</span> ← الخصم <b>مش هيتشال</b>.</div></div>
-          </div>
-
-          <div class="blk">
-            <h4>📌 أهم نقطة</h4>
-            <p>شوف العميل كمّل <b>12 فاتورة / سنة</b> من تاريخ التعاقد ولا لأ.</p>
-            <p style="margin-top:6px">لو هيعمل <span class="en">Downgrade</span> قبل السنة:</p>
-            <div class="path"><span>How to Manage My Account</span><i>→</i><span>DSL Package Downgrade</span></div>
-            <p style="margin-top:8px">هات الـ<span class="en">Script</span> الخاص بالحالة.</p>
-          </div>
-
-          <div class="callout warn"><span class="ci">📢</span><div><b>وبعد تنفيذ الـDowngrade</b>لازم تقول الـ<span class="en">Action Script</span> برضه.</div></div>
-        </div></div></div>
-      </article>
-
-      <!-- ── Extra Quote ── -->
-      <article class="acc rv" id="billing-extra-quote" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">➕</span>
-          <span class="tt"><b dir="ltr">Extra Quote</b><small>إضافة باقة إضافية</small></span>
-          <span class="bdg">٢ Scripts</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="blk">
-            <h4>العميل: "عايز أضيف باقة إضافية" — قول Scriptين:</h4>
-            <div class="cond-list">
-              <div class="cond"><span class="cn">١</span><span><span class="path" style="margin:0"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>DSL Extra Quote</span></span></span></div>
-              <div class="cond"><span class="cn">٢</span><span><span class="path" style="margin:0"><span>Home DSL</span><i>→</i><span>Related Offer</span><i>→</i><span>My Orange Usability Offer</span></span><small>وده <span class="en">Script</span> الـ<span class="en">5GB</span> هدية</small></span></div>
-            </div>
-          </div>
-          <div class="blk">
-            <h4>📌 عروض الباقات الإضافية</h4>
-            <div class="path"><span>Home DSL</span><i>→</i><span>Related Offer</span><i>→</i><span>Upselling Offer</span></div>
-            <p style="margin-top:8px">العروض <b>تتقال للعميل</b>، لكن <b>مش بنضيف من خلالها</b>.</p>
-            <div class="callout pin"><span class="ci">💡</span><div><b>لو العميل رفض العرض وقال عايز الباقة العادية</b>➡️ ضيفها عادي، وبعد الإضافة قول <span class="en">Script</span> الـ<span class="en">DSL Extra Quote</span>.</div></div>
-          </div>
-        </div></div></div>
-      </article>
-
-      <!-- ── Remove Extra Quote ── -->
-      <article class="acc rv" id="billing-remove-extra-quote" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">➖</span>
-          <span class="tt"><b dir="ltr">Remove Extra Quote</b><small>إزالة باقة إضافية</small></span>
-          <span class="bdg">شرطان</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="blk">
-            <h4>لازم شرطين:</h4>
-            <div class="cond-list">
-              <div class="cond"><span class="cn">١</span><span><b>الباقة متكونش اتستهلكت</b>
-                <span class="path" style="margin:6px 0"><span>PCRF</span><i>→</i><span>Extension Data</span></span>
-                <small>لازم: <span class="en">Remaining = 100%</span> و <span class="en">Usage = 0%</span></small></span></div>
-              <div class="cond"><span class="cn">٢</span><span><b>الفاتورة تكون لسه منزلتش</b><small>يعني العميل يكلمنا قبل ميعاد التجديد</small></span></div>
-            </div>
-          </div>
-          <div class="blk">
-            <h4>📌 المكان</h4>
-            <div class="path"><span>Home DSL</span><i>→</i><span>Network</span><i>→</i><span>Quote Consumption Issue</span></div>
-            <p style="margin-top:8px">اختار: <span class="chip en">Extra Quote Not Updated</span></p>
-            <p>وهتلاقي الـ<span class="en">Script</span> ورقم الشكوى.</p>
-          </div>
-        </div></div></div>
-      </article>
-
-      <!-- ── Consumption Info ── -->
-      <article class="acc rv" id="billing-consumption-info" data-sec="billing">
-        <button class="acc-h" aria-expanded="false">
-          <span class="ae">📊</span>
-          <span class="tt"><b dir="ltr">Consumption Info</b><small>معلومات جدول PCRF</small></span>
-          <span class="bdg">الجدول كله</span><span class="chv">▼</span>
-        </button>
-        <div class="acc-p"><div><div class="acc-b">
-          <div class="callout bad"><span class="ci">❌</span><div><b>لو العميل بيسأل عن أي معلومة موجودة في PCRF — ممنوع تقول المعلومة اللي سأل عنها بس</b>لازم تقول <b>كل معلومات جدول الـ<span class="en">PCRF</span></b>.<br>
-          مثال: لو سأل عن ميعاد التجديد ← تقول الجدول كله. لو سأل عن الجيجابات المتبقية ← تقول الجدول كله.</div></div>
-          <div class="blk">
-            <h4>📌 المكان</h4>
-            <div class="path"><span>Home DSL</span><i>→</i><span>Network</span><i>→</i><span>Quote Consumption Issue</span></div>
-            <p style="margin-top:8px">الـ<span class="en">Script</span> الأول للحالة العادية.</p>
-            <p style="margin-top:6px">ولو العميل:</p>
-            <div class="chips" style="margin-top:6px">
-              <span class="chip">مستهلك <span class="en">100%</span></span>
-              <span class="chip">أو السرعة وصلت <span class="en">256Kbps</span></span>
-            </div>
-            <p style="margin-top:8px">➡️ استخدم الـ<span class="en">Script</span> اللي تحته.</p>
-          </div>
-        </div></div></div>
-      </article>
+      <article class="acc rv" id="billing-consumption-info" data-sec="billing"><button class="acc-h" aria-expanded="false"><span class="ae">📊</span><span class="tt"><b dir="ltr">Consumption Info</b><small>معلومات جدول PCRF</small></span><span class="bdg">الجدول كله</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="callout bad"><span class="ci">❌</span><div><b>لو العميل بيسأل عن أي معلومة موجودة في PCRF — ممنوع تقول المعلومة اللي سأل عنها بس</b>لازم تقول <b>كل معلومات جدول الـ<span class="en">PCRF</span></b>.<br>مثال: لو سأل عن ميعاد التجديد ← تقول الجدول كله. لو سأل عن الجيجابات المتبقية ← تقول الجدول كله.</div></div>
+        <div class="blk"><h4>📌 المكان</h4><div class="path"><span>Home DSL</span><i>→</i><span>Network</span><i>→</i><span>Quote Consumption Issue</span></div><p style="margin-top:8px">الـ<span class="en">Script</span> الأول للحالة العادية.</p><p style="margin-top:6px">ولو العميل:</p><div class="chips" style="margin-top:6px"><span class="chip">مستهلك <span class="en">100%</span></span><span class="chip">أو السرعة وصلت <span class="en">256Kbps</span></span></div><p style="margin-top:8px">➡️ استخدم الـ<span class="en">Script</span> اللي تحته.</p></div>
+      </div></div></div></article>
     </div>
 
-    <!-- 🔥 خريطة الحفظ -->
-    <div class="map-card rv" style="margin-bottom:56px">
-      <h4>🔥 أهم خريطة للحفظ</h4>
+    <div class="map-card rv" style="margin-bottom:56px"><h4>🔥 أهم خريطة للحفظ</h4>
       <div class="map-grid">
         <div class="map-c"><b>How to Manage My Account</b>➡️ Extra Quote<br>➡️ Upgrade<br>➡️ Downgrade</div>
         <div class="map-c"><b>Related Offer</b>➡️ عروض الباقات<br>➡️ 5GB هدية<br>➡️ الباقات اللي بتنزل تلقائيًا من السيستم</div>
@@ -1318,135 +712,353 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
   </div>
 </section>
 
-<!-- ════════════════ 4) تركات ════════════════ -->
+<!-- ═══════ 4) تركات ═══════ -->
 <section class="view" id="view-tricks" style="--acc:var(--trk)">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="sec-emoji">🧠</span>
-      <div><h2>تركات</h2><p>أهم الملاحظات والنقاط اللي ممكن تسبب لخبطة أو تتنسي.</p></div>
-      <span class="count-chip">١٣ تريكة + أرقام</span>
-    </div>
-
+    <div class="sec-head"><span class="sec-emoji">🧠</span><div><h2>تركات</h2><p>أهم الملاحظات والنقاط اللي ممكن تسبب لخبطة أو تتنسي.</p></div><span class="count-chip">١٣ تريكة + أرقام</span></div>
     <div class="callout pin rv" style="margin-bottom:18px"><span class="ci">🧩</span><div>الرسالة دي مش شرح لحاجة معينة — هي بس <b>تركات أو حاجات ممكن تتنسي أو تلغبط حد</b>.</div></div>
-
     <div class="tricks">
-      <article class="trick rv" id="trick-1">
-        <div class="tg"><small>TRICK</small><span class="no">01</span></div>
-        <h4 dir="ltr">Router Type</h4>
-        <div class="tb">العميل هيرخم عليك ويقولك "مش عارف" نوع الراوتر — عندك كام سؤال يوصلوك لنوعه:
-          <ul>
-            <li><b>بيدعم السرعات العالية؟</b> لو آه يبقى <b>V</b> — لو لأ، يبقى احتمال يبقى <b>A</b></li>
-            <li><b>حضرتك جايبه قبل 2020 ولا بعد؟</b> لو قبل هيبقى <b>A</b> — ولو بعد هيبقى <b>V</b></li>
-            <li><b>وأسهل حاجة:</b> "أستأذنك يا فندم، من ضهر الراوتر تقرا لي الموديل بتاع الراوتر" — وتبدأ تشوف الاسم اللي هيقولهولك فيه V ولا لأ</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="trick rv" id="trick-2">
-        <div class="tg"><small>TRICK</small><span class="no">02</span></div>
-        <h4 dir="ltr">Slow Download vs No Browsing</h4>
-        <div class="tb">اتفقنا نفرّق بين الـ<b><span class="en">Slow Download</span></b> والـ<b><span class="en">No Browsing</span></b> عن طريق <b>الرسالة</b> ✉️ — بتوصل = Slow، مبتوصلش = No Browsing.</div>
-      </article>
-
-      <article class="trick rv" id="trick-3">
-        <div class="tg"><small>TRICK</small><span class="no">03</span></div>
-        <h4 dir="ltr">No Browsing vs Authentication</h4>
-        <div class="tb">هنفرّق بين الـ<b><span class="en">No Browsing</span></b> والـ<b><span class="en">Authentication</span></b> عن طريق: أشوفه <b>ساحب IP ولا لا</b> من <span class="en">IP Tool</span>.</div>
-      </article>
-
-      <article class="trick rv" id="trick-4">
-        <div class="tg"><small>TRICK</small><span class="no">04</span></div>
-        <h4 dir="ltr">Service ID</h4>
-        <div class="tb">مننساش — عشان أشوف الـ<b>IP</b>، أنا مش بكتب الرقم الأرضي وخلاص! لا لا لا لا لا يا شباب 😄<br>الـ<b>IP</b> باخد الرقم اللي موجود في السيبيل اللي اسمه <b><span class="en">Service ID</span></b> كله.</div>
-      </article>
-
-      <article class="trick rv" id="trick-5">
-        <div class="tg"><small>TRICK</small><span class="no">05</span></div>
-        <h4 dir="ltr">Clarifying Customer Complaint</h4>
-        <div class="tb">العميل يدخلك بسؤال مش واضح ويقولك: "الخدمة بتفصل وتشتغل"… قصده إيه بكلمة "الخدمة"؟ <b>الراوتر ولا الواي فاي في التليفون؟</b><br>فلازم أسأله — لازم لازم لازم، كترة أسئلتك مع العميل هي اللي هتوصلك للحل الصح.</div>
-      </article>
-
-      <article class="trick rv" id="trick-6">
-        <div class="tg"><small>TRICK</small><span class="no">06</span></div>
-        <h4 dir="ltr">Physical First</h4>
-        <div class="tb">طبعًا دي قلتها وبقولها وبكتبها أهو: <b>أي مشكلة نيتورك لازم أتأكد فيزيكل الأول</b> — حتى لو <span class="en">WiFi Instability</span>، لازم أتأكد إن <b><span class="en">Line Up</span></b> والـ<b><span class="en">Max</span> ✅</b> عشان أخش معاه <span class="en">WiFi Instability</span>.</div>
-      </article>
-
-      <article class="trick rv" id="trick-7">
-        <div class="tg"><small>TRICK</small><span class="no">07</span></div>
-        <h4 dir="ltr">Router Page Exceptions</h4>
-        <div class="tb">افتكر قبل ما تقدم أي مشكلة نيتورك، وقبل ما تقول "تمام يا فندم هقدملك طلب في خلال 24 ساعة المشكلة هتتحل" — <b>لازم تكون دخلت صفحة الراوتر</b> (سواء هتعمل ريست بالدبوس أو هتخش علطول، المهم إنك قلتله: افتح صفحة الراوتر يا فندم).
-          <br><b>⛔ إلا في 3 شكاوي نيتورك مش بندخل صفحة الراوتر:</b>
-          <ul>
-            <li>1/ <span class="en">Connection Unstable</span></li>
-            <li>2/ <span class="en">Authentication</span> (<span class="en">Login OK</span>)</li>
-            <li>3/ <span class="en">Bit Rate Mismatch</span></li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="trick rv" id="trick-8">
-        <div class="tg"><small>TRICK</small><span class="no">08</span></div>
-        <h4 dir="ltr">Bit Rate Mismatch</h4>
-        <div class="tb">بالنسبة للـ<b><span class="en">Bit Rate Mismatch</span></b> مبتتفتحش غير لخط الـ<b><span class="en">Copper</span></b> والخطوط الـ<b><span class="en">MSAN</span></b> سرعة <b>70 / 100 / 200</b>.<br><b style="color:var(--bad)">محدش يفكر يفتح شكوى Bit Rate Mismatch في خط MSAN سرعة 30!</b></div>
-      </article>
-
-      <article class="trick rv" id="trick-9">
-        <div class="tg"><small>TRICK</small><span class="no">09</span></div>
-        <h4 dir="ltr">Pedia Location</h4>
-        <div class="tb">كل مشاكل النيتورك موجودة في بيديا جوا الـ<b><span class="en">Network</span></b> — <b>إلا الـ<span class="en">Slow Download</span></b> موجودة في الـ<b><span class="en">Physical</span></b>، في نفس الخانة بتاعة الـ<span class="en">Bad Line</span> اللي اسمها <b><span class="en">Dsl-Slow Download</span></b>.</div>
-      </article>
-
-      <article class="trick rv" id="trick-10">
-        <div class="tg"><small>TRICK</small><span class="no">10</span></div>
-        <h4 dir="ltr">SV Port</h4>
-        <div class="tb">أول ما تلاقي نوع البورت في الـ<span class="en">Assurance</span> هو <b><span class="en">SV</span></b> — فدا بتعتبره <b><span class="en">VDSL</span></b> عادي… بس الـ<span class="en">Max</span> اللي هيظهرلك <b style="color:var(--bad)">FAKE FAKE FAKE!</b><br>يعني إيه؟ يعني أول ما أشوف <span class="en">SV</span> هقول للعميل: <b>"أستأذنك، نخش صفحة الراوتر عشان أعرف كفاءة خط حضرتك"</b>.</div>
-      </article>
-
-      <article class="trick rv" id="trick-11">
-        <div class="tg"><small>TRICK</small><span class="no">11</span></div>
-        <h4 dir="ltr">Speed 30 + Max 100</h4>
-        <div class="tb">ودي شفت ناس ملغبطة فيها… يا شباب:
-          <ul>
-            <li>لو العميل مشترك سرعة <b>30</b> والخط الـ<span class="en">Max</span> بتاعه <b>100</b> — سرعة أورانج المفروض هتبقى <b>80% × 100 = 80</b>… هل هياخد 80 فعلًا؟ <b style="color:var(--bad)">لا لا لا!</b> لأنه مشترك على 30، فأقصى حاجة هياخدها <b>30</b></li>
-            <li>طب هل أفتحله <span class="en">Bit Rate Mismatch</span> عشان هو يستحمل ياخد 80 وأنا مديله 30؟ <b style="color:var(--bad)">لا لا لا لا يا عم!</b> هو مشترررك معايا على 30 وبيدفع تمن 30 — واتفقنا مش هفتح شكوى <span class="en">Bit Rate Mismatch</span> في خط سرعة 30 أصلًا</li>
-            <li>يعني السرعة 30 مظبوطة؟ <b>= آيوه يا عم</b> — خش بقي على <b><span class="en">Doesn't Have Bit Rate Mismatch</span></b></li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="trick rv" id="trick-12">
-        <div class="tg"><small>TRICK</small><span class="no">12</span></div>
-        <h4 dir="ltr">WiFi Instability SSID</h4>
-        <div class="tb">مننساش بردو — في الـ<b><span class="en">WiFi Instability</span></b> بنغيّر اسم الشبكة لاسسسسم جديد <b>ميكونش اتعمل قبل كدا</b>.</div>
-      </article>
-
-      <article class="trick rv" id="trick-13">
-        <div class="tg"><small>TRICK</small><span class="no">13</span></div>
-        <h4 dir="ltr">Online Gaming Ping</h4>
-        <div class="tb">في الـ<b><span class="en">Online Gaming</span></b> طبيعي أول ما العميل يدخل يقولك "البنج وحش" — فلازم أسأله: <b>"البنج كام عند حضرتك؟"</b> عشان أشوف هل هو وحش فعلًا ولا لأ حسب الجدول اللي عندك في الـ<span class="en">Online Gaming</span> في بيديا.</div>
-      </article>
+      <article class="trick rv" id="trick-1"><div class="tg"><small>TRICK</small><span class="no">01</span></div><h4 dir="ltr">Router Type</h4><div class="tb">العميل هيرخم عليك ويقولك "مش عارف" نوع الراوتر — عندك كام سؤال يوصلوك لنوعه:<ul><li><b>بيدعم السرعات العالية؟</b> لو آه يبقى <b>V</b> — لو لأ، يبقى احتمال يبقى <b>A</b></li><li><b>حضرتك جايبه قبل 2020 ولا بعد؟</b> لو قبل هيبقى <b>A</b> — ولو بعد هيبقى <b>V</b></li><li><b>وأسهل حاجة:</b> "أستأذنك يا فندم، من ضهر الراوتر تقرا لي الموديل بتاع الراوتر" — وتبدأ تشوف الاسم اللي هيقولهولك فيه V ولا لأ</li></ul></div></article>
+      <article class="trick rv" id="trick-2"><div class="tg"><small>TRICK</small><span class="no">02</span></div><h4 dir="ltr">Slow Download vs No Browsing</h4><div class="tb">اتفقنا نفرّق بين الـ<b><span class="en">Slow Download</span></b> والـ<b><span class="en">No Browsing</span></b> عن طريق <b>الرسالة</b> ✉️ — بتوصل = Slow، مبتوصلش = No Browsing.</div></article>
+      <article class="trick rv" id="trick-3"><div class="tg"><small>TRICK</small><span class="no">03</span></div><h4 dir="ltr">No Browsing vs Authentication</h4><div class="tb">هنفرّق بين الـ<b><span class="en">No Browsing</span></b> والـ<b><span class="en">Authentication</span></b> عن طريق: أشوفه <b>ساحب IP ولا لا</b> من <span class="en">IP Tool</span>.</div></article>
+      <article class="trick rv" id="trick-4"><div class="tg"><small>TRICK</small><span class="no">04</span></div><h4 dir="ltr">Service ID</h4><div class="tb">مننساش — عشان أشوف الـ<b>IP</b>، أنا مش بكتب الرقم الأرضي وخلاص! لا لا لا لا لا يا شباب 😄<br>الـ<b>IP</b> باخد الرقم اللي موجود في السيبيل اللي اسمه <b><span class="en">Service ID</span></b> كله.</div></article>
+      <article class="trick rv" id="trick-5"><div class="tg"><small>TRICK</small><span class="no">05</span></div><h4 dir="ltr">Clarifying Customer Complaint</h4><div class="tb">العميل يدخلك بسؤال مش واضح ويقولك: "الخدمة بتفصل وتشتغل"… قصده إيه بكلمة "الخدمة"؟ <b>الراوتر ولا الواي فاي في التليفون؟</b><br>فلازم أسأله — لازم لازم لازم، كترة أسئلتك مع العميل هي اللي هتوصلك للحل الصح.</div></article>
+      <article class="trick rv" id="trick-6"><div class="tg"><small>TRICK</small><span class="no">06</span></div><h4 dir="ltr">Physical First</h4><div class="tb">طبعًا دي قلتها وبقولها وبكتبها أهو: <b>أي مشكلة نيتورك لازم أتأكد فيزيكل الأول</b> — حتى لو <span class="en">WiFi Instability</span>، لازم أتأكد إن <b><span class="en">Line Up</span></b> والـ<b><span class="en">Max</span> ✅</b> عشان أخش معاه <span class="en">WiFi Instability</span>.</div></article>
+      <article class="trick rv" id="trick-7"><div class="tg"><small>TRICK</small><span class="no">07</span></div><h4 dir="ltr">Router Page Exceptions</h4><div class="tb">افتكر قبل ما تقدم أي مشكلة نيتورك، وقبل ما تقول "تمام يا فندم هقدملك طلب في خلال 24 ساعة المشكلة هتتحل" — <b>لازم تكون دخلت صفحة الراوتر</b> (سواء هتعمل ريست بالدبوس أو هتخش علطول، المهم إنك قلتله: افتح صفحة الراوتر يا فندم).<br><b>⛔ إلا في 3 شكاوي نيتورك مش بندخل صفحة الراوتر:</b><ul><li>1/ <span class="en">Connection Unstable</span></li><li>2/ <span class="en">Authentication</span> (<span class="en">Login OK</span>)</li><li>3/ <span class="en">Bit Rate Mismatch</span></li></ul></div></article>
+      <article class="trick rv" id="trick-8"><div class="tg"><small>TRICK</small><span class="no">08</span></div><h4 dir="ltr">Bit Rate Mismatch</h4><div class="tb">بالنسبة للـ<b><span class="en">Bit Rate Mismatch</span></b> مبتتفتحش غير لخط الـ<b><span class="en">Copper</span></b> والخطوط الـ<b><span class="en">MSAN</span></b> سرعة <b>70 / 100 / 200</b>.<br><b style="color:var(--bad)">محدش يفكر يفتح شكوى Bit Rate Mismatch في خط MSAN سرعة 30!</b></div></article>
+      <article class="trick rv" id="trick-9"><div class="tg"><small>TRICK</small><span class="no">09</span></div><h4 dir="ltr">Pedia Location</h4><div class="tb">كل مشاكل النيتورك موجودة في بيديا جوا الـ<b><span class="en">Network</span></b> — <b>إلا الـ<span class="en">Slow Download</span></b> موجودة في الـ<b><span class="en">Physical</span></b>، في نفس الخانة بتاعة الـ<span class="en">Bad Line</span> اللي اسمها <b><span class="en">Dsl-Slow Download</span></b>.</div></article>
+      <article class="trick rv" id="trick-10"><div class="tg"><small>TRICK</small><span class="no">10</span></div><h4 dir="ltr">SV Port</h4><div class="tb">أول ما تلاقي نوع البورت في الـ<span class="en">Assurance</span> هو <b><span class="en">SV</span></b> — فدا بتعتبره <b><span class="en">VDSL</span></b> عادي… بس الـ<span class="en">Max</span> اللي هيظهرلك <b style="color:var(--bad)">FAKE FAKE FAKE!</b><br>يعني إيه؟ يعني أول ما أشوف <span class="en">SV</span> هقول للعميل: <b>"أستأذنك، نخش صفحة الراوتر عشان أعرف كفاءة خط حضرتك"</b>.</div></article>
+      <article class="trick rv" id="trick-11"><div class="tg"><small>TRICK</small><span class="no">11</span></div><h4 dir="ltr">Speed 30 + Max 100</h4><div class="tb">ودي شفت ناس ملغبطة فيها… يا شباب:<ul><li>لو العميل مشترك سرعة <b>30</b> والخط الـ<span class="en">Max</span> بتاعه <b>100</b> — سرعة أورانج المفروض هتبقى <b>80% × 100 = 80</b>… هل هياخد 80 فعلًا؟ <b style="color:var(--bad)">لا لا لا!</b> لأنه مشترك على 30، فأقصى حاجة هياخدها <b>30</b></li><li>طب هل أفتحله <span class="en">Bit Rate Mismatch</span> عشان هو يستحمل ياخد 80 وأنا مديله 30؟ <b style="color:var(--bad)">لا لا لا لا يا عم!</b> هو مشترررك معايا على 30 وبيدفع تمن 30 — واتفقنا مش هفتح شكوى <span class="en">Bit Rate Mismatch</span> في خط سرعة 30 أصلًا</li><li>يعني السرعة 30 مظبوطة؟ <b>= آيوه يا عم</b> — خش بقي على <b><span class="en">Doesn't Have Bit Rate Mismatch</span></b></li></ul></div></article>
+      <article class="trick rv" id="trick-12"><div class="tg"><small>TRICK</small><span class="no">12</span></div><h4 dir="ltr">WiFi Instability SSID</h4><div class="tb">مننساش بردو — في الـ<b><span class="en">WiFi Instability</span></b> بنغيّر اسم الشبكة لاسسسسم جديد <b>ميكونش اتعمل قبل كدا</b>.</div></article>
+      <article class="trick rv" id="trick-13"><div class="tg"><small>TRICK</small><span class="no">13</span></div><h4 dir="ltr">Online Gaming Ping</h4><div class="tb">في الـ<b><span class="en">Online Gaming</span></b> طبيعي أول ما العميل يدخل يقولك "البنج وحش" — فلازم أسأله: <b>"البنج كام عند حضرتك؟"</b> عشان أشوف هل هو وحش فعلًا ولا لأ حسب الجدول اللي عندك في الـ<span class="en">Online Gaming</span> في بيديا.</div></article>
     </div>
-
-    <!-- 🔢 الأرقام المهمة -->
     <div class="nums-head rv"><h3>🔢 أرقام مهمة</h3><span class="ln"></span></div>
     <p class="nums-note">مش لازم تحفظها — هي موجودة كدا كدا في بيديا قدام عينك، بس أهو لو حبيت تحفظها براحتك 😉</p>
-
     <div class="kvs">
-      <div class="kv rv" id="num-1"><div class="v"><span data-n="36">0</span></div><div class="l">MAX لو البورت + الراوتر <span class="en">VDSL</span> ميقلش عن</div></div>
-      <div class="kv rv" id="num-2"><div class="v"><span data-n="15">0</span></div><div class="l">لو البورت أو الراوتر <span class="en">ADSL</span> (أو الاتنين) مينفعش أقل من</div></div>
-      <div class="kv rv" id="num-3"><div class="v"><span data-n="6">0</span></div><div class="l">خط <span class="en">Copper</span> — أقل حاجة للـMAX</div></div>
-      <div class="kv rv" id="num-4"><div class="v"><span data-n="55">0</span></div><div class="l"><span class="en">MSAN</span> سرعة 70 — ولو أقل <span class="en">Bad Line</span> علطول</div></div>
-      <div class="kv rv" id="num-5"><div class="v"><span data-n="85">0</span></div><div class="l"><span class="en">MSAN</span> سرعة 100/200 — ولو أقل <span class="en">Bad Line</span> علطول</div></div>
-      <div class="kv rv" id="num-14"><div class="v"><span data-n="60">0</span></div><div class="l">الـ<span class="en">Noise / SNR</span> مينفعش يقل عن — ولو أقل <span class="en">Bad Line</span></div></div>
-      <div class="kv rv" id="num-6"><div class="v"><span data-n="80">0</span>% / <span data-n="85">0</span>%</div><div class="l">سرعة أورانج = MAX × (حد أدنى / أقصى)</div></div>
-      <div class="kv rv" id="num-7"><div class="v"><span data-n="65">0</span>%</div><div class="l">السبيد تيست = سرعة أورانج ×</div></div>
-      <div class="kv rv" id="num-8"><div class="v"><span data-n="45">0</span>%</div><div class="l">لو الخط <span class="en">Copper</span> — السبيد تيست = سرعة أورانج ×</div></div>
-      <div class="kv rv" id="num-9"><div class="v"><span data-n="40">0</span></div><div class="l"><span class="en">Online Gaming</span> بسسس — MAX ميقلش عن (حتى لو 38 = <span class="en">Bad Line</span>)</div></div>
-      <div class="kv rv" id="num-10"><div class="v"><span data-n="100">0</span></div><div class="l">الـ<span class="en">Noise / SNR</span> في الـ<span class="en">Online Gaming</span> بسسس مينفعش يقل عن</div></div>
-      <div class="kv rv" id="num-11"><div class="v">&gt; <span data-n="100">0</span></div><div class="l">عشان يبقى عنده مشكلة <span class="en">Ping</span> فعلًا — العميل يقول البنج أعلى من</div></div>
-      <div class="kv rv" id="num-12"><div class="v"><span data-n="1420">0</span> / <span data-n="1380">0</span> / <span data-n="1300">0</span></div><div class="l"><span class="en">MTU</span> أرقامها</div></div>
-      <div class="kv rv" id="num-13"><div class="v"><span data-n="1">0</span> / <span data-n="6">0</span> / <span data-n="11">0</span></div><div class="l">الـ<span class="en">WiFi Channels</span> أرقامها</div></div>
+      <div class="kv rv"><div class="v"><span data-n="36">0</span></div><div class="l">MAX لو البورت + الراوتر <span class="en">VDSL</span> ميقلش عن</div></div>
+      <div class="kv rv"><div class="v"><span data-n="15">0</span></div><div class="l">لو البورت أو الراوتر <span class="en">ADSL</span> مينفعش أقل من</div></div>
+      <div class="kv rv"><div class="v"><span data-n="6">0</span></div><div class="l">خط <span class="en">Copper</span> — أقل حاجة للـMAX</div></div>
+      <div class="kv rv"><div class="v"><span data-n="55">0</span></div><div class="l"><span class="en">MSAN</span> سرعة 70 — ولو أقل <span class="en">Bad Line</span> علطول</div></div>
+      <div class="kv rv"><div class="v"><span data-n="85">0</span></div><div class="l"><span class="en">MSAN</span> سرعة 100/200 — ولو أقل <span class="en">Bad Line</span> علطول</div></div>
+      <div class="kv rv"><div class="v"><span data-n="60">0</span></div><div class="l">الـ<span class="en">Noise / SNR</span> مينفعش يقل عن — ولو أقل <span class="en">Bad Line</span></div></div>
+      <div class="kv rv"><div class="v"><span data-n="80">0</span>% / <span data-n="85">0</span>%</div><div class="l">سرعة أورانج = MAX × (حد أدنى / أقصى)</div></div>
+      <div class="kv rv"><div class="v"><span data-n="65">0</span>%</div><div class="l">السبيد تيست = سرعة أورانج ×</div></div>
+      <div class="kv rv"><div class="v"><span data-n="45">0</span>%</div><div class="l">لو الخط <span class="en">Copper</span> — السبيد تيست = سرعة أورانج ×</div></div>
+      <div class="kv rv"><div class="v"><span data-n="40">0</span></div><div class="l"><span class="en">Online Gaming</span> بسسس — MAX ميقلش عن (حتى لو 38 = <span class="en">Bad Line</span>)</div></div>
+      <div class="kv rv"><div class="v"><span data-n="100">0</span></div><div class="l">الـ<span class="en">Noise / SNR</span> في الـ<span class="en">Online Gaming</span> بسسس مينفعش يقل عن</div></div>
+      <div class="kv rv"><div class="v">&gt; <span data-n="100">0</span></div><div class="l">عشان يبقى عنده مشكلة <span class="en">Ping</span> فعلًا — العميل يقول البنج أعلى من</div></div>
+      <div class="kv rv"><div class="v"><span data-n="1420">0</span> / <span data-n="1380">0</span> / <span data-n="1300">0</span></div><div class="l"><span class="en">MTU</span> أرقامها</div></div>
+      <div class="kv rv"><div class="v"><span data-n="1">0</span> / <span data-n="6">0</span> / <span data-n="11">0</span></div><div class="l">الـ<span class="en">WiFi Channels</span> أرقامها</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 5) CALL FLOW ═══════ -->
+<section class="view" id="view-callflow" style="--acc:var(--call)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-emoji">📞</span><div><h2 dir="ltr">Call Flow</h2><p>المقدمة والخاتمة — البداية والنهاية الصح لأي مكالمة.</p></div><span class="count-chip">٢ جزئين</span></div>
+    <div class="rule-banner rv" style="background:color-mix(in srgb,var(--call) 10%, var(--surface));border-color:color-mix(in srgb,var(--call) 50%, transparent)"><span class="ic">📞</span><span>المقدمة والخاتمة مش اختيارية — هي جزء أساسي من الاحترافية وبتأثر على تقييم المكالمة.</span></div>
+    <div class="accs">
+      <article class="acc rv" id="callflow-opening" data-sec="callflow"><button class="acc-h" aria-expanded="false"><span class="ae">🎙️</span><span class="tt"><b>بداية المكالمة</b><small>المقدمة الاحترافية</small></span><span class="bdg">٥ خطوات</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>خطوات المقدمة بالترتيب</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><b>أورانچ</b> — بتبدأ باسم الشركة</span></div>
+            <div class="cond"><span class="cn">٢</span><span><b>الاسم ثنائي</b> — اسمك الأول واسم الأب</span></div>
+            <div class="cond"><span class="cn">٣</span><span><b>صباح / مساء الخير</b> — حسب الوقت</span></div>
+            <div class="cond"><span class="cn">٤</span><span><b>أتشرف باسم حضرتك</b> — تسأل العميل عن اسمه</span></div>
+            <div class="cond"><span class="cn">٥</span><span><b>استفسار حضرتك بخصوص نفس الرقم ولا رقم تاني؟</b><small>طب ممكن أراجعه مع حضرتك؟</small></span></div>
+            <div class="cond"><span class="cn">٦</span><span><b>اتفضل، أقدر أساعدك إزاي؟</b></span></div>
+          </div>
+        </div>
+        <div class="blk"><h4>☎️ مثال حي على المقدمة</h4>
+          <div class="dialog">
+            <div class="msg agent"><span class="who">🎧 أنت</span>أورانچ، <b>باسل مجدي</b>، مساء الخير</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>أتشرف باسم حضرتك؟</div>
+            <div class="msg cust"><span class="who">👤 العميل</span>أحمد محمود</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>أهلاً بيك يا أستاذ أحمد، استفسار حضرتك بخصوص نفس الرقم ولا رقم تاني؟</div>
+            <div class="msg cust"><span class="who">👤 العميل</span>نفس الرقم</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>طب ممكن أراجعه مع حضرتك؟</div>
+            <div class="msg cust"><span class="who">👤 العميل</span>آه طبعاً</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>اتفضل، أقدر أساعدك إزاي؟</div>
+          </div>
+        </div>
+        <div class="callout ok"><span class="ci">✅</span><div><b>بعد ما تخلص المقدمة</b>بتبدأ تدخل في المشكلة نفسها وبتطبق الخطوات حسب نوع المشكلة (Physical / Network / Billing / Candidate).</div></div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="callflow-closing" data-sec="callflow"><button class="acc-h" aria-expanded="false"><span class="ae">👋</span><span class="tt"><b>نهاية المكالمة</b><small>الخاتمة الاحترافية</small></span><span class="bdg">٣ خطوات</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>خطوات الخاتمة بالترتيب</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><b>هل فيه أي استفسار تاني؟</b></span></div>
+            <div class="cond"><span class="cn">٢</span><span><b>بعد انتهاء المكالمة هتيجي مكالمة تقييم</b> عن أداء موظف خدمة العملاء بمقياس من <b>1 إلى 5</b>:<small>بحيث إن <b>1 = غير راضي</b> و <b>5 = راضي جداً</b><br>وأتمنى أكون قدرت أساعد حضرتك</small></span></div>
+            <div class="cond"><span class="cn">٣</span><span><b>شكراً لاتصالك بأورانچ</b></span></div>
+          </div>
+        </div>
+        <div class="blk"><h4>☎️ مثال حي على الخاتمة</h4>
+          <div class="dialog">
+            <div class="msg agent"><span class="who">🎧 أنت</span>هل فيه أي استفسار تاني أقدر أساعدك بيه يا أستاذ أحمد؟</div>
+            <div class="msg cust"><span class="who">👤 العميل</span>لا خلاص، شكراً</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>بعد انتهاء المكالمة هتيجي مكالمة تقييم عن أداء موظف خدمة العملاء بمقياس من 1 إلى 5، بحيث إن 1 غير راضي و5 راضي جداً، وأتمنى أكون قدرت أساعد حضرتك</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>شكراً لاتصالك بأورانچ 🧡</div>
+          </div>
+        </div>
+        <div class="callout warn"><span class="ci">⚠️</span><div><b>مهم جداً</b>جملة التقييم دي <b>إجبارية</b> — لو نسيتها، ممكن تتخصم من تقييمك حتى لو حليت المشكلة صح.</div></div>
+      </div></div></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 6) CANDIDATE ═══════ -->
+<section class="view" id="view-candidate" style="--acc:var(--cand)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-emoji">🆕</span><div><h2 dir="ltr">Candidate</h2><p>الخط الكانديدات — ٥ مراحل بالترتيب، مينفعش تتخطى مرحلة.</p></div><span class="count-chip">٥ مراحل + شكاوي</span></div>
+    <div class="rule-banner rv" style="background:color-mix(in srgb,var(--cand) 10%, var(--surface));border-color:color-mix(in srgb,var(--cand) 50%, transparent)"><span class="ic">🔢</span><span><b>القاعدة الذهبية:</b> الخط الكانديدات بيمر بـ<b>٥ مراحل بالترتيب</b> — مينفعش تحل مشكلة مرحلة تالتة أو رابعة واللي قبلها مش محلولة.</span></div>
+    <div class="intro-c rv"><h4>📋 الـ٥ مراحل بالترتيب</h4>
+      <div class="cond-list">
+        <div class="cond"><span class="cn">١</span><span><b>Status</b> — عشان تتم لازم تكون <span class="en">Open</span> ✅</span></div>
+        <div class="cond"><span class="cn">٢</span><span><b>WO</b> <small>(Work Order)</small> — لازم يكون فيه رقم ✅</span></div>
+        <div class="cond"><span class="cn">٣</span><span><b>DownPayment Status</b> — لازم يكون <span class="en">Paid</span> ✅</span></div>
+        <div class="cond"><span class="cn">٤</span><span><b>Deliver Status</b> — لازم يكون <span class="en">Deliver</span> ✅</span></div>
+        <div class="cond"><span class="cn">٥</span><span><b>Comment</b> — لازم تكون <span class="en">200 Success</span> ✅</span></div>
+      </div>
+    </div>
+    <div class="callout pin rv"><span class="ci">📚</span><div><b>بنجيب الكانديدات من Pedia إزاي؟</b><span class="path" style="margin:6px 0"><span>Home DSL</span><i>→</i><span>Plans</span><i>→</i><span>Candidate Customer Handling</span></span>أول لينك ← مشاكل الـ<span class="en">Work Order</span> والـ<span class="en">Comment</span><br>تاني خانة ← مشكلة الـ<span class="en">Down Payment Status</span><br>آخر خانة ← مشكلة الـ<span class="en">Deliver Status</span></div></div>
+
+    <div class="accs">
+      <article class="acc rv" id="candidate-status" data-sec="candidate"><button class="acc-h" aria-expanded="false"><span class="ae">📌</span><span class="tt"><b>المرحلة ١: Status</b><small>On Hold = العميل بيلغي</small></span><span class="bdg">Roll Back</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>الحالة الطبيعية</h4><p>الـ<span class="en">Status</span> الطبيعي يكون <span class="chip g">Open ✅</span></p></div>
+        <div class="blk"><h4>لو لقيتها On Hold؟</h4><p>ده معناه إن العميل بيلغي — بسأله:</p><div class="quote">"حضرتك عايز ترجع الخدمة معانا؟"</div>
+          <div class="exs">
+            <div class="ex good"><b>قال: آه عايز أفعل / أتعقد معاكم ✔</b>بتفتح شكوى <span class="en">Roll Back</span> مدتها <b>24 ساعة عمل</b></div>
+            <div class="ex bad"><b>قال: لأ ❌</b>تكمل معاه خطوات الإلغاء (راجع قسم Certification)</div>
+          </div>
+        </div>
+        <div class="blk"><h4>📍 مكان الشكوى في Pedia</h4><p>في الـ<span class="en">Cancellation</span>:</p><div class="path"><span>How to Manage My Account</span><i>→</i><span>Cancellation</span><i>→</i><span>الشكاوي تحت خالص اسمها Roll Back</span></div><p style="margin-top:8px">أو من جوا الـ<span class="en">Candidate</span> نفسها في الخانة اللي قبل الأخيرة.</p></div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="candidate-wo" data-sec="candidate"><button class="acc-h" aria-expanded="false"><span class="ae">🔢</span><span class="tt"><b>المرحلة ٢: Work Order</b><small>رقم الطلب / التفعيل</small></span><span class="bdg">أطول مرحلة</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>يعني إيه Work Order؟</h4><p>رقم الطلب أو رقم التفعيل أو التشغيل — الرقم ده <b>بيثبت إن الخط ده اتحجز عليه مننا</b>، فلازم يكون موجود.</p></div>
+        <div class="blk"><h4>سيناريو المكالمة</h4><p>قلت المقدمة الجميلة والعميل قالك "عايز أفعل"، ودخلت لقيت:</p>
+          <div class="chips" style="margin-top:8px"><span class="chip g">Status = Open ✅</span><span class="chip r">Work Order ❌ مفيش رقم</span></div>
+          <div class="callout warn"><span class="ci">🤔</span><div><b>إيه اللي يحصل؟</b>تقف ثانيتين تفكر: يا ترى الرقم مطلعش ليه؟ هتلاقي السبب في الخانة اللي تحتها بالظبط اسمها <b><span class="en">Work Order Issue</span></b> — ومعناها مشكلة رقم التفعيل. كده انت حددت المشكلة يا صديقي.</div></div>
+        </div>
+        <div class="blk"><h4>أشهر مشكلة: Another ISP</h4><p>بتبدأ تجيب الـ<span class="en">Scripts</span> من Pedia وتقرأ الاسكربت وتشوف المكالمة هتكمل إزاي.</p>
+          <div class="callout pin"><span class="ci">🧩</span><div><b>يعني إيه Another ISP؟</b>الخط مشترك مع شركة تانية — فبتقول للعميل: "ألغي وهات رقم الإلغاء من الشركة التانية وكلمنا".</div></div>
+        </div>
+        <div class="blk"><h4>رد العميل — حالتين بس مفيش تالت</h4>
+          <div class="cases" style="grid-template-columns:1fr 1fr">
+            <div class="case" style="--cc:var(--ok)"><div class="ch">✅ الحالة الأولى</div><div class="cb">
+              <p><b>العميل:</b> "تمام، هروح ألغي مع الشركة التانية وأجيب رقم الإلغاء وأكلمكم، سلام"</p>
+              <p style="margin-top:8px"><b>إنت بتعمل إيه؟</b></p>
+              <p>بتفتح <span class="en">SR</span> اسمها <b><span class="en">Activation Follow Up</span></b> وتقفلها — موجودة في آخر الصفحة في Pedia.</p>
+              <p style="margin-top:6px">خلاص، المكالمه انتهت. <b>مش هتبص على MSAN Activation ولا أي حاجة</b> — كل اللي هتعمله هتقوله: "تمام يا فندم، حضرتك لما تلغي تقدر تكلمنا نقدملك طلب"، وسلام وخلصت.</p>
+            </div></div>
+            <div class="case" style="--cc:var(--warn)"><div class="ch">⚠️ الحالة التانية</div><div class="cb">
+              <p><b>العميل:</b> "إزاي؟ أنا لغيت يا عم ومعايا رقم الإلغاء، انت بتقول إيه؟"</p>
+              <p style="margin-top:8px"><b>هنا كده فيه تناقض:</b> العميل بيقول إنه لغى ومعاه الرقم، وأنا بقوله "حضرتك محتاج تلغي وتجيب الرقم".</p>
+              <p style="margin-top:6px"><b>هنعمل إيه؟</b> محتاجين نفصل بشكوى — وده الجزء التاني من المكالمة اللي بيبقى أصعب، وهو إنك تقدم شكوى صح.</p>
+            </div></div>
+          </div>
+        </div>
+        <div class="blk"><h4>🔥 الشكوى الأم: MSAN Activation</h4><p>في الشكاوي، قولنا هنعتمد إن فيه <b>شكوى رئيسية أو الشكوى الأم</b> لازم أبص عليها قبل ما أفكر أقدم أي شكوى — وهي الـ<span class="en">MSAN Activation</span>.</p>
+          <div class="callout warn"><span class="ci">⏱️</span><div><b>مدتها:</b> <b>24 ساعة عمل</b><br><b>ملاحظة مهمة:</b> محدش فينا بيفتحها أول مرة — هي بتكون موجودة تلقائي، يعني محدش مننا بيفتحها خالص، انت هتخش تلاقيها بنسبة 100%.</div></div>
+          <p style="margin-top:10px">بهم أعرف مدتها واتفتحت إمتى قبل ما أقدم شكوى للـ<span class="en">Work Order</span> والـ<span class="en">Comment</span> — أما الـ<span class="en">Paid</span> والـ<span class="en">Deliver</span> مش لازم.</p>
+        </div>
+        <div class="blk"><h4>خطوات تقديم الشكوى</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><b>أول خطوة قبل ما أقدم شكوى بخصوص الـWork Order</b> — ببص على الـ<span class="en">MSAN Activation</span>
+              <small>• لو جوا الـ<b>24 ساعة عمل</b> ← بقول للعميل: "هو بشكل عام يا فندم، طلب تفعيل الخدمة الأساسي مازال قائم مفتوح لحضرتك، بياخد 24 ساعة عمل، إن شاء الله في خلالهم مشكلتك هتتحل، سلام سلام" — و<b>هفتح <span class="en">Activation Follow Up</span> وأقفلها</b><br>• لو <b>بعد الـ24 ساعة عمل</b> ← هبدأ أفتح أنا شكوى — نروح للخطوة ٢</small></span></div>
+            <div class="cond"><span class="cn">٢</span><span><b>تاني خطوة — تقديم الشكوى</b>
+              <small>هتلاقي عندي <b>سكريبتين</b> لتقديم الشكوى: واحد في خلال <b>6 ساعات عمل</b> والتاني في خلال <b>4 ساعات عمل</b><br><b>هقدم أنهي؟</b> لو مشكلة العميل موجودة في جدول الـ6 ساعات عمل ← هقول سكريبت الـ6 ساعات عمل. لو مش موجودة ← هقول سكريبت الـ4 ساعات عمل.<br>⚠️ <b>قبل ما تقول "هقدملك شكوى"</b> — اتأكد إنها مش مفتوحة الأول. يعني بعد الـ<span class="en">MSAN Activation</span> اللي عدّت، روحت بصيت على الجدول لقيت إن <span class="en">Another ISP</span> موجودة في جدول الـ6 ساعات عمل — قبل ما تقوله "هقدملك شكوى في خلال 6 ساعات عمل"، اتأكد يمكن تكون مفتوحة وعدّت الـ6 ساعات عمل، فانت لازم تفتح الـ4 ساعات عمل.</small></span></div>
+          </div>
+        </div>
+        <div class="blk"><h4>⏰ ترتيب الشكاوي في الـWork Order</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><span class="en">MSAN Activation</span> — <b>24 ساعة عمل</b></span></div>
+            <div class="cond"><span class="cn">٢</span><span>شكوى <b>الـ6 ساعات عمل</b> — حسب اسم المشكلة في جدول الـ6 ساعات (نفس الاسم في <span class="en">Work Order Issue</span> في السيبل)</span></div>
+            <div class="cond"><span class="cn">٣</span><span><span class="en">New Activation Delay</span> — <b>4 ساعات عمل</b></span></div>
+            <div class="cond"><span class="cn">٤</span><span><span class="en">Send Mail</span> — <b>2 ساعة عمل</b></span></div>
+            <div class="cond"><span class="cn">٥</span><span><span class="en">Send Second Mail</span> — <b>2 ساعة عمل</b></span></div>
+            <div class="cond"><span class="cn">٦</span><span><span class="en">Send Third Mail</span> — <b>2 ساعة عمل</b></span></div>
+          </div>
+        </div>
+        <div class="blk"><h4>⚠️ حالة استثنائية — 4 مشاكل خاصة</h4><p>فيه 4 مشاكل لما تروح تجيب الاسكربت بتاعهم هتلاقي بيقولك: <b>"إحنا بنبذل قصارى جهدنا لتشغيل..."</b> وغيرها.</p><p style="margin-top:8px">الـ4 مشاكل (موجودة قدام الاسكربت في Pedia):</p>
+          <div class="chips" style="margin-top:8px"><span class="chip en">1. Network Activation Problem</span><span class="chip en">2. Change Voice Port</span><span class="chip en">3. Available</span><span class="chip en">4. TE Delay</span></div>
+          <div class="callout bad" style="margin-top:10px"><span class="ci">🚨</span><div><b>أول ما تلاقي نفسك بتقول الاسكربت ده — اعرف إن ترتيب الشكاوي هو:</b>
+            <ol style="margin:8px 18px 0"><li><span class="en">MSAN Activation</span> — <b>24 WH</b></li><li><span class="en">New Activation Delay</span> — <b>4 WH</b></li></ol>
+            <b>طب لو عدّى New Activation Delay الـ4 ساعات عمل؟</b><br>هتفتحها تاني وتالت ورابع — الخط كله هيبقى عبارة عن شكاوي <span class="en">New Activation Delay</span> 4 ساعات عمل للصبح.</div></div>
+        </div>
+        <div class="blk"><h4>🔍 حالتين محتاجين مراجعة زيادة — NTRA</h4><p>هتلاقي في الـ<span class="en">Work Order Issue</span> مكتوب <b><span class="en">Waiting NTRA</span></b> أو <b><span class="en">Missing NTRA</span></b>.</p><p style="margin-top:8px">هتمشي خطوات عادي، هتروح تقول الاسكربت بتاعها، فالعميل هيقولك: <b>"بس أنا عملت الكلام اللي بتقول عليه ده"</b>.</p>
+          <p style="margin-top:10px"><b>هتروح تبص على الـ<span class="en">MSAN Activation</span></b> عشان تشوف هتقدم شكوى ولا لا:</p>
+          <div class="callout ok"><span class="ci">✅</span><div><b>لو جوا الـMSAN Activation (كالمعتاد):</b> هتقوله "تمام يا فندم، هو بشكل عام طلب التفعيل الأساسي الأول لسه مفتوح لحضرتك بياخد 24 ساعة عمل، سلام سلام" — وتفتح <span class="en">Activation Follow Up</span> وتقفلها.</div></div>
+          <div class="callout warn"><span class="ci">🔍</span><div><b>الزيادة إيه؟</b> لو لقيته <b>عدّى الـMSAN Activation</b> — <b>قبل ما تروح تقدم شكوتك</b>:<ul><li>دور على شكوى اسمها <b><span class="en">NTRA Activation Form</span></b></li><li>لو <b>لقيتها</b> ← كمل زي ما انت، شكوتك عادي (سواء 6 ساعات عمل أو 4 ساعات عمل)، عيش حياتك</li><li>لو <b>ملقيتهاش</b> ← هتقوله: <b>"يروح الفرع، للأسف مش هقدر أقدم شكوى مهما صمم"</b>، سلام سلام</li></ul></div></div>
+        </div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="candidate-downpayment" data-sec="candidate"><button class="acc-h" aria-expanded="false"><span class="ae">💰</span><span class="tt"><b>المرحلة ٣: DownPayment Status</b><small>مقدم التعاقد</small></span><span class="bdg">Paid ✅</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>الحالة الطبيعية</h4><p>الـ<span class="en">DownPayment Status</span> الطبيعي يكون <span class="chip g">Paid ✅</span></p></div>
+        <div class="blk"><h4>طب لو مش Paid؟</h4><p>بسأل العميل:</p><div class="quote">"حضرتك دفعت مقدم التعاقد (الفاتورة الأولى) ولا لأ؟"</div>
+          <p style="margin-top:8px"><small>(سعرها بيكون موجود عندك في نفس الخانة تحت خالص، تحت الـ<span class="en">Paid</span> والـ<span class="en">Not Paid</span>)</small></p>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">✓</span><span><b>لو قالي إنه دفع</b> — بفتح <span class="en">Collect Down Payment</span> علطول، مدتها <b>24 ساعة عمل</b>
+              <small>سواء الـ<span class="en">MSAN Activation</span> لسه جوا الـ24 ساعة عمل أو لا — <b>مش مهتم</b><br>موجودة في Pedia في تاني خانة تحت الـ<span class="en">Work Order</span></small></span></div>
+            <div class="cond"><span class="cn">⚠️</span><span><b>لو Collect Down Payment مفتوحة وعدّت 24 ساعة عمل ولسه ظاهر Not Paid</b>
+              <small>هتفتح <span class="en">New Activation Delay</span> — <b>4 ساعات عمل</b></small></span></div>
+            <div class="cond"><span class="cn">✗</span><span><b>لو قالي إنه مدفعش</b>
+              <small>هقوله الاسكربت بتاع إنه يروح يدفع — وهفتح <span class="en">Activation Follow Up</span> وأقفلها</small></span></div>
+          </div>
+        </div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="candidate-deliver" data-sec="candidate"><button class="acc-h" aria-expanded="false"><span class="ae">📦</span><span class="tt"><b>المرحلة ٤: Deliver Status</b><small>استلام الراوتر</small></span><span class="bdg">Deliver ✅</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>الحالة الطبيعية</h4><p>الـ<span class="en">Deliver Status</span> الطبيعي يكون <span class="chip g">Deliver ✅</span></p></div>
+        <div class="blk"><h4>طب لو لقيتها Not Deliver؟</h4><p>بسأله:</p><div class="quote">"حضرتك استلمت راوتر، ولا معاك راوتر قديم شغال بيه؟"</div>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">✓</span><span><b>لو قالي: آه، معايا راوتر قديم / استلمت الراوتر الجديد منكم</b>
+              <small><b>لازم لاااازم لاااازم تاخد منه الـSerial Number (SN)</b><br>هتقوله: "أستأذنك يا فندم، تمليني الـ<span class="en">Serial Number</span> اللي في ضهر الراوتر — إثبات إن حضرتك معاك الراوتر عشان أقدملك الطلب"<br>وساعتها بفتح <b><span class="en">Deliver Modification</span></b> مدتها <b>24 ساعة عمل</b><br><b>مش مهم بالنسبالي الـMSAN Activation</b> سواء عدّت 24 عمل أو لا — موجودة في آخر خانة في Pedia</small></span></div>
+            <div class="cond"><span class="cn">⚠️</span><span><b>لو داخل يقولك عايز يفعل وانت لقيته Not Deliver، وبصيت في الشكاوي لقيت Deliver Modification مفتوحة وعدّت 24 ساعة عمل</b>
+              <small>هتفتح <span class="en">New Activation Delay</span> — <b>4 ساعات عمل</b></small></span></div>
+            <div class="cond"><span class="cn">✗</span><span><b>لو قالي: لأ، عايز أقدم على راوتر</b> — بسأله: "حضرتك كاش ولا خصم؟"
+              <small>• <b>لو هياخده كاش</b> ← بوضحله إنه هياخد عليه خصم 50% (زي ما إحنا عارفين — الخطوط الكانديدات لو اشترت راوتر كاش بتاخد خصم 50%) — هقوله يروح الفرع وخلاص — وهفتح <span class="en">Activation Follow Up</span> وأقفلها<br>• <b>طب لو قسط؟</b> ← هفتح نفس الشكوى <span class="en">Deliver Modification</span> مدتها <b>24 ساعة عمل</b> — موجودة في آخر خانة في الكانديدات في Pedia</small></span></div>
+          </div>
+        </div>
+        <div class="blk"><h4>⚠️ متخلطش بين القسط لو الخط Active وبين القسط للراوتر الكانديدات</h4>
+          <div class="cases" style="grid-template-columns:1fr 1fr">
+            <div class="case" style="--cc:var(--cand)"><div class="ch">🆕 لو الخط Candidate</div><div class="cb">
+              <p>ودخل يقولك عايز راوتر قسط — بتوضحله طبعاً السعر ونظام القسط هيبقى إزاي، وهتفتح <b><span class="en">Deliver Modification</span></b></p>
+              <p style="margin-top:8px"><b>بسسس قبل ما تفتحها — لازم يكون طلع للخط رقم <span class="en">Work Order</span></b></p>
+            </div></div>
+            <div class="case" style="--cc:var(--ok)"><div class="ch">✅ لو الخط Active</div><div class="cb">
+              <p>وطلب راوتر قسط — بتوضحله التفاصيل بردو عادي، بس بتفتح <b><span class="en">Add</span></b> الموجودة في خانة الـ<span class="en">VDSL Router</span> في الـ<span class="en">Related VAS</span></p>
+            </div></div>
+          </div>
+          <div class="callout warn" style="margin-top:12px"><span class="ci">💰</span><div><b>في الحالتين:</b> لو عايزين الراوتر كاش — بقولهم يروحو الفرع علطول من غير ما أفتح طلب من عندي.</div></div>
+        </div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="candidate-comment" data-sec="candidate"><button class="acc-h" aria-expanded="false"><span class="ae">💬</span><span class="tt"><b>المرحلة ٥: Comment</b><small>200 Success</small></span><span class="bdg">آخر مرحلة</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>الحالة الطبيعية</h4><p>الـ<span class="en">Comment</span> لازم تكون <span class="chip g">200 Success ✅</span></p></div>
+        <div class="blk"><h4>طب لو ملقيتاش 200 Success؟</h4><p>هتشوف إيه اللي موجود مكانها وتقول الاسكربت بتاعها — وتتعامل زي ما بنتعامل في الـ<span class="en">Work Order</span>:</p>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span>بعد ما تقول الاسكربت والعميل يقولك "أنا حدّثت / دفعت / روحت"</span></div>
+            <div class="cond"><span class="cn">٢</span><span>هتبص على الـ<span class="en">MSAN Activation</span>:<small>• لو جواها ← هندل عليها إننا في خلال <b>24 ساعة عمل</b> هيتفعل</small></span></div>
+            <div class="cond"><span class="cn">٣</span><span>لو عدّى الـ<span class="en">MSAN Activation</span> ← تفتح <span class="en">New Activation Delay</span> <b>4 ساعات عمل</b></span></div>
+            <div class="cond"><span class="cn">٤</span><span>لو متحللتش أو مفتوحة ← هتبعت الميل الأول <b>ساعتين عمل</b></span></div>
+          </div>
+        </div>
+        <div class="blk"><h4>⚠️ حالة استثنائية زي الـWork Order</h4><p>فيه مشاكل هتلاقيها في الـ<span class="en">Comment</span>، الاسكربت بتاعها بيقول: <b>"إحنا بنبذل قصارى جهدنا..."</b> وغيرها.</p><p style="margin-top:8px"><b>خطواتها:</b></p>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span><span class="en">MSAN Activation</span> — <b>24 WH</b> ✅</span></div>
+            <div class="cond"><span class="cn">٢</span><span><span class="en">New Activation Delay</span> ✅</span></div>
+            <div class="cond"><span class="cn">٣</span><span><span class="en">Send First Mail</span> ❌❌ <b>مش ببعت ميل</b><small>بقعد أفتح مدي الحياة <span class="en">New Activation Delay</span> — <b>4 ساعات عمل</b></small></span></div>
+          </div>
+        </div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="candidate-modify" data-sec="candidate"><button class="acc-h" aria-expanded="false"><span class="ae">🔄</span><span class="tt"><b>تغيير الباقة المتعاقد عليها</b><small>Modify Over Candidate</small></span><span class="bdg">مش Upgrade / Downgrade</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>الحالة</h4><p>أوقات العميل يدخل يقولك: <b>"عايز أغير الباقة المتعاقد عليها"</b> — سواء عايز باقة أقل أو باقة أعلى.</p></div>
+        <div class="callout bad"><span class="ci">⛔</span><div><b>مش بمشي Upgrade أو Downgrade عادي!</b> لا يا عم، ده خط <span class="en">Candidate</span> — لما بيحتاج يغير الباقة المتعاقد عليها، الموضوع مختلف.</div></div>
+        <div class="blk"><h4>الخطوات</h4>
+          <div class="dialog">
+            <div class="msg agent"><span class="who">🎧 أنت</span>تمام، حضرتك دلوقتي على باقة <b>200 جيجا</b> (مثلاً) — عايز أنهي باقة؟</div>
+            <div class="msg cust"><span class="who">👤 العميل</span>عايز باقة X</div>
+            <div class="msg agent"><span class="who">🎧 أنت</span>تمام، هفتحلك طلب</div>
+          </div>
+        </div>
+        <div class="blk"><h4>الشكوى</h4><p>الطلب أو الشكوى اسمها: <b><span class="en">Modify Over Candidate</span></b></p><p>مدتها: <b>24 ساعة عمل</b></p></div>
+        <div class="blk"><h4>📍 موجودة فين في Pedia؟</h4><p>في نفس خانة الـ<span class="en">Deliver Modification</span> — اللي هي آخر خانة في الكانديدات.</p></div>
+      </div></div></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 7) CERTIFICATION ═══════ -->
+<section class="view" id="view-certification" style="--acc:var(--cert)">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-emoji">🎓</span><div><h2 dir="ltr">Certification</h2><p>إيقاف مؤقت · نقل الخدمة · الإلغاء — موضوعات بتيجي كتير في السيرتفيكيشن.</p></div><span class="count-chip">٣ موضوعات</span></div>
+    <div class="rule-banner rv" style="background:color-mix(in srgb,var(--cert) 10%, var(--surface));border-color:color-mix(in srgb,var(--cert) 50%, transparent)"><span class="ic">🎓</span><span>الموضوعات دي شرحناها منفصلة شوية عن المشاكل، بس <b>بتيجي في السيرتفيكيشن أكيد</b> — هييجي منهم كتير.</span></div>
+
+    <div class="accs">
+      <article class="acc rv" id="cert-suspension" data-sec="certification"><button class="acc-h" aria-expanded="false"><span class="ae">⏸️</span><span class="tt"><b>الإيقاف المؤقت</b><small>المسافر — Suspension</small></span><span class="bdg">30 جنيه · شهرين</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>إزاي بتدخل المكالمة؟</h4><p>العميل بيخشلك مباشرة يقولك:</p>
+          <div class="exs">
+            <div class="ex good"><b>السيناريو الأول</b>"عايز أعمل إيقاف مؤقت، عايز أوقف الخدمة عشان الفاتورة الجاية متنزلش"</div>
+            <div class="ex good"><b>السيناريو التاني</b>يقولك "عايز ألغي" ← تسأله "ليه عايز تلغي يا فندم؟" ← يقولك "أصل مسافر"<br>فبتقوله: "يا فندم، لو حضرتك مسافر، عندنا خدمة <b>إيقاف مؤقت</b>، ممكن نوقف الخدمة لحضرتك لحد ما ترجع بالسلامة"</div>
+          </div>
+        </div>
+        <div class="blk"><h4>الخطوات</h4><p>أول ما يقولك "تمام" (أو انت عموماً تيجي تقول التفاصيل)، فانت رايح تجيب الاسكربت اللي بيقول:</p>
+          <div class="quote">"المشترك معانا يقدر يعمل إيقاف مؤقت عن طريق أقرب فرع من فروعنا بقيمة <b>30 جنيه</b> غير شاملة الضريبة، بحد أقصى لمدة <b>شهرين</b>..."</div>
+        </div>
+        <div class="blk"><h4>📍 منين في Pedia؟</h4><div class="path"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>Suspension</span></div><p style="margin-top:8px">هتخش تقول الاسكربت، وبعدها هتنزل تحت خالص، هتفتح شكوى اسمها <b><span class="en">Suspend</span></b> وتقفلها — خلصت المكالمة.</p></div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="cert-transfer" data-sec="certification"><button class="acc-h" aria-expanded="false"><span class="ae">🚚</span><span class="tt"><b>نقل الخدمة / العزل</b><small>Change Username</small></span><span class="bdg">شرطين</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>إزاي بتدخل المكالمة؟</h4>
+          <div class="exs">
+            <div class="ex good"><b>السيناريو الأول</b>العميل بيخشلك مباشرة يقولك: "عايز أنقل الخدمة من مكان لمكان، ينفع؟"</div>
+            <div class="ex good"><b>السيناريو التاني</b>يقولك "عايز ألغي" ← تسأله "ليه هتلغي يا فندم؟" ← يقولك "أصل هعزل، هنقل البيت"</div>
+          </div>
+        </div>
+        <div class="blk"><h4>الرد الأول</h4><p>أول ما بيقولك كده، بتقوله:</p><div class="quote">"إحنا عندنا خدمة نقدر ننقل بيانات حضرتك من مكان لمكان تاني اللي حضرتك هتعزل فيها… بس لازم <b>شرطين</b>."</div></div>
+        <div class="blk"><h4>الشرطين</h4>
+          <div class="cond-list">
+            <div class="cond"><span class="cn">١</span><span>يكون معاه <b>خط أرضي تاني</b> — طبعاً عشان ننقل البيانات من الرقم الأرضي القديم للرقم الأرضي الجديد</span></div>
+            <div class="cond"><span class="cn">٢</span><span>يكون الرقم الأرضي ده <b>شغال وفيه حرارة</b></span></div>
+          </div>
+        </div>
+        <div class="blk"><h4>لو الشرطين موجدين؟</h4><div class="ex good"><b>✔ الشرطين تمام</b>هتروح تقول الاسكربت — وتفتح الطلب <b>وتسيبه مفتوح</b>، لأن الاسكربت بيقول "هقدم طلب لحضرتك..." وغيرها، فانت هتفتح الطلب بتاع نقل الخدمة وتسيبه مفتوح وتقول اسكربت الطلب وخلاص.</div></div>
+        <div class="blk"><h4>لو حاجة من الشرطين مش موجودة؟</h4><div class="ex bad"><b>❌ شرط ناقص</b>هتقوله: "تمام يا فندم، لما يتوفر عند حضرتك الشرط التاني، إن مثلاً الحرارة تشتغل عند حضرتك، ممكن تكلمنا وهننقل بيانات حضرتك…"<br>وانت ساعتها هتفتح الشكوى وتسيبها مفتوحة؟ <b>أكيد لأ</b> — ساعتها هتفتحها وتقفلها.</div></div>
+        <div class="blk"><h4>📍 فين في Pedia؟</h4><div class="path"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>Change Username</span></div><p style="margin-top:8px">خش وقول الاسكربت، والشكوى عندك تحت في نفس الصفحة. الموضوع سهل مش صعب.</p></div>
+      </div></div></div></article>
+
+      <article class="acc rv" id="cert-cancellation" data-sec="certification"><button class="acc-h" aria-expanded="false"><span class="ae">❌</span><span class="tt"><b>الإلغاء</b><small>Cancellation — Threat to Disconnect</small></span><span class="bdg">مهارات تكتيكية</span><span class="chv">▼</span></button><div class="acc-p"><div><div class="acc-b">
+        <div class="blk"><h4>🎯 الحالة الأولى: عايز ألغي (مش مسافر ومش بيعزل)</h4><p>العميل بيخش: "الو مساء الخير، أنا عايز ألغي من عندكم".</p>
+          <div class="callout warn"><span class="ci">🎭</span><div><b>أول ما بيجيب سيرة إلغاء — هنا بتيجي مهاراتك التكتيكية وشخصيتك المحنكة</b> اللي بتحاول تفهم المشكلة من العميل وتحاول تحلها. <b>لازم لازم</b> تسأله: "إيه مشكلة حضرتك؟ أنا هنا عشان أساعدك… ولو حضرتك حابب تديني فرصة أحل لحضرتك المشكلة…"</div></div>
+          <div class="cases" style="grid-template-columns:1fr 1fr">
+            <div class="case" style="--cc:var(--ok)"><div class="ch">✔ العميل وافق</div><div class="cb"><p>قالك المشكلة وبقت <span class="en">Case</span> عادي — إن النت بطيء أو بيقطع — خير وبركة، كمل بقي زي ما انت.</p></div></div>
+            <div class="case" style="--cc:var(--bad)"><div class="ch">✗ العميل رافض</div><div class="cb"><p>قالك: "لأ لأ مش هقول مشكلتي، لأ مش هديك فرصة تحلها، متقدمش طلب إن فني يجيلي، أنا مش عايز منكم حاجة، أنا هلغي، أستأذنك قولي ألغي إزاي؟"</p></div></div>
+          </div>
+          <div class="blk" style="margin-top:14px"><h4>في الحالة التانية (العميل رافض المساعدة):</h4>
+            <div class="cond-list">
+              <div class="cond"><span class="cn">١</span><span>هتقول للعميل <b>اسكربت الإلغاء</b></span></div>
+              <div class="cond"><span class="cn">٢</span><span>هتفتح <b><span class="en">Threat to Disconnect 81006</span></b> علطول
+                <small>⚠️ طبعاً طبعاً طبعاً <b>مبنقولش للعميل إننا هنفتحها ولا حاجة</b> — دي بنفتحها بس في السيستم، لكن مبقولش للعميل إني هفتح طلب.<br>ولو طلب رقم شكوى مثلاً، أكيد <b>مش بديله رقم الشكوى دي</b> — ولا كأنها موجودة بالنسبة للعميل ولا يعرف عنها حاجة.</small></span></div>
+            </div>
+          </div>
+          <div class="callout bad" style="margin-top:10px"><span class="ci">⚠️</span><div><b>طبعا لو انت مقولتش اسكربت الإلغاء وطريقة الإلغاء — كده مش هتفتح Threat to Disconnect.</b><br>يعني الشكوى مش بتتفتح غير لما انت <b>تنطق بلسانك</b> طريقة الإلغاء.<br>أول ما تلاقي نفسك بتقول للعميل: "الإلغاء يا فندم بيكون عن طريق كذا كذا…" — علطول هتفتح <span class="en">Threat</span>.</div></div>
+          <div class="callout warn" style="margin-top:10px"><span class="ci">⚠️</span><div><b>إلا في حالتين (هنذكرهم تحت)</b> — فيهم مش هتفتح <span class="en">Threat</span>.</div></div>
+        </div>
+
+        <div class="blk"><h4>🎯 الحالة التانية: مسافر / مش هيستخدم النت</h4><p>العميل: "الو مساء الخير، عايز ألغي… طب ليه يا فندم، أي مشكلة حضرتك؟" — "والله مسافر، مش هستخدم النت".</p>
+          <p style="margin-top:8px">هنا بتروح تعرض على العميل <b>الإيقاف المؤقت</b>: "بدل ما تلغي يا فندم، إحنا ممكن نوقفلك الخدمة عادي والفواتير متنزلش لحد ما ترجع بالسلامة".</p>
+          <div class="cases" style="grid-template-columns:1fr 1fr">
+            <div class="case" style="--cc:var(--ok)"><div class="ch">✔ عجبته الخدمة</div><div class="cb"><p>خير وبركة — روح قوله اسكربت الإيقاف المؤقت وافتح <span class="en">Suspend</span> واقفلها — وبارك الله فيما رزق.</p></div></div>
+            <div class="case" style="--cc:var(--bad)"><div class="ch">✗ مش عجبه — عايز يلغي</div><div class="cb"><p>قالك: "لأ مش عجبي شهرين، ده قليل، هلغي، قولي طريقة الإلغاء إزاي؟"</p><p style="margin-top:6px">هتقوله اسكربت الإلغاء عادي جداً: "إلغاء الخدمة يا فندم عن طريق كذا كذا…"</p></div></div>
+          </div>
+          <div class="callout bad" style="margin-top:12px;background:color-mix(in srgb,var(--bad) 15%, var(--surface))"><span class="ci">🚨</span><div>
+            <b style="font-size:1.05rem">بسسس مش هنفتح Threat ❌</b><br>
+            <b style="font-size:1.05rem">مش هنفتح Threat ❌</b><br>
+            <b style="font-size:1.05rem">Threat مش هتتفتح ❌</b>
+          </div></div>
+          <div class="callout ok" style="margin-top:10px"><span class="ci">✅</span><div><b>أومال هعمل إيه؟</b> أنا قولت اسكربت الإلغاء؟<br>هفتح <b><span class="en">Suspend</span></b> ونقفلها بردو ✅</div></div>
+        </div>
+
+        <div class="blk"><h4>🎯 الحالة التالتة: هيعزل / بينقل البيت</h4><p>هيدخل يقولك "عايز ألغي… ليه يا فندم، إيه المشكلة؟" — "هعزل، هروح بيت تاني هقعد فيه".</p>
+          <p style="margin-top:8px">هتعرض عليه إننا ممكن ننقل بيانات حضرتك — بس لازم يتوفر الشرطين: <b>الرقم الأرضي الجديد + الحرارة</b>.</p>
+          <div class="cases" style="grid-template-columns:1fr 1fr">
+            <div class="case" style="--cc:var(--ok)"><div class="ch">✔ الشرطين متوفرين وعجبه</div><div class="cb"><p>هتقول اسكربت بتاع نقل الخدمة وتفتح الطلب وتسيبه مفتوح عادي جداً.</p></div></div>
+            <div class="case" style="--cc:var(--bad)"><div class="ch">✗ مش عاجبه أو الشرطين مش متوفرين</div><div class="cb"><p>قالك: "لأ معنديش حرارة، هلغي بردو…"</p><p style="margin-top:6px">هتروح تقول اسكربت الإلغاء بردو عادي جداً — <b>بس مش هتفتح Threat ❌❌</b></p></div></div>
+          </div>
+          <div class="callout bad" style="margin-top:12px;background:color-mix(in srgb,var(--bad) 15%, var(--surface))"><span class="ci">🚨</span><div>
+            <b style="font-size:1.05rem">مش هتفتح Threat ❌</b><br>
+            <b style="font-size:1.05rem">مش هتفتح Threat ❌</b>
+          </div></div>
+          <div class="callout ok" style="margin-top:10px"><span class="ci">✅</span><div><b>افتح إيه؟</b> افتح <b><span class="en">Suspend</span></b> واقفلها ✅</div></div>
+        </div>
+
+        <div class="blk"><h4>📍 الـCancellation منين في Pedia؟</h4><div class="path"><span>Home DSL</span><i>→</i><span>How to Manage My Account</span><i>→</i><span>Cancellation</span><i>→</i><span>Cancellation Steps/Rules</span><i>→</i><span>Disagree</span></div>
+          <p style="margin-top:8px">(لو رفض مساعدتك) — هتخش تلاقي الاسكربت تحت، والشكوى بتاعة <span class="en">Threat to Disconnect</span> تحت بردو.</p>
+        </div>
+      </div></div></div></article>
     </div>
   </div>
 </section>
@@ -1457,11 +1069,11 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
   <div class="wrap foot">
     <div class="fb"><span dir="ltr">Orange DSL Training</span> 🧡</div>
     <div class="ft">مرجع تدريبي مبسط لمشاكل <span class="en">Orange Home DSL</span> والـ<span class="en">Scripts</span> والـ<span class="en">Troubleshooting</span> — Trainer: Basel Magdy | باسل مجدي</div>
-    <div class="fp">✨ Prepared by Youssef Eid</div>
+    <div class="fp">✨ Prepared by Youssef Eid </div>
   </div>
 </footer>
 
-<noscript><div style="padding:16px;text-align:center;background:#b3362b;color:#fff">فعّل JavaScript لاستخدام التنقل والبحث داخل الموقع.</div></noscript>
+<noscript><div style="padding:16px;text-align:center;background:#b3362b;color:#fff">فعّل JavaScript لاستخدام التنقل والبحث.</div></noscript>
 
 <script>
 (function(){
@@ -1469,9 +1081,8 @@ footer{border-top:1px solid var(--line);background:var(--surface);margin-top:20p
 const $  = (s,c)=> (c||document).querySelector(s);
 const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
 const RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const SECTIONS = {physical:"🛠️ Physical", network:"🌐 Network", billing:"💰 Billing", tricks:"🧠 تركات"};
+const SECTIONS = {physical:"🛠️ Physical", network:"🌐 Network", billing:"💰 Billing", tricks:"🧠 تركات", callflow:"📞 Call Flow", candidate:"🆕 Candidate", certification:"🎓 Certification"};
 
-/* الثيم */
 const themeBtn = $("#themeBtn");
 function setTheme(t){
   document.documentElement.dataset.theme = t;
@@ -1486,7 +1097,6 @@ function setTheme(t){
 })();
 themeBtn.addEventListener("click", ()=> setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
 
-/* الأكورديون */
 function setAcc(acc, open){
   if(!acc) return;
   acc.classList.toggle("open", open);
@@ -1501,9 +1111,8 @@ $$(".acc-h").forEach(btn=>{
 });
 setAcc($("#physical-line-down"), true);
 
-/* التنقل */
 function showView(name){
-  const map = {home:"#view-home", physical:"#view-physical", network:"#view-network", billing:"#view-billing", tricks:"#view-tricks"};
+  const map = {home:"#view-home", physical:"#view-physical", network:"#view-network", billing:"#view-billing", tricks:"#view-tricks", callflow:"#view-callflow", candidate:"#view-candidate", certification:"#view-certification"};
   if(!map[name]) name = "home";
   $$(".view").forEach(v=> v.classList.toggle("on", v.id === map[name].slice(1)));
   $$(".navbtn").forEach(b=> b.classList.toggle("on", b.dataset.go === name));
@@ -1532,7 +1141,6 @@ function routeFromHash(){
 }
 window.addEventListener("hashchange", routeFromHash);
 
-/* Reveal */
 let io;
 function observeReveals(){
   if(RM){ $$(".rv").forEach(el=> el.classList.add("in")); return; }
@@ -1545,7 +1153,6 @@ function observeReveals(){
 }
 observeReveals();
 
-/* عدّاد الأرقام */
 function countUp(el){
   const target = parseInt(el.dataset.n, 10) || 0;
   if(RM){ el.textContent = target; return; }
@@ -1564,7 +1171,6 @@ const numIO = new IntersectionObserver(entries=>{
 }, {threshold:.4});
 $$(".kv").forEach(k=> numIO.observe(k));
 
-/* البحث */
 const input = $("#searchInput");
 const panel = $("#srchPanel");
 let index = [];
@@ -1590,7 +1196,9 @@ function buildIndex(){
       text: k.innerText.replace(/\s+/g," ").trim()});
   });
   $$(".intro-c,.map-card,.rule-banner").forEach(c=>{
-    const sec = c.closest(".view") ? c.closest(".view").id.replace("view-","") : "physical";
+    const v = c.closest(".view");
+    if(!v) return;
+    const sec = v.id.replace("view-","");
     if(SECTIONS[sec]){
       index.push({type:"acc", el:c, sec:sec, id:"",
         title: ($("h4", c)||{textContent:"ملخص"}).textContent.trim(),
@@ -1620,10 +1228,9 @@ function doSearch(){
   if(q.length < 2){ closeSearch(); return; }
   const lq = q.toLowerCase();
   const hits = index.filter(it=> it.text.toLowerCase().includes(lq)).slice(0, 40);
-
-  const cv = {physical:"phys",network:"net",billing:"bill",tricks:"trk"};
+  const cv = {physical:"phys",network:"net",billing:"bill",tricks:"trk",callflow:"call",candidate:"cand",certification:"cert"};
   let html = '<div class="srch-meta">' + (hits.length
-      ? "🔎 " + hits.length + " نتيجة في الأقسام الأربعة لـ «" + esc(q) + "»"
+      ? "🔎 " + hits.length + " نتيجة لـ «" + esc(q) + "»"
       : "لا توجد نتائج لـ «" + esc(q) + "» — جرّب مصطلحًا آخر") + "</div>";
   hits.forEach((h, i)=>{
     html += '<button class="srch-item" data-i="'+i+'" role="option">'
